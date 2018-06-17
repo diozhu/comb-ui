@@ -1,0 +1,12 @@
+/build/
+/config/
+/dist/
+/docs/
+/*.js
+/node_modules/
+/static/
+src/js/utils/dom.js
+src/js/utils/emitter.js
+src/js/utils/draggable.js
+src/js/utils/translate.js
+src/js/utils/popup
