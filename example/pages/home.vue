@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="page page-home">
         <div v-for="(rows, index) in list" :key="index">
             <h2>{{rows.title}}</h2>
             <div v-for="(item, idx) in rows.list" :key="idx">

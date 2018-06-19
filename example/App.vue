@@ -60,6 +60,8 @@ export default {
         text-size-adjust: 100%;
         -webkit-text-size-adjust: 100%;
         -webkit-tap-highlight-color: transparent;
+        /*overflow: hidden;*/
+        -webkit-overflow-scrolling: touch;
     }
     article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
         display: block;
@@ -148,6 +150,12 @@ export default {
         }
         p {
             font-size: pxTorem(12);
+        }
+    }
+
+    .page {
+        h2 {
+            margin: pxTorem(20) 0 0 0;
         }
     }
 </style>

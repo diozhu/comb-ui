@@ -48,7 +48,7 @@ export default {
 };
 </script>
 <style rel="stylesheet/scss" lang="scss">
-    @import "../../../src/scss/variables";
+    @import "~@/scss/_variables.scss";
 
     .v-toast {
         -webkit-transform: translate3d(0, 0, 0);
