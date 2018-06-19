@@ -8,16 +8,12 @@
             ref="picker"
         >
             <div class="date-time-msg-box">
+                <slot name="topMessage"></slot>
                 <div class="concel-confirm-button">
                     <span class="v-datetime-action v-datetime-cancel" @click="visible = false">{{ cancelText }}</span>
                     <span class="v-datetime-action v-datetime-confirm" @click="confirm">{{ confirmText }}</span>
                 </div>
-                <slot name="topMessage"></slot>
                 <div class="v-datetime-picker__regions">
-                    <!--<p v-for="(dat, idx) in currentDates" :key="idx"-->
-                       <!--:class="{cur: currentDatesIdx == idx, empty: !dat.dat}"-->
-                       <!--@click="currentDatesIdx = (currentDatesIdx ? 0 : 1)"-->
-                    <!--&gt;{{ dat.lab }}</p>-->
                     <p class="region" :class="{cur: currentDatesIdx == 0, empty: !currentDates[0].dat}"
                        @click="currentDatesIdx = (currentDatesIdx ? 0 : 1)"
                     >{{ currentDates[0].lab }}</p>
