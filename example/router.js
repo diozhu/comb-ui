@@ -7,7 +7,7 @@ const routes = [
         title: 'CSS Components',
         list: [
             { name: 'Layout', path: '/layout' },
-            { name: 'Spinner', path: '/toast' },
+            { name: 'Spinner', path: '/spinner' },
             { name: 'Icon', path: '/toast' },
             { name: 'Button', path: '/button' },
             { name: 'Text', path: '/button' },

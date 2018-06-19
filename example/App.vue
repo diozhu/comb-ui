@@ -36,6 +36,8 @@ export default {
         outline: 0;
         vertical-align: baseline;
         font-family: Arial;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
     }
     *:before,
     *:after {
@@ -58,7 +60,6 @@ export default {
         height: 100%;
         user-select: none;
         text-size-adjust: 100%;
-        -webkit-text-size-adjust: 100%;
         -webkit-tap-highlight-color: transparent;
         /*overflow: hidden;*/
         -webkit-overflow-scrolling: touch;
@@ -133,9 +134,6 @@ export default {
     }
 
     #app {
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        text-align: center;
         color: #2c3e50;
         /*margin-top: 60px;*/
     }

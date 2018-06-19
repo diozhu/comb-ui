@@ -13,6 +13,7 @@ import vPopup from '../packages/v-popup.vue';
 import vPicker from '../packages/v-picker.vue';
 import vDatetimePicker from '../packages/v-datetime-picker.vue';
 import vField from '../packages/v-field.vue';
+import vSpinner from '../packages/v-spinner';
 // import vText from './v-text.vue';
 // import vFeed from './v-feed.vue';
 // import Refresh from './v-refresh';
@@ -41,6 +42,7 @@ const install = function (Vue) {
     Vue.component(vPicker.name, vPicker);
     Vue.component(vDatetimePicker.name, vDatetimePicker);
     Vue.component(vField.name, vField);
+    Vue.component(vSpinner.name, vSpinner);
     // Vue.component(vText.name, vText);
     // Vue.component(vFeed.name, vFeed);
     // Vue.component(vRefresh.name, vRefresh);
@@ -75,6 +77,7 @@ export {
     vPicker,
     vDatetimePicker,
     vField,
+    vSpinner,
     // vText,
     // vFeed,
     //
