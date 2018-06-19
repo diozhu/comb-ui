@@ -13,7 +13,7 @@
                     <span class="v-datetime-action v-datetime-cancel" @click="visible = false">{{ cancelText }}</span>
                     <span class="v-datetime-action v-datetime-confirm" @click="confirm">{{ confirmText }}</span>
                 </div>
-                <div class="v-datetime-picker__regions">
+                <div v-if="isRegion" class="v-datetime-picker__regions">
                     <p class="region" :class="{cur: currentDatesIdx == 0, empty: !currentDates[0].dat}"
                        @click="currentDatesIdx = (currentDatesIdx ? 0 : 1)"
                     >{{ currentDates[0].lab }}</p>
@@ -129,7 +129,7 @@ export default {
         },
         isRegion: {
             type: Boolean,
-            default: true
+            default: false
         }
     },
 

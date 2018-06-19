@@ -55,6 +55,7 @@
             @input="handlePickerInput7"
             :startDate="startDate"
             :endDate="endDate"
+            isRegion
         >
             <div class="top-message" slot="topMessage">
                 <div class="msg-tit">选择开始和结束的日期</div>
