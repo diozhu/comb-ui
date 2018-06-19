@@ -4,13 +4,15 @@
 
 import VToast from '../packages/v-toast.js';
 import MessageBox from '../packages/v-message-box.js';
+import Validator from '../packages/v-validator.js';
 import vButton from '../packages/v-button.vue';
 import vCell from '../packages/v-cell.vue';
 import vRow from '../packages/v-row.vue';
 import vCol from '../packages/v-col.vue';
 import vPopup from '../packages/v-popup.vue';
-import vPicker from '../packages/v-picker';
-import vDatetimePicker from '../packages/v-datetime-picker';
+import vPicker from '../packages/v-picker.vue';
+import vDatetimePicker from '../packages/v-datetime-picker.vue';
+import vField from '../packages/v-field.vue';
 // import vText from './v-text.vue';
 // import vFeed from './v-feed.vue';
 // import Refresh from './v-refresh';
@@ -29,6 +31,7 @@ const install = function (Vue) {
 
     Vue.$toast = Vue.prototype.$toast = VToast;
     Vue.$messagebox = Vue.prototype.$messagebox = MessageBox;
+    Vue.$validator = Vue.prototype.$validator = Validator;
 
     Vue.component(vButton.name, vButton);
     Vue.component(vCell.name, vCell);
@@ -37,6 +40,7 @@ const install = function (Vue) {
     Vue.component(vPopup.name, vPopup);
     Vue.component(vPicker.name, vPicker);
     Vue.component(vDatetimePicker.name, vDatetimePicker);
+    Vue.component(vField.name, vField);
     // Vue.component(vText.name, vText);
     // Vue.component(vFeed.name, vFeed);
     // Vue.component(vRefresh.name, vRefresh);
@@ -62,6 +66,7 @@ export {
     version,
     VToast,
     MessageBox,
+    Validator,
     vButton,
     vCell,
     vRow,
@@ -69,6 +74,7 @@ export {
     vPopup,
     vPicker,
     vDatetimePicker,
+    vField,
     // vText,
     // vFeed,
     //

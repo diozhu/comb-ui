@@ -12,6 +12,9 @@
 
         <v-cell title="选择日期" is-link @click.native="openPicker6" :value="formatedValue6"></v-cell>
 
+        <!--<v-cell title="选择日期" is-link @click.native="openPicker7" :value="value7"></v-cell>-->
+        <v-field title="有效期" placeholder="请选择开始、结束时间" :readonly="true" :value="startEndTime" @click.native="openPicker7"></v-field>
+
         <v-datetime-picker
             ref="picker1"
             @confirm="handlePicker1"
@@ -45,6 +48,18 @@
             :visibleItemCount="5"
             @confirm="handlePicker6"
         ></v-datetime-picker>
+        <v-datetime-picker
+            ref="picker7"
+            type="date"
+            @confirm="handlePicker7"
+            @input="handlePickerInput7"
+            :startDate="startDate"
+            :endDate="endDate"
+        >
+            <div class="top-message" slot="topMessage">
+                <div class="msg-tit">选择开始和结束的日期</div>
+            </div>
+        </v-datetime-picker>
     </div>
 </template>
 
@@ -65,7 +80,14 @@ export default {
             visible4: false,
             visible5: false,
             value6: null,
-            visible6: false
+            visible6: false,
+
+            topMessage: 'topMessage',
+            value7: null,
+            visible7: false,
+            startEndTime: null,
+            startDate: new Date(new Date().getFullYear() - 2, 0, 1),
+            endDate: new Date(new Date().getFullYear() + 2, 11, 31)
         };
     },
     computed: {
@@ -89,7 +111,8 @@ export default {
         }
     },
 
-    created () {
+    mounted () {
+        setTimeout(this.openPicker7, 500);
     },
     methods: {
         open (picker) {
@@ -151,6 +174,23 @@ export default {
         handlePicker6 (value) {
             console.log('datetime-picker.handlePicker6: ', value);
             this.value6 = value;
+        },
+
+        openPicker7 () {
+            this.$refs.picker7.open();
+        },
+        handlePickerInput7 (value) {
+            console.log('datetime-picker.handlePickerInput7: ', value);
+            // this.value7 = value;
+        },
+        handlePicker7 (dates) {
+            console.log('datetime-picker.handlePicker7: ', dates);
+            // this.value7 = value;
+            if (dates && dates.length && dates[0].val) {
+                this.startEndTime = dates[0].lab + ' 至 ' + (dates[1].val ? dates[1].lab : utils.formatTime(Date.now(), 'yyyy-MM-dd'));
+            } else {
+                this.$toast('日期得选...');
+            }
         }
     }
 };

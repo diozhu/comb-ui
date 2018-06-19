@@ -8,10 +8,23 @@
             ref="picker"
         >
             <div class="date-time-msg-box">
-                <slot name="topMessage"></slot>
                 <div class="concel-confirm-button">
                     <span class="v-datetime-action v-datetime-cancel" @click="visible = false">{{ cancelText }}</span>
                     <span class="v-datetime-action v-datetime-confirm" @click="confirm">{{ confirmText }}</span>
+                </div>
+                <slot name="topMessage"></slot>
+                <div class="v-datetime-picker__regions">
+                    <!--<p v-for="(dat, idx) in currentDates" :key="idx"-->
+                       <!--:class="{cur: currentDatesIdx == idx, empty: !dat.dat}"-->
+                       <!--@click="currentDatesIdx = (currentDatesIdx ? 0 : 1)"-->
+                    <!--&gt;{{ dat.lab }}</p>-->
+                    <p class="region" :class="{cur: currentDatesIdx == 0, empty: !currentDates[0].dat}"
+                       @click="currentDatesIdx = (currentDatesIdx ? 0 : 1)"
+                    >{{ currentDates[0].lab }}</p>
+                    至
+                    <p class="region" :class="{cur: currentDatesIdx == 1, empty: !currentDates[1].dat}"
+                       @click="currentDatesIdx = (currentDatesIdx ? 0 : 1)"
+                    >{{ currentDates[1].lab }}</p>
                 </div>
             </div>
         </v-picker>
@@ -117,6 +130,10 @@ export default {
         isValidator: {
             type: Boolean,
             default: false
+        },
+        isRegion: {
+            type: Boolean,
+            default: true
         }
     },
 
@@ -135,7 +152,9 @@ export default {
             shortMonthDates: [],
             longMonthDates: [],
             febDates: [],
-            leapFebDates: []
+            leapFebDates: [],
+            currentDates: [ {val: null, lab: '开始时间'}, {val: null, lab: '结束时间'} ],    // 日期区间数组
+            currentDatesIdx: 0
         };
     },
 
@@ -194,12 +213,34 @@ export default {
 
     watch: {
         value (val) {
-            this.currentValue = val;
+            if (this.isRegion && val.length && val[0].val) this.currentValue = val[0].val;
+            else this.currentValue = val;
         },
-
         rims () {
             this.generateSlots();
+        },
+        currentDatesIdx (val) { // 显示为区间样式时，根据当前选择的时间切换currentValue的值。 mod by Dio Zhu. on 2018.6.19
+            console.log('v-datetime-picker.watch.currentCatesIdx: ', val);
+            this.currentValue = (this.currentDates && this.currentDates[val] && this.currentDates[val].val) ? this.currentDates[val].val : new Date();
         }
+    },
+
+    mounted () {
+        this.currentValue = this.value;
+        if (!this.value) {
+            if (this.type.indexOf('date') > -1) {
+                // this.currentValue = this.startDate; 如果是课程有效期默认下一个月 孙乐卿 2018-02-11
+                if (this.isValidator) this.currentValue = new Date(this.startDate.getFullYear(), this.startDate.getMonth() + 1, this.startDate.getDate());
+                else this.currentValue = this.startDate;
+            } else if (this.type.indexOf('smart') > -1) { // add by Dio Zhu. on 2017.2.28
+                this.currentValue = this.startDate; // new Date();
+            } else {
+                this.currentValue = `${('0' + this.startHour).slice(-2)}:00`;
+            }
+        }
+        // if (this.isRegion) this.currentDates = [this.currentValue, this.currentValue];
+        if (this.isRegion) this.currentDates = [ {val: null, lab: '开始时间'}, {val: null, lab: '结束时间'} ];
+        this.generateSlots();
     },
 
     methods: {
@@ -506,28 +547,26 @@ export default {
 
         confirm () {
             this.visible = false;
-            this.$emit('confirm', this.currentValue);
+            if (this.isRegion) {
+                if (this.currentDatesIdx) this.$set(this.currentDates, 1, {val: this.currentValue, lab: utils.formatTime(this.currentValue, 'yyyy-MM-dd')});
+                else this.$set(this.currentDates, 0, {val: this.currentValue, lab: utils.formatTime(this.currentValue, 'yyyy-MM-dd')});
+                console.log('v-datetime-picker.confirm: ', this.currentDates);
+                this.$emit('confirm', this.currentDates);
+            } else {
+                this.$emit('confirm', this.currentValue);
+            }
         },
 
         handleValueChange () {
-            this.$emit('input', this.currentValue);
-        }
-    },
-
-    mounted () {
-        this.currentValue = this.value;
-        if (!this.value) {
-            if (this.type.indexOf('date') > -1) {
-                // this.currentValue = this.startDate; 如果是课程有效期默认下一个月 孙乐卿 2018-02-11
-                if (this.isValidator) this.currentValue = new Date(this.startDate.getFullYear(), this.startDate.getMonth() + 1, this.startDate.getDate());
-                else this.currentValue = this.startDate;
-            } else if (this.type.indexOf('smart') > -1) { // add by Dio Zhu. on 2017.2.28
-                this.currentValue = this.startDate; // new Date();
+            if (this.isRegion) { // mod by Dio Zhu. on 2018.6.19
+                if (this.currentDatesIdx) this.$set(this.currentDates, 1, {val: this.currentValue, lab: utils.formatTime(this.currentValue, 'yyyy-MM-dd')});
+                else this.$set(this.currentDates, 0, {val: this.currentValue, lab: utils.formatTime(this.currentValue, 'yyyy-MM-dd')});
+                console.log('v-datetime-picker.handleValueChange: ', this.currentDates);
+                this.$emit('input', this.currentDates);
             } else {
-                this.currentValue = `${('0' + this.startHour).slice(-2)}:00`;
+                this.$emit('input', this.currentValue);
             }
         }
-        this.generateSlots();
     }
 };
 </script>
@@ -572,6 +611,29 @@ export default {
             height: pxTorem(40px);
             display: flex;
             justify-content: space-between;
+        }
+
+        .v-datetime-picker__regions {
+            font-size: pxTorem(14);
+            line-height: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            .empty {
+                color: #888;
+            }
+
+            .region {
+                width: pxTorem(120);
+                height: pxTorem(22);
+                line-height: pxTorem(22);
+                margin: 0 pxTorem(10);
+            }
+
+            .cur {
+                border-bottom: #007AFF pxTorem(2) solid;
+            }
         }
     }
 </style>

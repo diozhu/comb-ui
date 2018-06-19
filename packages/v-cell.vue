@@ -71,6 +71,7 @@ export default {
 
     methods: {
         handleClick ($event) {
+            this.$emit('handleClick', $event);
             console.log('v-cell.handleClick: ');
             $event.preventDefault();
             this.$router.push(this.to);

@@ -167,12 +167,12 @@ export default {
     .v-picker {
         overflow: hidden;
     }
-    .top-message{
+    .v-picker .top-message{
         font-size: pxTorem(14px);
         // height: pxTorem(80px);
         padding:pxTorem(12px) pxTorem(15px);
         // display: block;
-        border-bottom: 1px solid #E3E3E3;
+        /*border-bottom: 1px solid #E3E3E3;*/
         border-top: 1px solid #E3E3E3;
         .msg-tit{
             font-size:pxTorem(15px);
@@ -187,7 +187,7 @@ export default {
         }
     }
     .v-picker-toolbar {
-        height: pxTorem(40px);
+        min-height: pxTorem(40px);
         border-bottom: 1px solid #E3E3E3;
         display: flex;
         justify-content: space-between;
