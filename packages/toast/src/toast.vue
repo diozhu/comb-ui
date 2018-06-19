@@ -8,44 +8,44 @@
 </template>
 
 <script>
-    export default {
-        props: {
-            message: String,
-            className: {
-                type: String,
-                default: ''
-            },
-            position: {
-                type: String,
-                default: 'middle'
-            },
-            iconClass: {
-                type: String,
-                default: ''
-            }
+export default {
+    props: {
+        message: String,
+        className: {
+            type: String,
+            default: ''
         },
-        data () {
-            return {
-                visible: false
-            };
+        position: {
+            type: String,
+            default: 'middle'
         },
-
-        computed: {
-            customClass () {
-                let classes = [];
-                if (this.position === 'top') {
-                    classes.push('is-placetop');
-                } else if (this.position === 'bottom') {
-                    classes.push('is-placebottom');
-                } else {
-                    classes.push('is-placemiddle');
-                }
-                classes.push(this.className);
-
-                return classes.join(' ');
-            }
+        iconClass: {
+            type: String,
+            default: ''
         }
-    };
+    },
+    data () {
+        return {
+            visible: false
+        };
+    },
+
+    computed: {
+        customClass () {
+            let classes = [];
+            if (this.position === 'top') {
+                classes.push('is-placetop');
+            } else if (this.position === 'bottom') {
+                classes.push('is-placebottom');
+            } else {
+                classes.push('is-placemiddle');
+            }
+            classes.push(this.className);
+
+            return classes.join(' ');
+        }
+    }
+};
 </script>
 <style rel="stylesheet/scss" lang="scss">
     @import "../../../src/scss/variables";

@@ -9,3 +9,8 @@ $browser-default-font-size: 37.5px !default;
     }
     @return ($px / $browser-default-font-size) * 1rem;
 }
+
+//** Number of columns in the grid.
+$grid-columns:              12 !default;
+
+$grid-gutter-width:         pxTorem(30) !default;

@@ -4,9 +4,10 @@
 
 import Toast from '../packages/toast/index';
 import vButton from '../packages/button/index';
+import vCell from '../packages/cell/index';
+import vRow from '../packages/row';
+import vCol from '../packages/col';
 // import vText from './v-text.vue';
-// import vRow from './v-row.vue';
-// import vCol from './v-col.vue';
 // import vFeed from './v-feed.vue';
 // import Refresh from './v-refresh';
 // import vRefresh from './v-refresh.vue';
@@ -26,9 +27,10 @@ const install = function (Vue) {
     Vue.$toast = Vue.prototype.$toast = Toast;
 
     Vue.component(vButton.name, vButton);
+    Vue.component(vCell.name, vCell);
+    Vue.component(vRow.name, vRow);
+    Vue.component(vCol.name, vCol);
     // Vue.component(vText.name, vText);
-    // Vue.component(vRow.name, vRow);
-    // Vue.component(vCol.name, vCol);
     // Vue.component(vFeed.name, vFeed);
     // Vue.component(vRefresh.name, vRefresh);
     // Vue.component(vScroll.name, vScroll);
@@ -54,9 +56,10 @@ export {
     version,
     Toast,
     vButton,
+    vCell,
+    vRow,
+    vCol,
     // vText,
-    // vRow,
-    // vCol,
     // vFeed,
     //
     // Refresh,
