@@ -1,7 +1,7 @@
 {
     "name": "comb-ui",
     "description": "A Vue.js components project.",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "author": "diozhu <diozhu@163.com>",
     "license": "MIT",
     "private": false,
