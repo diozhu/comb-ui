@@ -15,10 +15,21 @@ module.exports = {
     ],
     // required to lint *.vue files
     plugins: [
-        'vue'
+        'vue',
+        // 'prettier'
     ],
     // add your custom rules here
     'rules': {
+        // // 'prettier/prettier': 'error',
+        // 'prettier/prettier': ['error', {
+        //     tabWidth: 4,
+        //     singleQuote: true,
+        //     semi: true,
+        //     trailingComma: 'none',
+        //     // printWidth: 100,
+        //     bracketSpacing: true,
+        //     parser: 'flow'
+        // }],
         // allow paren-less arrow functions
         'arrow-parens': 0,
         // allow async-await

@@ -4,7 +4,7 @@
  */
 import Vue from 'vue';
 // const ToastConstructor = Vue.extend(require('./v-toast.vue'));
-import vToast from './toast.vue';
+import vToast from './v-toast.vue';
 const ToastConstructor = Vue.extend(vToast);
 let toastPool = [],
     getAnInstance = () => {
@@ -24,7 +24,7 @@ let toastPool = [],
         if (event.target.parentNode) {
             event.target.parentNode.removeChild(event.target);
         }
-    }, Toast = (options = {}) => {
+    }, VToast = (options = {}) => {
         let duration = options.duration || 3000, instance = getAnInstance();
         instance.closed = false;
         clearTimeout(instance.timer);
@@ -52,4 +52,4 @@ ToastConstructor.prototype.close = function () {
     returnAnInstance(this);
 };
 
-export default Toast;
+export default VToast;

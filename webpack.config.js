@@ -1,20 +1,22 @@
-var path = require('path');
-var webpack = require('webpack');
+const path = require('path');
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-    entry: './example/main.js',
+    // entry: './example/main.js',
+    entry: path.resolve(__dirname, './example/main.js'),
     // template: './example/index.html',
-    output: {
-        path: path.resolve(__dirname, './dist'),
-        publicPath: '/dist/',
-        filename: 'index.js',
-        library: 'comb-ui',
-        libraryTarget: 'umd',
-        umdNamedDefine: true
-    },
     module: {
         rules: [
+            {
+                test: /\.(js|vue)$/,
+                loader: 'eslint-loader',
+                enforce: 'pre',
+                include: [path.resolve(__dirname, './packages')],
+                options: {
+                    formatter: require('eslint-friendly-formatter')
+                }
+            },
             {
                 test: /\.css$/,
                 use: [
@@ -76,15 +78,18 @@ module.exports = {
     },
     resolve: {
         alias: {
-            'vue$': 'vue/dist/vue.esm.js',
+            // 'vue$': 'vue/dist/vue.esm.js',
+            'vue$': 'vue/dist/vue.common.js',
             '@': path.resolve(__dirname, './src'),
         },
         extensions: ['*', '.js', '.vue', '.json']
     },
     devServer: {
-        contentBase: path.resolve(__dirname, './example'),
         host: '127.0.0.1',
         port: '8181',
+        // publicPath: path.resolve(__dirname, '/'),
+        // publicPath: '/',
+        contentBase: path.resolve(__dirname, './example'),
         open: false,
         historyApiFallback: true,
         noInfo: true,
@@ -108,6 +113,15 @@ if (process.env.NODE_ENV === 'development') {
 if (process.env.NODE_ENV === 'production') {
     module.exports.entry = './src/index.js';
     module.exports.devtool = '#source-map';
+    module.exports.output = {
+        path: path.resolve(__dirname, './dist'),
+            publicPath: '/dist/',
+            filename: 'index.js',
+            library: 'comb-ui',
+            libraryTarget: 'umd',
+            umdNamedDefine: true
+    };
+
     // http://vue-loader.vuejs.org/en/workflow/production.html
     module.exports.plugins = (module.exports.plugins || []).concat([
         new webpack.DefinePlugin({

@@ -2,11 +2,19 @@
  * Created by diozhu on 2017/2/6.
  */
 
-import Toast from '../packages/toast/index';
-import vButton from '../packages/button/index';
+import VToast from '../packages/v-toast.js';
+import MessageBox from '../packages/v-message-box.js';
+import Validator from '../packages/v-validator.js';
+import vButton from '../packages/v-button.vue';
+import vCell from '../packages/v-cell.vue';
+import vRow from '../packages/v-row.vue';
+import vCol from '../packages/v-col.vue';
+import vPopup from '../packages/v-popup.vue';
+import vPicker from '../packages/v-picker.vue';
+import vDatetimePicker from '../packages/v-datetime-picker.vue';
+import vField from '../packages/v-field.vue';
+import vSpinner from '../packages/v-spinner';
 // import vText from './v-text.vue';
-// import vRow from './v-row.vue';
-// import vCol from './v-col.vue';
 // import vFeed from './v-feed.vue';
 // import Refresh from './v-refresh';
 // import vRefresh from './v-refresh.vue';
@@ -16,19 +24,26 @@ import vButton from '../packages/button/index';
 // import vInfiniteScroll from './v-infinite-scroll.vue';
 // import Swipe from './v-swipe'; // 滑动手势
 // import ScrollPosition from './v-scroll-position'; // 滚动条位置记录、还原
-// import MessageBox from './v-message-box.js';
 // import Logger from '../js/utils/logger';
 
 const version = '1.0.0';
 const install = function (Vue) {
     if (install.installed) return;
 
-    Vue.$toast = Vue.prototype.$toast = Toast;
+    Vue.$toast = Vue.prototype.$toast = VToast;
+    Vue.$messagebox = Vue.prototype.$messagebox = MessageBox;
+    Vue.$validator = Vue.prototype.$validator = Validator;
 
     Vue.component(vButton.name, vButton);
+    Vue.component(vCell.name, vCell);
+    Vue.component(vRow.name, vRow);
+    Vue.component(vCol.name, vCol);
+    Vue.component(vPopup.name, vPopup);
+    Vue.component(vPicker.name, vPicker);
+    Vue.component(vDatetimePicker.name, vDatetimePicker);
+    Vue.component(vField.name, vField);
+    Vue.component(vSpinner.name, vSpinner);
     // Vue.component(vText.name, vText);
-    // Vue.component(vRow.name, vRow);
-    // Vue.component(vCol.name, vCol);
     // Vue.component(vFeed.name, vFeed);
     // Vue.component(vRefresh.name, vRefresh);
     // Vue.component(vScroll.name, vScroll);
@@ -40,7 +55,6 @@ const install = function (Vue) {
     // Vue.use(Swipe);
     // Vue.use(ScrollPosition);
     //
-    // Vue.$messagebox = Vue.prototype.$messagebox = MessageBox;
     // Vue.$logger = Vue.prototype.$logger = Logger;
 };
 
@@ -52,11 +66,19 @@ if (typeof window !== 'undefined' && window.Vue) {
 export {
     install as default,
     version,
-    Toast,
+    VToast,
+    MessageBox,
+    Validator,
     vButton,
+    vCell,
+    vRow,
+    vCol,
+    vPopup,
+    vPicker,
+    vDatetimePicker,
+    vField,
+    vSpinner,
     // vText,
-    // vRow,
-    // vCol,
     // vFeed,
     //
     // Refresh,
@@ -68,6 +90,5 @@ export {
     // Swipe,
     // ScrollPosition,
     //
-    // MessageBox,
     // Logger
 };

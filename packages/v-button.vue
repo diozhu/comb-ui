@@ -58,7 +58,7 @@ export default {
 };
 </script>
 <style rel="stylesheet/scss" lang="scss">
-    @import "../../../src/scss/variables";
+    @import "~@/scss/_variables.scss";
 
     .v-btn {
         width: 100%;
