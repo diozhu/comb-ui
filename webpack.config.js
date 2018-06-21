@@ -116,7 +116,7 @@ if (process.env.NODE_ENV === 'production') {
     module.exports.output = {
         path: path.resolve(__dirname, './dist'),
             publicPath: '/dist/',
-            filename: 'index.js',
+            filename: 'comb-ui.js',
             library: 'comb-ui',
             libraryTarget: 'umd',
             umdNamedDefine: true
