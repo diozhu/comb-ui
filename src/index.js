@@ -2,7 +2,7 @@
  * Created by diozhu on 2017/2/6.
  */
 
-import VToast from '../packages/v-toast.js';
+import Toast from '../packages/v-toast.js';
 import MessageBox from '../packages/v-message-box.js';
 import Validator from '../packages/v-validator.js';
 import vButton from '../packages/v-button.vue';
@@ -26,11 +26,11 @@ import vSpinner from '../packages/v-spinner';
 // import ScrollPosition from './v-scroll-position'; // 滚动条位置记录、还原
 // import Logger from '../js/utils/logger';
 
-const version = '1.0.0';
+// const version = '1.0.0';
 const install = function (Vue) {
     if (install.installed) return;
 
-    Vue.$toast = Vue.prototype.$toast = VToast;
+    Vue.$toast = Vue.prototype.$toast = Toast;
     Vue.$messagebox = Vue.prototype.$messagebox = MessageBox;
     Vue.$validator = Vue.prototype.$validator = Validator;
 
@@ -63,10 +63,39 @@ if (typeof window !== 'undefined' && window.Vue) {
     install(window.Vue);
 }
 
+// export {
+//     install as default,
+//     version,
+//     Toast,
+//     MessageBox,
+//     Validator,
+//     vButton,
+//     vCell,
+//     vRow,
+//     vCol,
+//     vPopup,
+//     vPicker,
+//     vDatetimePicker,
+//     vField,
+//     vSpinner,
+//     // vText,
+//     // vFeed,
+//     //
+//     // Refresh,
+//     // vRefresh,
+//     // Scroll,
+//     // vScroll,
+//     // vInfiniteScroll,
+//     // InfiniteScroll,
+//     // Swipe,
+//     // ScrollPosition,
+//     //
+//     // Logger
+// };
+export default install;
+
 export {
-    install as default,
-    version,
-    VToast,
+    Toast,
     MessageBox,
     Validator,
     vButton,
