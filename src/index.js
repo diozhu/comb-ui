@@ -2,8 +2,8 @@
  * Created by diozhu on 2017/2/6.
  */
 
-import Toast from '../packages/v-toast.js';
-import MessageBox from '../packages/v-message-box.js';
+import vToast from '../packages/v-toast.js';
+import vMessageBox from '../packages/v-message-box.js';
 import Validator from '../packages/v-validator.js';
 import vButton from '../packages/v-button.vue';
 import vCell from '../packages/v-cell.vue';
@@ -30,8 +30,8 @@ import vSpinner from '../packages/v-spinner';
 const install = function (Vue) {
     if (install.installed) return;
 
-    Vue.$toast = Vue.prototype.$toast = Toast;
-    Vue.$messagebox = Vue.prototype.$messagebox = MessageBox;
+    Vue.$toast = Vue.prototype.$toast = vToast;
+    Vue.$messagebox = Vue.prototype.$messagebox = vMessageBox;
     Vue.$validator = Vue.prototype.$validator = Validator;
 
     Vue.component(vButton.name, vButton);
@@ -94,30 +94,30 @@ if (typeof window !== 'undefined' && window.Vue) {
 // };
 export default install;
 
-export {
-    Toast,
-    MessageBox,
-    Validator,
-    vButton,
-    vCell,
-    vRow,
-    vCol,
-    vPopup,
-    vPicker,
-    vDatetimePicker,
-    vField,
-    vSpinner,
-    // vText,
-    // vFeed,
-    //
-    // Refresh,
-    // vRefresh,
-    // Scroll,
-    // vScroll,
-    // vInfiniteScroll,
-    // InfiniteScroll,
-    // Swipe,
-    // ScrollPosition,
-    //
-    // Logger
-};
+export const Toast = vToast;
+export const MessageBox = vMessageBox;
+//     MessageBox,
+//     Validator,
+//     vButton,
+//     vCell,
+//     vRow,
+//     vCol,
+//     vPopup,
+//     vPicker,
+//     vDatetimePicker,
+//     vField,
+//     vSpinner,
+//     // vText,
+//     // vFeed,
+//     //
+//     // Refresh,
+//     // vRefresh,
+//     // Scroll,
+//     // vScroll,
+//     // vInfiniteScroll,
+//     // InfiniteScroll,
+//     // Swipe,
+//     // ScrollPosition,
+//     //
+//     // Logger
+// };

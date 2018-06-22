@@ -83,6 +83,15 @@ export default {
             -webkit-transform: translate3d(-50%, 0, 0);
             transform: translate3d(-50%, 0, 0);
         }
+        &.multi {
+            width: 80%;
+            padding: pxTorem(12) pxTorem(15);
+
+            .v-toast-text {
+                white-space: normal;
+                line-height: 1.3;
+            }
+        }
     }
 
     /* autoprefixer: off */
