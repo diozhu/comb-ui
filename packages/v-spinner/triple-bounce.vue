@@ -26,7 +26,7 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss">
-    @import "~@/scss/_variables.scss";
+    @import "../../src/scss/_variables.scss";
 
     $color: #ACB3BF;
     .v-spinner__triple-bounce {

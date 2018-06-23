@@ -7,7 +7,7 @@
 // 中,然后在使用的页面通过遍历validation的方式逐一弹出提示，现在由于有判断条件根据用户交互而改变的需求，因此只执行一次的bind无法满足
 
 import Vue from 'vue';
-import * as utils from '@/utils/utils.js';
+import * as utils from '../src/utils/utils.js';
 
 const ctx = '@@Validator'; //eslint-disable-line
 

@@ -66,8 +66,8 @@
 </template>
 <script>
 import vCell from './v-cell.vue';
-import clickoutside from '@/utils/clickoutside';
-import * as utils from '@/utils/utils';
+import clickoutside from '../src/utils/clickoutside';
+import * as utils from '../src/utils/utils';
 import Vue from 'vue';
 import Validator from './v-validator.js';
 
@@ -182,7 +182,7 @@ export default {
 };
 </script>
 <style rel="stylesheet/scss" lang="scss">
-    @import "~@/scss/_variables.scss";
+    @import "../src/scss/_variables.scss";
 
     .v-field {
         display: block;

@@ -20,10 +20,10 @@
 </template>
 
 <script type="text/ecmascript-6">
-import draggable from '@/utils/draggable';
-import translateUtil from '@/utils/translate';
-import {once, addClass, removeClass} from '@/utils/dom';
-import emitter from '@/utils/emitter';
+import draggable from '../src/utils/draggable';
+import translateUtil from '../src/utils/translate';
+import {once, addClass, removeClass} from '../src/utils/dom';
+import emitter from '../src/utils/emitter';
 //    import Vue from 'vue';
 //    if (!Vue.prototype.$isServer) {
 //        require('raf.js');
@@ -365,7 +365,7 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss">
-    @import "~@/scss/_variables.scss";
+    @import "../src/scss/_variables.scss";
 
     .picker-slot {
         font-size: pxTorem(18px);
