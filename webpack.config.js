@@ -1,7 +1,22 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-
+const componts = {
+    'comb-ui': './src/index.js',
+    'spinner': './packages/v-spinner',
+    'button': './packages/v-button.vue',
+    'cell': './packages/v-cell.vue',
+    'col': './packages/v-col.vue',
+    'datetime-picker': './packages/v-datetime-picker.vue',
+    'field': './packages/v-field.vue',
+    'message-box': './packages/v-message-box.js',
+    'picker': './packages/v-picker.vue',
+    'picker-slot': './packages/v-picker-slot.vue',
+    'popup': './packages/v-popup.vue',
+    'row': './packages/v-row.vue',
+    'toast': './packages/v-toast.js',
+    'validator': './packages/v-validator.js',
+};
 module.exports = {
     // entry: './example/main.js',
     entry: path.resolve(__dirname, './example/main.js'),
@@ -78,8 +93,8 @@ module.exports = {
     },
     resolve: {
         alias: {
-            // 'vue$': 'vue/dist/vue.esm.js',
-            'vue$': 'vue/dist/vue.common.js',
+            // 'vue$': 'vue/lib/vue.esm.js',
+            'vue$': 'vue/lib/vue.common.js',
             '@': path.resolve(__dirname, './src'),
         },
         extensions: ['*', '.js', '.vue', '.json']
@@ -93,14 +108,14 @@ module.exports = {
 if (process.env.NODE_ENV === 'development') {
     module.exports.devServer = {
         host: '127.0.0.1',
-            port: '8181',
-            // publicPath: path.resolve(__dirname, '/'),
-            // publicPath: '/',
-            contentBase: path.resolve(__dirname, './example'),
-            open: false,
-            historyApiFallback: true,
-            noInfo: true,
-            overlay: true
+        port: '8181',
+        // publicPath: path.resolve(__dirname, '/'),
+        // publicPath: '/',
+        contentBase: path.resolve(__dirname, './example'),
+        open: false,
+        historyApiFallback: true,
+        noInfo: true,
+        overlay: true
     };
     module.exports.plugins = [
         new HtmlWebpackPlugin({
@@ -111,15 +126,17 @@ if (process.env.NODE_ENV === 'development') {
     ];
 }
 if (process.env.NODE_ENV === 'production') {
-    module.exports.entry = './src/index.js';
+    // module.exports.entry = './src/index.js';
+    module.exports.entry = componts;
     module.exports.devtool = '#source-map';
     module.exports.output = {
-        path: path.resolve(__dirname, './dist'),
-        publicPath: '/dist/',
-        filename: 'comb-ui.js',
+        path: path.resolve(__dirname, './lib'),
+        publicPath: '/lib/',
+        // filename: 'comb-ui.js',
+        filename: '[name].js',
         library: 'comb-ui',
         libraryTarget: 'commonjs', // 'umd',
-        umdNamedDefine: true
+        // umdNamedDefine: true
     };
 
     // http://vue-loader.vuejs.org/en/workflow/production.html
