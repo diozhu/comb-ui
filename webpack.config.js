@@ -118,7 +118,7 @@ if (process.env.NODE_ENV === 'production') {
         publicPath: '/dist/',
         filename: 'comb-ui.js',
         library: 'comb-ui',
-        libraryTarget: 'commonjs2', // 'umd',
+        libraryTarget: 'commonjs', // 'umd',
         umdNamedDefine: true
     };
 
