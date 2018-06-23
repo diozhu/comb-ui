@@ -84,17 +84,6 @@ module.exports = {
         },
         extensions: ['*', '.js', '.vue', '.json']
     },
-    devServer: {
-        host: '127.0.0.1',
-        port: '8181',
-        // publicPath: path.resolve(__dirname, '/'),
-        // publicPath: '/',
-        contentBase: path.resolve(__dirname, './example'),
-        open: false,
-        historyApiFallback: true,
-        noInfo: true,
-        overlay: true
-    },
     performance: {
         hints: false
     },
@@ -102,24 +91,35 @@ module.exports = {
 };
 
 if (process.env.NODE_ENV === 'development') {
+    module.exports.devServer = {
+        host: '127.0.0.1',
+            port: '8181',
+            // publicPath: path.resolve(__dirname, '/'),
+            // publicPath: '/',
+            contentBase: path.resolve(__dirname, './example'),
+            open: false,
+            historyApiFallback: true,
+            noInfo: true,
+            overlay: true
+    };
     module.exports.plugins = [
         new HtmlWebpackPlugin({
             filename: 'index.html',
             template: path.resolve(__dirname, './example/index.html'),
             inject: true
         })
-    ]
+    ];
 }
 if (process.env.NODE_ENV === 'production') {
     module.exports.entry = './src/index.js';
     module.exports.devtool = '#source-map';
     module.exports.output = {
         path: path.resolve(__dirname, './dist'),
-            publicPath: '/dist/',
-            filename: 'comb-ui.js',
-            library: 'comb-ui',
-            libraryTarget: 'umd',
-            umdNamedDefine: true
+        publicPath: '/dist/',
+        filename: 'comb-ui.js',
+        library: 'comb-ui',
+        libraryTarget: 'commonjs2', // 'umd',
+        umdNamedDefine: true
     };
 
     // http://vue-loader.vuejs.org/en/workflow/production.html
