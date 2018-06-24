@@ -9,16 +9,16 @@
         "stage-3"
     ],
     "plugins": ["transform-vue-jsx", "transform-runtime"],
-    "env": {
-        "utils": {
-            "plugins": [
-                ["module-resolver", {
-                    "root": ["comb-ui"],
-                    "alias": {
-                        "element-ui/src": "comb-ui/dist"
-                    }
-                }]
-            ]
-        }
-    }
+//    "env": {
+//        "utils": {
+//            "plugins": [
+//                ["module-resolver", {
+//                    "root": ["comb-ui"],
+//                    "alias": {
+//                        "comb-ui/src": "comb-ui/dist"
+//                    }
+//                }]
+//            ]
+//        }
+//    }
 }
