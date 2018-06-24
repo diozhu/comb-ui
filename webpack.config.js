@@ -127,13 +127,14 @@ if (process.env.NODE_ENV === 'development') {
 }
 if (process.env.NODE_ENV === 'production') {
     // module.exports.entry = './src/index.js';
-    module.exports.entry = componts;
+    module.exports.entry = {'comb-ui': './src/index.js'};
+    // module.exports.entry = componts;
     module.exports.devtool = '#source-map';
     module.exports.output = {
         path: path.resolve(__dirname, './lib'),
         publicPath: '/lib/',
-        // filename: 'comb-ui.js',
-        filename: '[name].js',
+        filename: 'comb-ui.js',
+        // filename: '[name].js',
         library: 'comb-ui',
         libraryTarget: 'commonjs', // 'umd',
         // umdNamedDefine: true
