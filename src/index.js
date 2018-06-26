@@ -26,7 +26,7 @@ import vSpinner from '../packages/v-spinner';
 // import ScrollPosition from './v-scroll-position'; // 滚动条位置记录、还原
 // import Logger from '../js/utils/logger';
 
-// const version = '1.0.0';
+const version = '1.0.0';
 const install = function (Vue) {
     if (install.installed) return;
 
@@ -63,39 +63,39 @@ if (typeof window !== 'undefined' && window.Vue) {
     install(window.Vue);
 }
 
-// export {
-//     install as default,
-//     version,
-//     Toast,
-//     MessageBox,
-//     Validator,
-//     vButton,
-//     vCell,
-//     vRow,
-//     vCol,
-//     vPopup,
-//     vPicker,
-//     vDatetimePicker,
-//     vField,
-//     vSpinner,
-//     // vText,
-//     // vFeed,
-//     //
-//     // Refresh,
-//     // vRefresh,
-//     // Scroll,
-//     // vScroll,
-//     // vInfiniteScroll,
-//     // InfiniteScroll,
-//     // Swipe,
-//     // ScrollPosition,
-//     //
-//     // Logger
-// };
-export default install;
-
-export const Toast = vToast;
-export const MessageBox = vMessageBox;
+export {
+    install as default,
+    version,
+    vToast,
+    vMessageBox,
+    Validator,
+    vButton,
+    vCell,
+    vRow,
+    vCol,
+    vPopup,
+    vPicker,
+    vDatetimePicker,
+    vField,
+    vSpinner,
+    // vText,
+    // vFeed,
+    //
+    // Refresh,
+    // vRefresh,
+    // Scroll,
+    // vScroll,
+    // vInfiniteScroll,
+    // InfiniteScroll,
+    // Swipe,
+    // ScrollPosition,
+    //
+    // Logger
+};
+// export default install;
+//
+// export const Toast = vToast;
+// export const MessageBox = vMessageBox;
 //     MessageBox,
 //     Validator,
 //     vButton,
