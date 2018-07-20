@@ -159,7 +159,7 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss">
-    @import "~@/scss/_variables.scss";
+    @import "../src/scss/_variables.scss";
 
     .v-modal-enter{ animation:v-modal-in .2s ease; }
     .v-modal-leave{ animation:v-modal-out .2s ease forwards; }

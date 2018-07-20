@@ -161,7 +161,7 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss">
-    @import "~@/scss/_variables.scss";
+    @import "../src/scss/_variables.scss";
 
     $line-height: pxTorem(36px);
     .v-picker {
