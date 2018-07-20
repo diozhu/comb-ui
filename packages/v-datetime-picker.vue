@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import * as utils from '@/utils/utils.js';
+import * as utils from '../src/utils/utils.js';
 import vPicker from './v-picker.vue';
 import vPopup from './v-popup.vue';
 //    import logger from '../js/utils/logger';

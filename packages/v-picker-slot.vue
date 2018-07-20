@@ -20,10 +20,10 @@
 </template>
 
 <script type="text/ecmascript-6">
-import draggable from '@/utils/draggable';
-import translateUtil from '@/utils/translate';
-import {once, addClass, removeClass} from '@/utils/dom';
-import emitter from '@/utils/emitter';
+import draggable from '../src/utils/draggable';
+import translateUtil from '../src/utils/translate';
+import {once, addClass, removeClass} from '../src/utils/dom';
+import emitter from '../src/utils/emitter';
 //    import Vue from 'vue';
 //    if (!Vue.prototype.$isServer) {
 //        require('raf.js');
