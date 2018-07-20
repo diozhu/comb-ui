@@ -5,7 +5,18 @@
 </template>
 
 <script>
+import Vue from 'vue';
+// import vCell from '../../packages/v-cell.vue';
+// import vToast from '../../packages/v-toast.js';
+// Vue.component(vCell.name, vCell);
+// Vue.$toast = Vue.prototype.$toast = vToast;
+import { vToast, vCell } from '../../src/index.js';
+console.warn('toast: ', vToast, vCell);
+Vue.component(vCell.name, vCell);
+Vue.$toast = Vue.prototype.$toast = vToast;
+
 export default {
+    components: { vCell },
     data () {
         return {
         };

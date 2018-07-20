@@ -1,10 +1,10 @@
 /**
  * Created by diozhu on 2017/2/6.
  */
-
-import VToast from '../packages/v-toast.js';
-import MessageBox from '../packages/v-message-box.js';
-import Validator from '../packages/v-validator.js';
+import Vue from 'vue';
+import vToast from '../packages/v-toast.js';
+import messageBox from '../packages/v-message-box.js';
+import validator from '../packages/v-validator.js';
 import vButton from '../packages/v-button.vue';
 import vCell from '../packages/v-cell.vue';
 import vRow from '../packages/v-row.vue';
@@ -30,9 +30,9 @@ const version = '1.0.0';
 const install = function (Vue) {
     if (install.installed) return;
 
-    Vue.$toast = Vue.prototype.$toast = VToast;
-    Vue.$messagebox = Vue.prototype.$messagebox = MessageBox;
-    Vue.$validator = Vue.prototype.$validator = Validator;
+    Vue.$toast = Vue.prototype.$toast = vToast;
+    Vue.$messagebox = Vue.prototype.$messagebox = messageBox;
+    Vue.$validator = Vue.prototype.$validator = validator;
 
     Vue.component(vButton.name, vButton);
     Vue.component(vCell.name, vCell);
@@ -58,17 +58,17 @@ const install = function (Vue) {
     // Vue.$logger = Vue.prototype.$logger = Logger;
 };
 
-// auto install
-if (typeof window !== 'undefined' && window.Vue) {
-    install(window.Vue);
-}
+// // auto install
+// if (typeof window !== 'undefined' && window.Vue) {
+//     install(window.Vue);
+// }
 
 export {
     install as default,
     version,
-    VToast,
-    MessageBox,
-    Validator,
+    vToast,
+    messageBox,
+    validator,
     vButton,
     vCell,
     vRow,
@@ -92,3 +92,26 @@ export {
     //
     // Logger
 };
+
+// let Vue = (typeof window !== 'undefined' && window.Vue) ? window.Vue : null;
+
+// export default install;
+// // export class vToast;
+// // export function toast () {
+// //     Vue.$toast = Vue.prototype.$toast = vToast;
+// //     return vToast;
+// // };
+// // export const messageBox;
+// // export const validator;
+// // export const vButton;
+// export function cell () {
+//     Vue.component(vCell.name, vCell);
+//     return vCell;
+// };
+// export const vRow;
+// export const vCol;
+// export const vPopup;
+// export const vPicker;
+// export const vDatetimePicker;
+// export const vField;
+// export const vSpinner;
