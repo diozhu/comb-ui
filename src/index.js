@@ -63,8 +63,38 @@ const install = function (Vue) {
 //     install(window.Vue);
 // }
 
+// export {
+//     install as default,
+//     version,
+//     toast,
+//     messageBox,
+//     validator,
+//     vButton,
+//     vCell,
+//     vRow,
+//     vCol,
+//     vPopup,
+//     vPicker,
+//     vDatetimePicker,
+//     vField,
+//     vSpinner,
+//     // vText,
+//     // vFeed,
+//     //
+//     // Refresh,
+//     // vRefresh,
+//     // Scroll,
+//     // vScroll,
+//     // vInfiniteScroll,
+//     // InfiniteScroll,
+//     // Swipe,
+//     // ScrollPosition,
+//     //
+//     // Logger
+// };
+
+export default install;
 export {
-    install as default,
     version,
     toast,
     messageBox,
