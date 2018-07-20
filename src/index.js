@@ -2,7 +2,7 @@
  * Created by diozhu on 2017/2/6.
  */
 import Vue from 'vue';
-import vToast from '../packages/v-toast.js';
+import toast from '../packages/v-toast.js';
 import messageBox from '../packages/v-message-box.js';
 import validator from '../packages/v-validator.js';
 import vButton from '../packages/v-button.vue';
@@ -30,7 +30,7 @@ const version = '1.0.0';
 const install = function (Vue) {
     if (install.installed) return;
 
-    Vue.$toast = Vue.prototype.$toast = vToast;
+    Vue.$toast = Vue.prototype.$toast = toast;
     Vue.$messagebox = Vue.prototype.$messagebox = messageBox;
     Vue.$validator = Vue.prototype.$validator = validator;
 
@@ -66,7 +66,7 @@ const install = function (Vue) {
 export {
     install as default,
     version,
-    vToast,
+    toast,
     messageBox,
     validator,
     vButton,
