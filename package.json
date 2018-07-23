@@ -5,7 +5,7 @@
     "author": "diozhu <diozhu@163.com>",
     "license": "MIT",
     "private": false,
-    "main": "src/index.js",
+    "main": "lib/comb-ui.js",
     "scripts": {
         "dev": "cross-env NODE_ENV=development webpack-dev-server --inline --progress",
         "build": "cross-env NODE_ENV=production webpack --progress --hide-modules",

@@ -114,9 +114,9 @@ if (process.env.NODE_ENV === 'production') {
     module.exports.entry = './src/index.js';
     module.exports.devtool = '#source-map';
     module.exports.output = {
-        path: path.resolve(__dirname, './dist'),
-            publicPath: '/dist/',
-            filename: 'index.js',
+        path: path.resolve(__dirname, './lib'),
+            publicPath: '/lib/',
+            filename: 'comb-ui.js',
             library: 'comb-ui',
             libraryTarget: 'umd',
             umdNamedDefine: true
