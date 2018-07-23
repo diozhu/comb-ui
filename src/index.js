@@ -1,7 +1,7 @@
 /**
  * Created by diozhu on 2017/2/6.
  */
-import Vue from 'vue';
+// import Vue from 'vue';
 import toast from '../packages/v-toast.js';
 import messageBox from '../packages/v-message-box.js';
 import validator from '../packages/v-validator.js';
@@ -32,17 +32,17 @@ const install = function (Vue) {
 
     Vue.$toast = Vue.prototype.$toast = toast;
     Vue.$messagebox = Vue.prototype.$messagebox = messageBox;
-    Vue.$validator = Vue.prototype.$validator = validator;
+    // Vue.$validator = Vue.prototype.$validator = validator;
 
-    Vue.component(vButton.name, vButton);
-    Vue.component(vCell.name, vCell);
-    Vue.component(vRow.name, vRow);
-    Vue.component(vCol.name, vCol);
-    Vue.component(vPopup.name, vPopup);
-    Vue.component(vPicker.name, vPicker);
-    Vue.component(vDatetimePicker.name, vDatetimePicker);
-    Vue.component(vField.name, vField);
-    Vue.component(vSpinner.name, vSpinner);
+    // Vue.component(vButton.name, vButton);
+    // Vue.component(vCell.name, vCell);
+    // Vue.component(vRow.name, vRow);
+    // Vue.component(vCol.name, vCol);
+    // Vue.component(vPopup.name, vPopup);
+    // Vue.component(vPicker.name, vPicker);
+    // Vue.component(vDatetimePicker.name, vDatetimePicker);
+    // Vue.component(vField.name, vField);
+    // Vue.component(vSpinner.name, vSpinner);
     // Vue.component(vText.name, vText);
     // Vue.component(vFeed.name, vFeed);
     // Vue.component(vRefresh.name, vRefresh);
@@ -58,43 +58,13 @@ const install = function (Vue) {
     // Vue.$logger = Vue.prototype.$logger = Logger;
 };
 
-// // auto install
-// if (typeof window !== 'undefined' && window.Vue) {
-//     install(window.Vue);
-// }
+// auto install
+if (typeof window !== 'undefined' && window.Vue) {
+    install(window.Vue);
+}
 
-// export {
-//     install as default,
-//     version,
-//     toast,
-//     messageBox,
-//     validator,
-//     vButton,
-//     vCell,
-//     vRow,
-//     vCol,
-//     vPopup,
-//     vPicker,
-//     vDatetimePicker,
-//     vField,
-//     vSpinner,
-//     // vText,
-//     // vFeed,
-//     //
-//     // Refresh,
-//     // vRefresh,
-//     // Scroll,
-//     // vScroll,
-//     // vInfiniteScroll,
-//     // InfiniteScroll,
-//     // Swipe,
-//     // ScrollPosition,
-//     //
-//     // Logger
-// };
-
-export default install;
 export {
+    install as default,
     version,
     toast,
     messageBox,
@@ -122,6 +92,36 @@ export {
     //
     // Logger
 };
+
+// export default install;
+// export {
+//     version,
+//     toast,
+//     messageBox,
+//     validator,
+//     vButton,
+//     vCell,
+//     vRow,
+//     vCol,
+//     vPopup,
+//     vPicker,
+//     vDatetimePicker,
+//     vField,
+//     vSpinner,
+//     // vText,
+//     // vFeed,
+//     //
+//     // Refresh,
+//     // vRefresh,
+//     // Scroll,
+//     // vScroll,
+//     // vInfiniteScroll,
+//     // InfiniteScroll,
+//     // Swipe,
+//     // ScrollPosition,
+//     //
+//     // Logger
+// };
 
 // let Vue = (typeof window !== 'undefined' && window.Vue) ? window.Vue : null;
 
