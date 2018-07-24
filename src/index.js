@@ -34,7 +34,7 @@ const install = function (Vue) {
     Vue.$messagebox = Vue.prototype.$messagebox = messageBox;
     // Vue.$validator = Vue.prototype.$validator = validator;
 
-    // Vue.component(vButton.name, vButton);
+    Vue.component(vButton.name, vButton);
     // Vue.component(vCell.name, vCell);
     // Vue.component(vRow.name, vRow);
     // Vue.component(vCol.name, vCol);
