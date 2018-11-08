@@ -258,20 +258,6 @@ export const requestAnimationFrame = window.requestIdleCallback ||
         window.setTimeout(callback, 1000 / 60);
     };
 
-// /** ==================== 图片相关 ==================== */
-/** 缩略图：又拍云 */
-export function thumb (url, width, height) {
-    let str = url;
-    // console.log('utils.thumb: ', url, width, height);
-    // return url + '!/fw/100';
-    if (/upaiyun/.test(url)) { // 又拍云缩略图
-        if (width && height) str += '!/both/' + width + 'x' + height;
-        else if (width) str += '!/fw/' + width;
-        else if (height) str += '!/fh/' + height;
-    }
-    return str;
-};
-
 /** ==================== 时间函数 ==================== */
 /**
  * 时间转化
@@ -522,4 +508,118 @@ export function validateUsername (val) {
 export function permitForForeigners (val) {
     // 暂时不做校验
     return true;
+};
+
+// /** ==================== 图片相关 ==================== */
+
+/*
+ * 图片处理*
+ * 添加阿里云oss
+ *              -- mod by Dio Zhu. on 2018.5.14
+ */
+export function thumb (url, { width = 750, height = 0 } = {}) {
+    let str = url;
+    // console.log('utils.thumb: ', url, width, height);
+    // return url + '!/fw/100';
+    if (/upaiyun.com/.test(url)) { // 又拍云缩略图
+        if (width && height) str += '!/both/' + width + 'x' + height;
+        else if (width) str += '!/fw/' + width;
+        else if (height) str += '!/fh/' + height;
+    } else if (/img-yp-cdn.dongyin.net/.test(url)) { // 阿里云缩略图
+        if (width && height) str += '?x-oss-process=image/resize,h_' + height + ',w_' + width;
+        else if (width) str += '?x-oss-process=image/resize,w_' + width;
+        else if (height) str += '?x-oss-process=image/resize,h_' + height;
+    } else if (/dy-static-h5.oss-cn-beijing.aliyuncs.com/.test(url)) {
+        if (width && height) str += '?x-oss-process=image/resize,h_' + height + ',w_' + width;
+        else if (width) str += '?x-oss-process=image/resize,w_' + width;
+        else if (height) str += '?x-oss-process=image/resize,h_' + height;
+    }
+    return str;
+};
+
+/*
+* 功能：给图片URL地址增加后缀
+* 解决问题：
+*   首次加载：接收req.headers.accept的值，确认是否有'image/webp'
+*       如果有：支持webp，给对应的webp图
+*       没有：则不支持webp，要啥图给啥图
+*   浏览器中的路由切换：判断浏览器是否支持webp
+*       如果有：支持webp，给对应的webp图
+*       没有：则不支持webp，要啥图给啥图
+*
+* 功能：对图片进行处理（阿里云）
+* @param string url 文件名
+* @param Object {}  参数
+*   width: 图片宽度
+*   height: 图片高度
+*               -- Author by Junjun Liu. on 2018.8.9
+*
+* 调整type参数，兼容默认引用;
+* 默认png不做处理，如确定不需要透底，可指定type=jpg，进行类型转后后再启用渐进方案；
+*               -- Mod by Dio Zhu. on 2018.8.10
+**/
+export function format (url, { width = 0, height = 0, type = '', thumb = false } = {}) {
+    // 请求过程中，有undefined, ''等URL地址，返回默认图片
+    if (!url) return 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+
+    // 有地址会被两次处理
+    // console.error(url, url.indexOf('x-oss-process') >= 0 || url.indexOf('!/') >= 0);
+    if (url.indexOf('x-oss-process') >= 0 || url.indexOf('!/') >= 0) return url;
+
+    // 判断是否支持webp
+    let webp = getLocalStorage().get('webp-is-supported') || false;
+
+    // 避免https下访问http图片会报警告（后台存储的sku图片等）。 mod by Dio Zhu. on 2018.8.16
+    url = url.replace('http://', '//').replace('https://', '//');
+
+    // 获取URL地址后的后缀名
+    const newType = url.slice(url.lastIndexOf('.') + 1);
+
+    if (/upaiyun.com/.test(url)) { // 又拍云
+        if (thumb) return url + '!/fw/50' + (newType === 'png' ? '' : '/gaussblur/5x5'); // 返回缩略图
+        let tmp = '!';
+
+        // 2. 格式转换 非空 && (非webp格式 || webp && 支持webp)
+        if (webp) { // 如果浏览器支持webp，使用webp格式
+            tmp += '/format/webp';
+        } else if (type || (!type && newType === 'png')) { // 如果传入了类型转换 || (未指定类型转换 && 当前url为png类型)
+            if (!type && newType === 'png') type = newType; // 默认png不指定类型转换是看不到渐进效果的，这里这么写是为了兼容。 Mod by Dio Zhu. on 2018.8.10
+            tmp += `/format/${type}/progressive/true`;
+        } else { // 默认所有图片都转换为jpg、渐进
+            tmp += '/format/jpg/progressive/true';
+        }
+
+        // 1. 宽高
+        if (width && height) tmp += '/both/' + width + 'x' + height;
+        else if (width) tmp += '/fw/' + width;
+        else if (height) tmp += '/fh/' + height;
+
+        let newQuery = tmp === '!' ? '' : tmp;
+        return url + newQuery;
+    } else if (/s01.dongyin.net|aliyuncs.com/.test(url)) { // 阿里云oss（自有域名：s01.dongyin.net）
+        // console.warn(url, thumb);
+        if (thumb) return url + '?x-oss-process=image/format,webp/resize,w_51' + (newType === 'png' ? '' : '/blur,r_5,s_5'); // 返回缩略图
+        let tmp = '';
+
+        // 1. 针对宽高处理
+        if (width) tmp = `/resize,w_${width}`;
+        if (height) tmp = `/resize,h_${height}`;
+        if (width && height) tmp = `/resize,m_fill,w_${width},h_${height}`;
+
+        // 2. 格式转换 非空 && (非webp格式 || webp && 支持webp)
+        if (webp) { // 如果浏览器支持webp，使用webp格式
+            tmp += '/format,webp';
+        } else if (type || (!type && newType === 'png')) { // 如果传入了类型转换 || (未指定类型转换 && 当前url为png类型)
+            if (!type && newType === 'png') type = newType; // 默认png不指定类型转换是看不到渐进效果的，这里这么写是为了兼容。 Mod by Dio Zhu. on 2018.8.10
+            tmp += `/format,${type}/interlace,1`;
+        } else { // 默认所有图片都转换为jpg、渐进
+            tmp += '/format,jpg/interlace,1';
+        }
+
+        // 3. 拼接新图片路径
+        let newQuery = tmp === '' ? '' : '?x-oss-process=image' + tmp;
+        return url + newQuery;
+    } else {
+        return url;
+    }
 };
