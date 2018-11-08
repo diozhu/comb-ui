@@ -7,6 +7,8 @@ import vCol from './v-col.vue';
 import vCell from './v-cell.vue';
 import vButton from './v-button.vue';
 import vText from './v-text.vue';
+import vAnimat from './v-animat.vue';
+
 import vImage from './v-image.vue';
 // import vFeed from './v-feed.vue';
 // import Refresh from './v-refresh';
@@ -17,8 +19,12 @@ import vImage from './v-image.vue';
 // import vInfiniteScroll from './v-infinite-scroll.vue';
 // import Swipe from './v-swipe'; // 滑动手势
 // import ScrollPosition from './v-scroll-position'; // 滚动条位置记录、还原
-// import MessageBox from './v-message-box.js';
 import Toast from './v-toast.js';
+import MessageBox from './v-message-box.js';
+import vPicker from './v-picker.vue';
+import vPopup from './v-popup.vue';
+import vDatetimePicker from './v-datetime-picker.vue';
+import vSwipe from './v-swipe.vue';
 // import Logger from '../js/utils/logger';
 import vSpinner from './v-spinner';
 
@@ -33,6 +39,12 @@ const install = function (Vue) {
     Vue.component(vCell.name, vCell);
     Vue.component(vButton.name, vButton);
     Vue.component(vText.name, vText);
+    Vue.component(vAnimat.name, vAnimat);
+
+    Vue.component(vPicker.name, vPicker);
+    Vue.component(vPopup.name, vPopup);
+    Vue.component(vDatetimePicker.name, vDatetimePicker);
+    Vue.component(vSwipe.name, vSwipe);
     Vue.component(vImage.name, vImage);
     // Vue.component(vFeed.name, vFeed);
     // Vue.component(vRefresh.name, vRefresh);
@@ -47,7 +59,7 @@ const install = function (Vue) {
     // Vue.use(Swipe);
     // Vue.use(ScrollPosition);
     //
-    // Vue.$messagebox = Vue.prototype.$messagebox = MessageBox;
+    Vue.$messagebox = Vue.prototype.$messagebox = MessageBox;
     Vue.$toast = Vue.prototype.$toast = Toast;
     // Vue.$logger = Vue.prototype.$logger = Logger;
 };
@@ -65,6 +77,11 @@ export {
     vCell,
     vButton,
     vText,
+    vAnimat,
+    vPicker,
+    vPopup,
+    vDatetimePicker,
+    vSwipe,
     vImage,
     // vFeed,
     //
@@ -79,7 +96,7 @@ export {
     // ScrollPosition,
     vSticky,
     //
-    // MessageBox,
+    MessageBox,
     Toast
     // Logger,
 };
