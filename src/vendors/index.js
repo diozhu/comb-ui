@@ -2,11 +2,12 @@
  * Created by diozhu on 2017/2/6.
  */
 
-import vButton from './v-button.vue';
-// import vText from './v-text.vue';
 import vRow from './v-row.vue';
 import vCol from './v-col.vue';
 import vCell from './v-cell.vue';
+import vButton from './v-button.vue';
+import vText from './v-text.vue';
+import vImage from './v-image.vue';
 // import vFeed from './v-feed.vue';
 // import Refresh from './v-refresh';
 // import vRefresh from './v-refresh.vue';
@@ -19,31 +20,33 @@ import vCell from './v-cell.vue';
 // import MessageBox from './v-message-box.js';
 import Toast from './v-toast.js';
 // import Logger from '../js/utils/logger';
-// import vImage from '../vendor/v-image';
 import vSpinner from './v-spinner';
+
+import vSticky from './v-sticky.js';
 
 const version = '1.0.1';
 const install = function (Vue) {
     if (install.installed) return;
 
-    Vue.component(vButton.name, vButton);
-    // Vue.component(vText.name, vText);
     Vue.component(vRow.name, vRow);
     Vue.component(vCol.name, vCol);
     Vue.component(vCell.name, vCell);
+    Vue.component(vButton.name, vButton);
+    Vue.component(vText.name, vText);
+    Vue.component(vImage.name, vImage);
     // Vue.component(vFeed.name, vFeed);
     // Vue.component(vRefresh.name, vRefresh);
     // Vue.component(vScroll.name, vScroll);
     // Vue.component(vInfiniteScroll.name, vInfiniteScroll);
     Vue.component(vSpinner.name, vSpinner);
     //
+    Vue.use(vSticky);
     // Vue.use(Refresh);
     // Vue.use(Scroll);
     // Vue.use(InfiniteScroll);
     // Vue.use(Swipe);
     // Vue.use(ScrollPosition);
     //
-    // Vue.component(vImage.name, vImage);
     // Vue.$messagebox = Vue.prototype.$messagebox = MessageBox;
     Vue.$toast = Vue.prototype.$toast = Toast;
     // Vue.$logger = Vue.prototype.$logger = Logger;
@@ -57,11 +60,12 @@ if (typeof window !== 'undefined' && window.Vue) {
 export {
     install as default,
     version,
-    vButton,
-    // vText,
     vRow,
     vCol,
     vCell,
+    vButton,
+    vText,
+    vImage,
     // vFeed,
     //
     // Refresh,
@@ -73,9 +77,9 @@ export {
     vSpinner,
     // Swipe,
     // ScrollPosition,
+    vSticky,
     //
     // MessageBox,
     Toast
     // Logger,
-    // vImage
 };
