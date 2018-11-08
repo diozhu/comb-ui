@@ -2,12 +2,12 @@ $browser-default-font-size: 37.5px !default;
 //$browser-default-font-size: 75px !default;
 
 @function pxTorem($px) { //$px为需要转换的字号
-    @if (unitless($px)) {
-        @return pxTorem($px + 0px);
-    } @else if (unit($px) == em) {
-        @return $px;
-    }
-    @return ($px / $browser-default-font-size) * 1rem;
+  @if (unitless($px)) {
+    @return pxTorem($px + 0px);
+  } @else if (unit($px) == em) {
+    @return $px;
+  }
+  @return ($px / $browser-default-font-size) * 1rem;
 }
 
 //** Number of columns in the grid.

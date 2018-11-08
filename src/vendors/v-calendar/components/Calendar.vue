@@ -1,0 +1,276 @@
+<template>
+<div
+  class='c-pane-container'
+  :class='{ "is-double-paned": isDoublePaned_, "is-expanded": isExpanded }'
+  :style='themeStyles_.wrapper'>
+  <calendar-pane
+    :todayComps='todayComps'
+    :position='isDoublePaned_ ? 1 : 0'
+    :page.sync='fromPage_'
+    :min-page='minPage'
+    :max-page='maxFromPage'
+    :styles='themeStyles_'
+    :attributes='attributes_'
+    v-bind='$attrs'
+    v-on='$listeners'>
+    <!-- 组件内部提供了slot，这里莫名的没有写。。。 -->
+    <!-- <template slot="header-title" slot-scope="page">
+        <slot name="header-titles" :page="page">
+            {{ page.yearLabel }}{{ page.monthLabel }}
+        </slot>
+    </template> -->
+    <!-- <template slot="header" slot-scope="pages" :page="page" v-if="$slots">
+        <slot name="headers"></slot>
+    </template> -->
+    <!-- <template v-for="(item, idx) in $slots" :key="idx">
+        <slot :name="item.key"></slot>
+    </template> -->
+  </calendar-pane>
+  <!-- <calendar-pane
+    v-if='isDoublePaned_'
+    :position='2'
+    :page.sync='toPage_'
+    :min-page='minToPage'
+    :max-page='maxPage'
+    :styles='themeStyles_'
+    :attributes='attributes_'
+    v-bind='$attrs'
+    v-on='$listeners'>
+  </calendar-pane> -->
+
+</div>
+</template>
+
+<script>
+/**
+ * v-calendar
+ * 组件API地址：http://vcalendar.netlify.com/api
+ * calendarPane提供了slots，但是在calendar中却没有封装???what are u 弄啥嘞???
+ * 重新拷贝过来添加slot。。。header的和header button的
+ *              -- Author by Dio Zhu. 2017.11.6
+ */
+import CalendarPane from './CalendarPane';
+import Tag from './Tag';
+// import '../assets/fonts/vcalendar/vcalendar.scss';
+import '../styles/lib.sass';
+import { themeStyles, getHighlight, dot, bar } from '../utils/defaults';
+
+import {
+    // todayComps,
+    pageIsBeforePage,
+    pageIsAfterPage,
+    getPrevPage,
+    getNextPage,
+    getPageBetweenPages,
+    getFirstValidPage,
+    DateInfo
+} from '../utils/helpers';
+
+export default {
+    components: {
+        CalendarPane,
+        Tag
+    },
+    props: {
+        todayComps: {
+            type: Object,
+            default: () => {
+                return {
+                    year: new Date().getFullYear(),
+                    month: new Date().getMonth() + 1,
+                    day: new Date().getDate()
+                };
+            }
+        },
+        minPage: Object,
+        maxPage: Object,
+        fromPage: Object,
+        toPage: Object,
+        isDoublePaned: Boolean,
+        isExpanded: Boolean,
+        showTags: Boolean,
+        themeStyles: Object,
+        attributes: Array,
+        dateFormatter: {
+            type: Function,
+            default: d => d.toLocaleDateString()
+        }
+    },
+    data () {
+        return {
+            windowWidth: 0,
+            fromPage_: null,
+            toPage_: null
+        };
+    },
+    computed: {
+        isDoublePaned_ () {
+            return this.isDoublePaned && this.windowWidth >= 480;
+        },
+        showFooter () {
+            return this.showTags || this.$slots.footer;
+        },
+        paneCentered () {
+            return this.isDoublePaned && !this.isDoublePaned_;
+        },
+        maxFromPage () {
+            if (this.isDoublePaned_) return getPrevPage(this.maxPage);
+            return this.maxPage;
+        },
+        minToPage () {
+            if (this.isDoublePaned_) return getNextPage(this.minPage);
+            return null;
+        },
+        themeStyles_ () {
+            // Mix user supplied styles with default styles
+            return { ...themeStyles, ...this.themeStyles };
+        },
+        attributes_ () {
+            if (!this.attributes || !this.attributes.length) return [];
+            return this.attributes.map((a, i) => {
+                const newAttribute = {
+                    key: a.key || i.toString(),
+                    dates: a.dates.map(
+                        d => (d instanceof DateInfo ? d : new DateInfo(d, a.order))
+                    ),
+                    order: a.order || 0
+                };
+                if (a.highlight) {
+                    newAttribute.highlight = getHighlight(a.highlight);
+                }
+                if (a.dot) {
+                    newAttribute.dot = {
+                        ...dot,
+                        ...a.dot
+                    };
+                }
+                if (a.bar) {
+                    newAttribute.bar = {
+                        ...bar,
+                        ...a.bar
+                    };
+                }
+                if (a.contentStyle) {
+                    newAttribute.contentStyle = {
+                        ...a.contentStyle
+                    };
+                }
+                if (a.contentHoverStyle) {
+                    newAttribute.contentHoverStyle = {
+                        ...a.contentHoverStyle
+                    };
+                }
+                if (a.iconClass) {
+                    newAttribute.iconClass = a.iconClass;
+                }
+                if (a.clickStyle) {
+                    newAttribute.clickStyle = a.clickStyle;
+                }
+                return newAttribute;
+            });
+        }
+    },
+    watch: {
+        fromPage () {
+            this.refreshFromPage();
+        },
+        toPage () {
+            this.refreshToPage();
+        },
+        fromPage_ (value) {
+            this.$emit('update:fromPage', value);
+            if (!pageIsBeforePage(value, this.toPage_)) {
+                this.toPage_ = getNextPage(this.fromPage_);
+            }
+        },
+        toPage_ (value) {
+            this.$emit('update:toPage', value);
+            if (!pageIsAfterPage(value, this.fromPage_)) {
+                this.fromPage_ = getPrevPage(this.toPage_);
+            }
+        },
+        isDoublePaned_ () {
+            this.refreshToPage();
+        }
+    },
+    created () {
+        this.handleResize();
+        window.addEventListener('resize', this.handleResize);
+        this.refreshFromPage();
+        this.refreshToPage();
+        // console.log('!!!!!!!!', this.$slots);
+    },
+    beforeDestroy () {
+        window.removeEventListener('resize', this.handleResize);
+    },
+    methods: {
+        handleResize () {
+            this.windowWidth = window.innerWidth;
+        },
+        refreshFromPage () {
+            this.fromPage_ = this.getValidFromPage(this.fromPage, this.todayComps);
+        },
+        refreshToPage () {
+            this.toPage_ = this.getValidToPage(
+                this.toPage,
+                getNextPage(this.fromPage_)
+            );
+        },
+        getValidFromPage (...args) {
+            return getFirstValidPage(
+                ...args.map(p => getPageBetweenPages(p, this.minPage, this.maxPage)),
+                this.minPage,
+                getPrevPage(this.maxPage)
+            );
+        },
+        getValidToPage (...args) {
+            return getFirstValidPage(
+                ...args.map(p => getPageBetweenPages(p, this.minPage, this.maxPage)),
+                this.maxPage,
+                getNextPage(this.minPage)
+            );
+        }
+    }
+};
+</script>
+
+<style lang='sass' scoped>
+
+@import '../styles/vars'
+
+.c-container
+  display: inline-flex
+  flex-direction: column
+  background-color: $paneBgColor
+  border: $paneBorder
+  &.center
+    display: flex
+    align-items: center
+
+.c-pane-container
+  flex-shrink: 1
+  display: inline-flex
+  min-width: $paneMinWidth
+  width: $paneWidth
+  background-color: $paneBgColor
+  border: $paneBorder
+  &.is-double-paned
+    min-width: $paneMinWidth * 2
+    width: $paneWidth * 2
+  &.is-expanded
+    display: flex
+
+.c-pane-divider
+  width: 1px
+  border: 1px inset
+  border-color: #e3e3e3
+
+.c-footer-container
+  // width: 100%
+
+.c-footer
+  display: flex
+  justify-content: center
+  padding: 5px 0
+
+</style>

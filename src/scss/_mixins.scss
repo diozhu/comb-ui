@@ -1,0 +1,426 @@
+@mixin sizing{
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+}
+@mixin absolute($direction){
+    position:$direction;
+}
+@mixin height($height){
+    height:$height;
+}
+@mixin hidden{
+    overflow:hidden;
+}
+@mixin center($center){
+    text-align:$center;
+}
+//@mixin box{
+//    display: -webkit-box;
+//    display: -moz-box;
+//    display: -ms-box;
+//    display: -o-box;
+//    display: box;
+//}
+@mixin flex{
+    -webkit-box-flex: 1;
+    -moz-box-flex: 1;
+    -ms-box-flex: 1;
+    -o-box-flex: 1;
+    box-flex: 1;
+}
+@mixin box_flex{
+    display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
+    display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
+    display: -ms-flexbox;      /* TWEENER - IE 10 */
+    display: flex;             /* NEW, Spec - Opera 12.1, Firefox 20+ */
+    display: -webkit-flex;     /* NEW - Chrome */
+}
+@mixin flex_grow($val){
+    -webkit-box-flex: $val;
+    -moz-flex-grow: $val;
+    -webkit-flex-grow: $val;
+    flex-grow: $val;
+}
+@mixin flex_shrink($val){
+    -webkit-box-flex: $val;
+    -moz-flex-shrink: $val;
+    -webkit-flex-shrink: $val;
+    flex-shrink: $val;
+}
+@mixin flex_basis($val){
+    //-webkit-box-basis: $val;
+    -moz-flex-basis: $val;
+    -webkit-flex-basis: $val;
+    flex-basis: $val;
+}
+@mixin align_items($val){
+    -webkit-box-align: $val;
+    -moz-align-items: $val;
+    -webkit-align-items: $val;
+    align-items: $val;
+}
+@mixin justify-content($val){
+    -webkit-box-pack: $val;
+    -moz-justify-content: $val;
+    -webkit-justify-content: $val;
+    justify-content: $val;
+}
+
+@mixin flex-direction-row {
+    -webkit-box-direction: normal;
+    -webkit-box-orient: horizontal;
+    -moz-flex-direction: row;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+}
+@mixin flex-direction-column {
+    -webkit-box-direction: normal;
+    -webkit-box-orient: vertical;
+    -moz-flex-direction: column;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+}
+
+@mixin pack-center{
+    -webkit-box-pack:center;
+    -moz-box-pack: center;
+    -ms-box-pack: center;
+    -o-box-pack: center;
+    box-pack: center;
+}
+@mixin hv($h){
+    -webkit-box-orient:$h;
+    -moz-box-pack: $h;
+    -ms-box-pack: $h;
+    -o-box-pack: $h;
+    box-pack: $h;
+}
+
+@mixin pack($h){
+    -webkit-box-pack:$h;
+    -moz-box-pack: $h;
+    -ms-box-pack: $h;
+    -o-box-pack: $h;
+    box-pack: $h;
+}
+@mixin align{
+    -webkit-box-align:center;
+    -moz-box-align: center;
+    -ms-box-align: center;
+    -o-box-align: center;
+    box-align: center;
+}
+@mixin a{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: none;
+    border: none;
+    text-overflow: ellipsis;
+}
+@mixin inputColor($color){
+    input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+        　　color: $color;
+    }
+    input:-moz-placeholder, textarea:-moz-placeholder {
+        　　color:$color;
+    }
+    input::-moz-placeholder, textarea::-moz-placeholder {
+        　　color:$color;
+    }
+    input:-ms-input-placeholder, textarea:-ms-input-placeholder {
+        　　color:$color;
+    }
+}
+@mixin borderRadius($radiusValue){
+    -webkit-border-radius: $radiusValue;
+    -moz-border-radius: $radiusValue;
+    border-radius: $radiusValue;
+}
+@mixin touch{
+    -webkit-overflow-scrolling: touch;
+    -moz-overflow-scrolling: touch;
+    -ms-overflow-scrolling: touch;
+    -o-overflow-scrolling: touch;
+    box-overflow-scrolling: touch;
+}
+@mixin placeCenter {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+}
+
+/** some useful things, come from Bootstrap. Created by Dio Zhu. on 2016.9.23 */
+// Box sizing
+@mixin box-sizing($boxmodel) {
+    -webkit-box-sizing: $boxmodel;
+    -moz-box-sizing: $boxmodel;
+    box-sizing: $boxmodel;
+}
+
+@mixin clearfix() {
+    *zoom: 1;
+    //overflow:visible;
+    &:before,
+    &:after {
+        //content: " "; // 1
+        //content: '.'; // 1
+        content: '\200B'; // 1
+        //display: table; // 2
+        display: block; // 2
+        height: 0;
+        visibility: hidden;
+    }
+    &:after {
+        clear: both;
+    }
+}
+
+// Center-align a block level element
+@mixin center-block() {
+    display: block !important;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+// Centered container element
+@mixin container-fixed($gutter: $grid-gutter-width) {
+    margin-right: auto;
+    margin-left: auto;
+    padding-left:  ($gutter / 2);
+    padding-right: ($gutter / 2);
+    @include clearfix;
+}
+//// Creates a wrapper for a series of columns
+//@mixin make-row($gutter: $grid-gutter-width) {
+//    margin-left:  ($gutter / -2);
+//    margin-right: ($gutter / -2);
+//    //overflow: hidden;
+//    @include clearfix;
+//}
+//// Framework grid generation
+//
+//// Used only by Bootstrap to generate the correct number of grid classes given
+//// any value of `$grid-columns`.
+//// [converter] This is defined recursively in LESS, but Sass supports real loops
+//@mixin make-grid-columns($i: 1, $list: ".col-xs-#{$i}, .col-sm-#{$i}, .col-md-#{$i}, .col-lg-#{$i}") {
+//    @for $i from (1 + 1) through $grid-columns {
+//        $list: "#{$list}, .col-xs-#{$i}, .col-sm-#{$i}, .col-md-#{$i}, .col-lg-#{$i}";
+//    }
+//    #{$list} {
+//        position: relative;
+//        // Prevent columns from collapsing when empty
+//        min-height: 1px;
+//        // Inner gutter via padding
+//        padding-left:  ($grid-gutter-width / 2);
+//        padding-right: ($grid-gutter-width / 2);
+//    }
+//}
+//
+//// [converter] This is defined recursively in LESS, but Sass supports real loops
+//@mixin float-grid-columns($class, $i: 1, $list: ".col-#{$class}-#{$i}") {
+//    @for $i from (1 + 1) through $grid-columns {
+//        $list: "#{$list}, .col-#{$class}-#{$i}";
+//    }
+//    #{$list} {
+//        float: left;
+//
+//        /**
+//        col 中,float会造成模型崩塌,已下模型需启动BFC,修改display只是其中一种方式....
+//        如调整以下模型也为float模式,或overflow:hidden,position=fix或absolute,但不如修改display合理
+//        display值可为:table, table-cell, inline-bloc都可以触发BFC.
+//                      -- Author by Dio Zhu. on 2016.9.27
+//        */
+//        //:not(div):not(small):not(table):not(thead):not(tbody):not(th):not(tr):not(td){
+//        //p, ul, li, dl, dt, dd{
+//        //    //width: 100%;
+//        //    display: inline-block;
+//        //    //overflow: hidden;
+//        //}
+//        //@include clearfix;
+//    }
+//}
+//
+//// [converter] This is defined recursively in LESS, but Sass supports real loops
+//@mixin loop-grid-columns($columns, $class, $type) {
+//    @for $i from 0 through $columns {
+//        @include calc-grid-column($i, $class, $type);
+//    }
+//}
+//
+//@mixin calc-grid-column($index, $class, $type) {
+//    @if ($type == width) and ($index > 0) {
+//        .col-#{$class}-#{$index} {
+//            width: percentage(($index / $grid-columns));
+//        }
+//    }
+//    @if ($type == push) and ($index > 0) {
+//        .col-#{$class}-push-#{$index} {
+//            left: percentage(($index / $grid-columns));
+//        }
+//    }
+//    @if ($type == push) and ($index == 0) {
+//        .col-#{$class}-push-0 {
+//            left: auto;
+//        }
+//    }
+//    @if ($type == pull) and ($index > 0) {
+//        .col-#{$class}-pull-#{$index} {
+//            right: percentage(($index / $grid-columns));
+//        }
+//    }
+//    @if ($type == pull) and ($index == 0) {
+//        .col-#{$class}-pull-0 {
+//            right: auto;
+//        }
+//    }
+//    @if ($type == offset) {
+//        .col-#{$class}-offset-#{$index} {
+//            margin-left: percentage(($index / $grid-columns));
+//        }
+//    }
+//}
+//// Create grid for specific class
+//@mixin make-grid($class) {
+//    @include float-grid-columns($class);
+//    @include loop-grid-columns($grid-columns, $class, width);
+//    @include loop-grid-columns($grid-columns, $class, pull);
+//    @include loop-grid-columns($grid-columns, $class, push);
+//    @include loop-grid-columns($grid-columns, $class, offset);
+//}
+
+
+
+
+// Buttons styles
+// --------------------------------------------------
+// Button variants
+//
+// Easily pump out default styles, as well as :hover, :focus, :active,
+// and disabled options for all buttons
+
+@mixin button-variant($color, $background, $border) {
+    color: $color;
+    background-color: $background;
+    border-color: $border;
+
+    //&:hover,
+    //&:focus,
+    //&.focus,
+    //&:active,
+    //&.active,
+    //.open > &.dropdown-toggle {
+    //    color: $color;
+    //    background-color: darken($background, 10%);
+    //    border-color: darken($border, 12%);
+    //}
+    //&:active,
+    //&.active,
+    //.open > &.dropdown-toggle {
+    //    background-image: none;
+    //}
+    //&.disabled,
+    //&[disabled],
+    //fieldset[disabled] & {
+    //    &,
+    //    &:hover,
+    //    &:focus,
+    //    &.focus,
+    //    &:active,
+    //    &.active {
+    //        background-color: $background;
+    //        border-color: $border;
+    //    }
+    //}
+    //
+    //.badge {
+    //    color: $background;
+    //    background-color: $color;
+    //}
+}
+// Button sizes
+@mixin button-size($padding-vertical, $padding-horizontal, $font-size, $line-height, $border-radius) {
+    padding: $padding-vertical $padding-horizontal;
+    font-size: $font-size;
+    line-height: $line-height;
+    border-radius: $border-radius;
+}
+
+// User select
+// For selecting text on the page
+@mixin user-select($select) {
+    -webkit-user-select: $select;
+    -moz-user-select: $select;
+    -ms-user-select: $select; // IE10+
+    user-select: $select;
+}
+// WebKit-style focus
+@mixin tab-focus() {
+    // Default
+    outline: thin dotted;
+    // WebKit
+    outline: 5px auto -webkit-focus-ring-color;
+    outline-offset: -2px;
+}
+// Opacity
+@mixin opacity($opacity) {
+    opacity: $opacity;
+    // IE8 filter
+    $opacity-ie: ($opacity * 100);
+    filter: #{alpha(opacity=$opacity-ie)};
+}
+
+// Drop shadows
+//
+// Note: Deprecated `.box-shadow()` as of v3.1.0 since all of Bootstrap's
+// supported browsers that have box shadow capabilities now support it.
+@mixin box-shadow($shadow...) {
+    -webkit-box-shadow: $shadow; // iOS <4.3 & Android <4.1
+    box-shadow: $shadow;
+}
+
+// Text overflow
+// Requires inline-block or block for proper styling
+
+@mixin text-overflow() {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+@mixin nowarp($font-size) {
+    white-space: nowrap;
+    overflow: hidden;
+    margin: auto;
+    overflow: hidden;
+    -webkit-text-overflow: ellipsis;
+    -moz-text-overflow: ellipsis;
+    -ms-text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    padding-right: $font-size / 2;
+    padding-left: $font-size / 2; /* 加这行是因为发现在某些低端机上, 会截取最后半个字符, 原因不明, 可通过padding-right方式避免. Author by Dio Zhu. on 2016.10.22 */
+}
+
+@mixin placeholder-color($color) {
+    &::-webkit-input-placeholder {/* WebKit browsers */
+        color:$color;
+    }
+    &:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+        color:$color;
+    }
+    &::-moz-placeholder { /* Mozilla Firefox 19+ */
+        color:$color;
+    }
+    &:-ms-input-placeholder { /* Internet Explorer 10+ */
+        color:$color;
+    }
+}
+
