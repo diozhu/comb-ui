@@ -2,7 +2,7 @@
  * Created by diozhu on 2017/2/6.
  */
 
-// import vButton from './v-button.vue';
+import vButton from './v-button.vue';
 // import vText from './v-text.vue';
 import vRow from './v-row.vue';
 import vCol from './v-col.vue';
@@ -26,7 +26,7 @@ const version = '1.0.1';
 const install = function (Vue) {
     if (install.installed) return;
 
-    // Vue.component(vButton.name, vButton);
+    Vue.component(vButton.name, vButton);
     // Vue.component(vText.name, vText);
     Vue.component(vRow.name, vRow);
     Vue.component(vCol.name, vCol);
@@ -57,7 +57,7 @@ if (typeof window !== 'undefined' && window.Vue) {
 export {
     install as default,
     version,
-    // vButton,
+    vButton,
     // vText,
     vRow,
     vCol,
