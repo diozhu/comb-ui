@@ -29,6 +29,7 @@ import vSwipe from './v-swipe.vue';
 import vSpinner from './v-spinner';
 
 import vSticky from './v-sticky.js';
+import vScrollPosition from './v-scroll-position.js';
 
 const version = '1.0.1';
 const install = function (Vue) {
@@ -53,6 +54,7 @@ const install = function (Vue) {
     Vue.component(vSpinner.name, vSpinner);
     //
     Vue.use(vSticky);
+    Vue.use(vScrollPosition);
     // Vue.use(Refresh);
     // Vue.use(Scroll);
     // Vue.use(InfiniteScroll);
@@ -95,6 +97,7 @@ export {
     // Swipe,
     // ScrollPosition,
     vSticky,
+    vScrollPosition,
     //
     MessageBox,
     Toast
