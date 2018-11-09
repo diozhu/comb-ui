@@ -117,9 +117,9 @@
             },
 
             '$route.name' (val) {
-                this.$logger.log(`v-message.${this._uid}.watch: $route!!!`, val, this._inactive, this.$router.direct());
+                console.log(`v-message.${this._uid}.watch: $route!!!`, val, this._inactive, this.$router.direct());
                 this.$nextTick(() => {
-                    this.$logger.log(`v-message.${this._uid}.watch: $route!!!`, val, this._inactive, this.$router.direct());
+                    console.log(`v-message.${this._uid}.watch: $route!!!`, val, this._inactive, this.$router.direct());
                     if (!this._inactive) { // 激活时重新加载
 //                        this.isEnabled = this.enabled;
 //                        if (this.$router.direct()) { // in
@@ -135,7 +135,7 @@
         },
 
         mounted () {
-            this.$logger.log(`v-message.${this._uid}.mounted: `, this.message);
+            console.log(`v-message.${this._uid}.mounted: `, this.message);
         },
 
         methods: {

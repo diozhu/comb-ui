@@ -150,7 +150,7 @@
                 if (values && values.length && value) [].forEach.call(values, (v, i) => { if (v === value || v[this.valueKey] === value || (v[this.valueKey] !== undefined && v[this.valueKey] === value[this.valueKey])) valueIndex = i; });
                 if (!value && valueIndex === undefined) valueIndex = -1;
                 if (valueIndex !== -1) {
-                    // if (value) this.$logger.warn('v-picker-slot.value2Translate: ', values, value, valueIndex, offset, (valueIndex - offset) * -ITEM_HEIGHT);
+                    // if (value) console.warn('v-picker-slot.value2Translate: ', values, value, valueIndex, offset, (valueIndex - offset) * -ITEM_HEIGHT);
                     return (valueIndex - offset) * -ITEM_HEIGHT;
                 }
             },
@@ -169,7 +169,7 @@
                     itemsFit = Math.ceil(this.visibleItemCount / 2),
                     angleUnit = VISIBLE_ITEMS_ANGLE_MAP[this.visibleItemCount] || -20;
 
-//                this.$logger.log('v-picker-slot.updateRotate: ', pickerItems);
+//                console.log('v-picker-slot.updateRotate: ', pickerItems);
                 if (!pickerItems) {
                     pickerItems = wrapper.querySelectorAll('.picker-item');
                 }
@@ -289,7 +289,7 @@
 //                            let startIndex = currentIndex - vRange;
 //                            let endIndex = currentIndex + vRange;
 
-//                            this.$logger.log('v-picker-slot.initEvents.currentValue: ', this.currentValue);
+//                            console.log('v-picker-slot.initEvents.currentValue: ', this.currentValue);
 
                             if (this.rotateEffect) {
                                 this.planUpdateRotate();
@@ -324,13 +324,13 @@
             this.$emit('input', this.currentValue);
 
             if (!this.divider) {
-//                this.$logger.log('v-picker-slot.mounted: ==> doOnValueChange() ');
+//                console.log('v-picker-slot.mounted: ==> doOnValueChange() ');
                 this.initEvents();
                 this.doOnValueChange();
             }
 
             if (this.rotateEffect) {
-//                this.$logger.log('v-picker-slot.mounted: ==> doOnValuesChange() ');
+//                console.log('v-picker-slot.mounted: ==> doOnValuesChange() ');
                 this.doOnValuesChange();
             }
         },
@@ -360,7 +360,7 @@
                 this.dispatch('picker', 'slotValueChange', this);
             },
             className () {
-                this.$logger.warn('v-picker-slot.watch.className: ', ...arguments);
+                console.warn('v-picker-slot.watch.className: ', ...arguments);
             }
         }
     };

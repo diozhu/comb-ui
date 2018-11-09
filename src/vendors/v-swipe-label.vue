@@ -92,23 +92,23 @@
             '$route.name' (val) { // 如果使用了keep-alive，根据路由变化，判断组件的_inactive，设置isEnabled，避免事件重复触发
                 if (!this.fixed) return;
                 if (!this._inactive) { // 激活
-                    this.$logger.log('v-swipe-label.watch.in...');
+                    console.log('v-swipe-label.watch.in...');
                     window.addEventListener('scroll', this.scrollHandle);
                 } else { // 失效
-                    this.$logger.log('v-swipe-label.watch.back...');
+                    console.log('v-swipe-label.watch.back...');
                     window.removeEventListener('scroll', this.scrollHandle);
                 }
             }
         },
 
         created () {
-            this.$logger.log('v-swipe-label created...');
+            console.log('v-swipe-label created...');
         },
 
         mounted () {
             this.$nextTick(() => {
                 this.init();
-//                this.$logger.log('v-swipe-label.mounted...', this.maxl, this.$refs.touch.recognizers); // 能后去到hammerjs对象，处理多事件合并
+//                console.log('v-swipe-label.mounted...', this.maxl, this.$refs.touch.recognizers); // 能后去到hammerjs对象，处理多事件合并
             });
         },
 
@@ -183,7 +183,7 @@
 //                             ios = userAgent.match(/(iPad|iPhone|iPod)\s+OS\s([\d_\.]+)/);
 //                         return ios && ios[2] && (parseInt(ios[2].replace(/_/g, '.'), 10) >= 6);
 //                     };
-// //                if (this._uid === 11) this.$logger.log(this._uid + ':::::::::', t);
+// //                if (this._uid === 11) console.log(this._uid + ':::::::::', t);
 //                 if (this.fixed && t > this.position) {
 //                     if (isIos6()) {
 // //                        this.floatClass = 'sticky';
@@ -203,17 +203,17 @@
 //             },
 
 //             swipe (e) {
-//                 this.$logger.log('>>>>>>>>>>>>>  swipe in v-swipe-label...', e);
+//                 console.log('>>>>>>>>>>>>>  swipe in v-swipe-label...', e);
 //                 e.srcEvent.stopPropagation();
 //             },
 // //            onTap: function (e) {
-// //                this.$logger.log('v-swipe-label.onTap =============> ');
+// //                console.log('v-swipe-label.onTap =============> ');
 // //            },
 //             touchStart: function (e) {
 // //                e.stopPropagation();
 // //                e.preventDefault();
-// //                this.$logger.log('v-swipe-label.touchStart =============> ');
-// //                this.$logger.log('v-swip-label.methods.touchStart: ', e);
+// //                console.log('v-swipe-label.touchStart =============> ');
+// //                console.log('v-swip-label.methods.touchStart: ', e);
 //                 if (this.maxl >= 0) return; // 内容过小不滑动
 //                 let touches = e.changedTouches[0];
 //                 this.startX = this.lastX = touches.clientX;
@@ -225,7 +225,7 @@
 //                 this.stopMovingTag = true;
 //             },
 //             touchMoving: function (e) {
-// //                this.$logger.log('v-swip-label.methods.touchMoving: ', e);
+// //                console.log('v-swip-label.methods.touchMoving: ', e);
 // //                e.stopPropagation();
 // //                e.preventDefault();
 //                 if (this.maxl >= 0) return; // 内容过小不滑动
@@ -262,7 +262,7 @@
 // //                e.preventDefault();
 //                 // e.srcEvent.stopPropagation();
 //                 if (this.maxl >= 0) return; // 内容过小不滑动
-// //                this.$logger.log('v-swip-label.methods.touchEnd: ', e);
+// //                console.log('v-swip-label.methods.touchEnd: ', e);
 //                 let _self = this,
 //                     // touches = e.changedPointers[0],
 //                     touches = e.changedTouches[0],
@@ -273,7 +273,7 @@
 
 // //                if (currentX >= _self.minl || currentX < _self.maxl)  return;
 
-// //                this.$logger.log('v-swip-label.methods.touchEnd: ', currentX, _self.minl, _self.maxl);
+// //                console.log('v-swip-label.methods.touchEnd: ', currentX, _self.minl, _self.maxl);
 //                 if (currentX >= _self.minl) currentX = _self.minl;
 //                 if (currentX < _self.maxl) currentX = _self.maxl;
 
@@ -289,7 +289,7 @@
 //                 // var nowTime = e.timeStamp || Date.now(),
 //                 let nowTime = Date.now(),
 //                     v = (nowX - this.lastMoveStart) / (nowTime - this.lastMoveTime); // 最后一段时间手指划动速度
-//                 // this.$logger.log("**********: ", v);
+//                 // console.log("**********: ", v);
 //                 this.stopMovingTag = false;
 //                 (function (v, startTime, currentX) {
 //                     let dir = v > 0 ? -1 : 1,           // 加速度方向
@@ -297,7 +297,7 @@
 // //                        duration = v / deceleration;    // 速度消减至0所需时间
 // //                        dist = v * duration / 2;        // 当前移动距离
 
-//                     // this.$logger.log("*****1*****: ", v, dir, deceleration, duration, dist);
+//                     // console.log("*****1*****: ", v, dir, deceleration, duration, dist);
 
 //                     function inertiaMove () {
 //                         if (_self.stopMovingTag) {
@@ -309,14 +309,14 @@
 //                             t = nowTime - startTime,
 //                             nowV = v + t * deceleration;
 
-//                         // this.$logger.log("*****2*****: ", nowTime, startTime, t, nowV);
+//                         // console.log("*****2*****: ", nowTime, startTime, t, nowV);
 
 //                         // 速度方向变化表示速度达到0了
 //                         if (dir * nowV > 0) {
 //                             return;
 //                         }
 //                         let moveX = (v + nowV) / 2 * t; // 距离递减~
-// //                        this.$logger.log('=======3=======', currentX, moveX);
+// //                        console.log('=======3=======', currentX, moveX);
 //                         // 范围限定
 // //                        if ((currentX + moveX) >= _self.minl || (currentX + moveX) < _self.maxl) return;
 //                         if ((currentX + moveX) >= _self.minl) {

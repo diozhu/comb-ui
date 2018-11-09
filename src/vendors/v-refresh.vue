@@ -97,7 +97,7 @@
             },
 
             translate (val) {
-                // this.$logger.log(`v-refresh.${this._uid}.watch.translate: ${val}, ${val - this.refreshHeight}`);
+                // console.log(`v-refresh.${this._uid}.watch.translate: ${val}, ${val - this.refreshHeight}`);
                 if (val >= this.refreshHeight) {
                     this.refreshTranslate = 0;
                 } else {
@@ -110,15 +110,15 @@
         },
 
         created () {
-            this.$logger.log(`v-refresh.${this._uid}.created...`, this.$route);
+            console.log(`v-refresh.${this._uid}.created...`, this.$route);
 //            this.init();
             if (!this.$route.meta || !this.$route.meta.keepAlive) this.init(); // 如果路由没有设定keepAlive，再执行init函数，否则会重复执行。 Author by Dio Zhu. on 2017.12.2
         },
         mounted () {
-            this.$logger.log(`v-refresh.${this._uid}.mounted...`);
+            console.log(`v-refresh.${this._uid}.mounted...`);
         },
         activated () {
-            this.$logger.log(`*[v-refresh].${this._uid}.activated...`, this._inactive);
+            console.log(`*[v-refresh].${this._uid}.activated...`, this._inactive);
             // this.init(); // 如果当前页面是keep-alive的，这里重新初始化
             if (this.$router.direct()) { // in
                 this.init(); // 如果当前页面是keep-alive的，这里重新初始化
@@ -128,7 +128,7 @@
             // dom.addClass(window.document.documentElement, 'overflow'); // body绑定overflow样式
         },
         deactivated () {
-            this.$logger.log(`*[v-refresh].${this._uid}.deactivated...`, this._inactive);
+            console.log(`*[v-refresh].${this._uid}.deactivated...`, this._inactive);
             this.isEnabled = false;
             // dom.removeClass(window.document.documentElement, 'overflow'); // 移除overflow样式
         },
@@ -138,7 +138,7 @@
             },
 
             init () {
-                this.$logger.log(`v-refresh.${this._uid}.init...`);
+                console.log(`v-refresh.${this._uid}.init...`);
                 // dom.addClass(window.document.documentElement, 'overflow'); // body绑定overflow样式
 
                 this.$nextTick(() => {
@@ -175,7 +175,7 @@
              *              -- Author by Dio Zhu. on 2017.12.7
              */
             refresh () {
-                this.$logger.log(`v-refresh.${this._uid}.refresh.befor: `); //eslint-disable-line
+                console.log(`v-refresh.${this._uid}.refresh.befor: `); //eslint-disable-line
 
 //                bus.$emit('v-scroll.refreshList'); // 不能放这儿。。。应该先运行this.func，完成数据初始化，再调用refreshList重新拉取数据。。。Author by Dio Zhu. on 2017.12.7
 
@@ -186,16 +186,16 @@
                             bus.$emit('v-scroll.refreshList');
                             this.refreshTag = false;
                             this.inertia(this.translate);
-                            this.$logger.log(`v-refresh.${this._uid}.refresh.after: `);
+                            console.log(`v-refresh.${this._uid}.refresh.after: `);
                         }).catch(e => {
                             this.refreshTag = false;
                             this.inertia(this.translate);
-                            this.$logger.error(`v-refresh.${this._uid}.refresh.after.error: ${e}`);
+                            console.error(`v-refresh.${this._uid}.refresh.after.error: ${e}`);
                         });
                     } catch (e) {
                         this.refreshTag = false;
                         this.inertia(this.translate);
-                        this.$logger.error(`v-refresh.${this._uid}.refresh.after.error: ${e}`);
+                        console.error(`v-refresh.${this._uid}.refresh.after.error: ${e}`);
                     }
                 } else {
                     bus.$emit('v-scroll.refreshList');

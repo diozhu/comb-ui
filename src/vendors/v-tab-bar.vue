@@ -61,7 +61,7 @@
         },
 
         mounted () {
-            this.$logger.log('TabBar.mounted... ', this.tabs);
+            console.log('TabBar.mounted... ', this.tabs);
         },
 
         methods: {

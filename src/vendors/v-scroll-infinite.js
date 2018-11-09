@@ -107,7 +107,7 @@ export default (Vue) => {
             };
         },
         mounted () {
-            this.$logger.log('v-scroll-infinite.mounted: ');
+            console.log('v-scroll-infinite.mounted: ');
             this.init();
         },
         beforeDestroy () {

@@ -25,16 +25,16 @@
             };
         },
         ready: function () {
-            this.$logger.log('form qr-code $el... ' + this.el);
+            console.log('form qr-code $el... ' + this.el);
         },
         created: function () {
-            this.$logger.log('form qr-code... ' + this.cusUrl);
+            console.log('form qr-code... ' + this.cusUrl);
 //            this.codeModule();
         },
         mounted () {
             this.$nextTick(() => {
                 this.el = document.getElementById(this.cusId);
-                this.$logger.log('v-qr-code.mounted...' + this.el);
+                console.log('v-qr-code.mounted...' + this.el);
                 this.codeModule();
             });
         },
@@ -42,7 +42,7 @@
             codeModule () {
                 var that = this;
                 var qrcode;
-                this.$logger.log('codeModule');
+                console.log('codeModule');
                 that.$logger.log('form v-qr-code... ' + that.el);
                 qrcode = new QRCode(that.el, { //eslint-disable-line
                     width: that.cusWidth, // 设置宽高

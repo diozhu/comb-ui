@@ -94,13 +94,13 @@
         },
         watch: {
             value (val) {
-                this.$logger.log(`v-checkbox.${this._uid}.watch ===> value: `, val);
+                console.log(`v-checkbox.${this._uid}.watch ===> value: `, val);
                 this.currentValue = val;
 
                 if (this.checkAll) { // 全选逻辑
                     if (typeof this.checkAllFunc === 'function') { // 如果定制了全选函数逻辑，执行后处理，如果未定职，执行默认的长度匹配逻辑
                         this.checkAllFunc(val).then(res => {
-                            this.$logger.log(`v-checkbox.${this._uid}.watch ===> currentValue: checkAllFunc.callback!!!`, res);
+                            console.log(`v-checkbox.${this._uid}.watch ===> currentValue: checkAllFunc.callback!!!`, res);
                             if (!res && this.checkAllValue.length > 0) {
                                 this.checkAllValue = []; // 取消任何一个选项，恢复全选状态
                             } else if (res && this.checkAllValue.length < 1) {
@@ -117,7 +117,7 @@
             },
 
             currentValue (val) {
-                this.$logger.log(`v-checkbox.${this._uid}.watch ===> currentValue: `, val);
+                console.log(`v-checkbox.${this._uid}.watch ===> currentValue: `, val);
                 if (this.limit) {
                     val.pop();
                     return;
@@ -129,7 +129,7 @@
                 if (!this.checkAll) return;
 
 //                if (val.length > 0) { // 全选
-//                    this.$logger.log('v-checkbox.watch.checkAllValue: select All!!!');
+//                    console.log('v-checkbox.watch.checkAllValue: select All!!!');
 // //                    if (!this.currentValue.length && this.currentValue.length !== this.options.length) { // 判断是否需要重新赋值
 //                    let rtn = [];
 //                    this.options.forEach((v) => {
@@ -138,47 +138,47 @@
 //                    this.$set(this, 'currentValue', rtn);
 // //                    }
 //                } else if (this.currentValue.length && this.currentValue.length === this.options.length) { // 取消全选
-//                    this.$logger.log('v-checkbox.watch.checkAllValue: clear All!!!');
+//                    console.log('v-checkbox.watch.checkAllValue: clear All!!!');
 //                    this.$set(this, 'currentValue', []);
 //                }
 
                 if (typeof this.checkAllFunc === 'function') { // 从vurrentValue中依次添加、删除
                     if (val.length > 0) { // 全选
-                        this.$logger.log('v-checkbox.watch.checkAllValue: select All !@#');
+                        console.log('v-checkbox.watch.checkAllValue: select All !@#');
                         let adds = [];
                         this.options.forEach((v) => {
                             if (!_.find(this.currentValue, function (i) { return i.nodeId === v.nodeId; })) adds.push(v.value || v);
                         });
                         if (adds.length > 0) this.currentValue = this.currentValue.concat(adds);
                     } else if (this.currentValue.length && this.currentValue.length >= this.options.length) { // 取消全选
-                        this.$logger.log('v-checkbox.watch.checkAllValue: clear All !@#');
+                        console.log('v-checkbox.watch.checkAllValue: clear All !@#');
                         let dels = [...this.currentValue]; // 原想通过深度拷贝避免vue连续的变更，但实际发现，就算直接循环去删除，vue还是在nexttick提交变化。。。白操心了。。Dio Zhu. on 2017.5.12
                         this.options.forEach((v) => {
                             dels.forEach((m, n) => {
                                 if (parseInt(m.nodeId) === parseInt(v.nodeId)) dels.splice(n, 1);
                             });
                         });
-//                        this.$logger.log('v-checkbox.watch.checkAllValue: clear All !@#', dels, this.currentValue);
+//                        console.log('v-checkbox.watch.checkAllValue: clear All !@#', dels, this.currentValue);
                         if (dels.length !== this.currentValue.length) this.$set(this, 'currentValue', dels);
                     }
                 } else if (val.length > 0) { // 全选
-                    this.$logger.log('v-checkbox.watch.checkAllValue: select All!!!');
+                    console.log('v-checkbox.watch.checkAllValue: select All!!!');
                     let rtn = [];
                     this.options.forEach((v) => {
                         rtn.push(v.value || v);
                     });
                     this.$set(this, 'currentValue', rtn);
                 } else if (this.currentValue.length && this.currentValue.length === this.options.length) { // 取消全选
-                    this.$logger.log('v-checkbox.watch.checkAllValue: clear All!!!');
+                    console.log('v-checkbox.watch.checkAllValue: clear All!!!');
                     this.$set(this, 'currentValue', []);
                 }
             },
 
             options (val) { // options 变化，循环slots，添加分割标记
-                this.$logger.log(`v-checkbox.${this._uid}.watch ===> options: `, val, this.$slots);
+                console.log(`v-checkbox.${this._uid}.watch ===> options: `, val, this.$slots);
                 this.slotStart = 0;
                 Object.keys(this.$slots).forEach((v) => {
-//                    this.$logger.log(`v-checkbox.${this._uid}.getSlotStart: `, v);
+//                    console.log(`v-checkbox.${this._uid}.getSlotStart: `, v);
                     if (!this.slotStart && v.indexOf('slot') >= 0) {
                         this.slotStart = v.substring(4);
                     }
@@ -200,24 +200,24 @@
         },
 
         created () {
-            this.$logger.log(`v-checkbox.${this._uid}.created: `);
+            console.log(`v-checkbox.${this._uid}.created: `);
             this._initCurrentObj(this.value); // 初始化已选标识，用于list中的css标识checked，源于:checked ~ 只支持ios9.3以上Safari. Add by Dio Zhu. on 2017.8.3
         },
         mounted () {
-            this.$logger.log(`v-checkbox.${this._uid}.mounted: `);
+            console.log(`v-checkbox.${this._uid}.mounted: `);
         },
         methods: {
             // 循环设定currentObj的属性值，用于list中显示是否已选，原因是css中:checked ~不支持ios9.3以下的Safari。。。mod by Dio Zhu. on 2017.8.3
             _initCurrentObj (val) {
                 this.options.forEach((va, ix) => {
-                    // this.$logger.log('!!!!!!!!', ix, va);
+                    // console.log('!!!!!!!!', ix, va);
                     this.currentObj[ix] = false;
                     [].forEach.call(val, (v, i) => {
-                        // this.$logger.log('#####', i, v);
+                        // console.log('#####', i, v);
                         if (va === v || (va.value && va.value === v)) this.currentObj[ix] = true;
                     });
                 });
-                this.$logger.log('v-checkbox._initCurrentObj: ', this.checkAllValue);
+                console.log('v-checkbox._initCurrentObj: ', this.checkAllValue);
                 if (this.checkAllValue.length) {
                     this.currentObj['-1'] = true;
                 } else {

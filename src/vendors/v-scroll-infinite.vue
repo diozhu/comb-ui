@@ -113,7 +113,7 @@
             bus.$on('v-scroll-infinite.init', this.init);
         },
         mounted () {
-            this.$logger.log('v-scroll-infinite.mounted: ');
+            console.log('v-scroll-infinite.mounted: ');
             this.init();
         },
         beforeDestroy () {
@@ -122,7 +122,7 @@
         },
         methods: {
             init () {
-                this.$logger.log(`v-scroll-infinite.${this._uid}.init ... `);
+                console.log(`v-scroll-infinite.${this._uid}.init ... `);
                 this._options = assign({}, options, {
                     prerender: this.prerender || options.prerender,
                     remain: this.remain || options.remain,

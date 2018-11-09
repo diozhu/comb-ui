@@ -211,7 +211,7 @@
 //            },
 
             isShowText () {
-//                this.$logger.log('--------> ', this.dataExist, this.isLoadMore);
+//                console.log('--------> ', this.dataExist, this.isLoadMore);
                 return !!(this.hasData && !this.hasMore);
 //                return !!(this.hasData && !this.hasMore && document.body.scrollTop > 100);
             }
@@ -223,7 +223,7 @@
 
                 // 取消此方式刷新数据，如果要刷新，使用eventbus。 mod by Dio Zhu. on 2017.7.1
 //                if (val.length < 1 && this.isEnabled && !this.isLoading && !this.refreshTag) { // 客户端直接清空listdata，触发刷新事件
-//                    this.$logger.log(`[v-scroll].${this._uid}.watch: value`, val);
+//                    console.log(`[v-scroll].${this._uid}.watch: value`, val);
 //                    this.refreshList();
 //                }
             },
@@ -231,7 +231,7 @@
                 this.$emit('input', val);
             },
             enabled (val) {
-                this.$logger.log('v-scroll.watch.enabled! ');
+                console.log('v-scroll.watch.enabled! ');
 //                this.isEnabled = !this._inactive && val;
                 this.isEnabled = val;
 //                if (val) this.$router.scrollTarget = this.scrollTarget; // 保存滚动容器
@@ -251,9 +251,9 @@
              *                  -- Author by Dio Zhu. on 2017.5.25
              */
             // '$route.name' (val) {
-            //     this.$logger.log(`v-scroll.${this._uid}.watch: $route!!!`, val, this._inactive, this.$router.direct());
+            //     console.log(`v-scroll.${this._uid}.watch: $route!!!`, val, this._inactive, this.$router.direct());
             //     this.$nextTick(() => {
-            //         this.$logger.log(`v-scroll.${this._uid}.watch: $route!!!`, val, this._inactive, this.$router.direct());
+            //         console.log(`v-scroll.${this._uid}.watch: $route!!!`, val, this._inactive, this.$router.direct());
             //         if (!this._inactive) { // 激活时重新加载
             //             this.isEnabled = this.enabled;
             //             if (this.$router.direct()) { // in
@@ -267,13 +267,13 @@
             //     });
 /*
                 this.$nextTick(() => {
-                    this.$logger.log(`v-scroll.${this._uid}.watch: $route!!!`, val, this._inactive);
+                    console.log(`v-scroll.${this._uid}.watch: $route!!!`, val, this._inactive);
                     if (!this._inactive) { // 激活时重新加载，这里可根据实际需要进行重新定义
                         this.isEnabled = this.enabled;
 //                        if (this.isEnabled) this.$router.scrollTarget = this.scrollTarget; // 保存滚动容器
 //                        // 如果保存了位置信息，还原"容器"的滚动条位置，window的走route的scrollBehavior
 //                        if (this.position && this.position[this.timestamp] && this.position[this.timestamp].y >= 0) {
-//                        this.$logger.log(`v-scroll.${this._uid}.watch: $route!!!`, this.position[this.timestamp]);
+//                        console.log(`v-scroll.${this._uid}.watch: $route!!!`, this.position[this.timestamp]);
 // //                        let y = this.position[this.timestamp].y || 0;
 // //                        this.$nextTick(() => {
 // // //                            this.$el.scrollTop = y;
@@ -304,7 +304,7 @@
         },
 
         created () {
-            this.$logger.log(`[v-scroll].${this._uid}.created...`);
+            console.log(`[v-scroll].${this._uid}.created...`);
             bus.$on('v-scroll.refreshList', this.refreshList); // 监听下拉刷新的事件
             bus.$on('v-scroll.getList', this.getList); // 监听上拉加载事件
 //            this.init();
@@ -312,11 +312,11 @@
         },
         mounted () {
             this.pageHeight = window.screen.height;
-            this.$logger.log(`[v-scroll].${this._uid}.mounted...`, this.$route.name, this.$parent.$route.name);
+            console.log(`[v-scroll].${this._uid}.mounted...`, this.$route.name, this.$parent.$route.name);
         },
 
         activated () {
-            this.$logger.log(`*[v-scroll].${this._uid}.activated...`, this._inactive, this.$router.direct());
+            console.log(`*[v-scroll].${this._uid}.activated...`, this._inactive, this.$router.direct());
             this.isEnabled = this.enabled;
             // this.init(); // 如果当前页面是keep-alive的，这里重新初始化
             if (this.$router.direct()) { // in
@@ -331,13 +331,13 @@
             // dom.addClass(window.document.documentElement, 'overflow'); // body绑定overflow样式
         },
         deactivated () {
-            this.$logger.log(`*[v-scroll].${this._uid}.deactivated...`, this._inactive);
+            console.log(`*[v-scroll].${this._uid}.deactivated...`, this._inactive);
             this.isEnabled = false;
 
             // dom.removeClass(window.document.documentElement, 'overflow'); // 移除overflow样式
         },
         beforeDestroy () {
-            this.$logger.log(`*[v-scroll].${this._uid}.beforeDestroy...`);
+            console.log(`*[v-scroll].${this._uid}.beforeDestroy...`);
         },
 
         methods: {
@@ -360,7 +360,7 @@
             },
 
             init () {
-                this.$logger.log(`[v-scroll].${this._uid}.init...`);
+                console.log(`[v-scroll].${this._uid}.init...`);
 
                 // dom.addClass(window.document.documentElement, 'overflow'); // body绑定overflow样式
 
@@ -379,7 +379,7 @@
 
             goTop () {
                 let target = this.scrollTarget;
-                this.$logger.log(`[v-scroll].${this._uid}.getList.after: `, target.scrollHeight, target.offsetHeight);
+                console.log(`[v-scroll].${this._uid}.getList.after: `, target.scrollHeight, target.offsetHeight);
                 if (target === window) {
                     window.scrollTo(0, 0);
                 } else {
@@ -395,7 +395,7 @@
              * 获取数据
              */
             getList () {
-                // this.$logger.log(`[v-scroll].${this._uid}.getList.befor: !!!`);
+                // console.log(`[v-scroll].${this._uid}.getList.befor: !!!`);
                 if (!this.isEnabled) return;  // 当前滚动条非可用时，直接返回，用于同页面多个实例的时候
                 // 结束语判断
                 // if (!this.scrollEndTxt && this.scrollTarget) this.scrollEndTxt = document.body.scrollHeight > document.body.offsetHeight;
@@ -416,9 +416,9 @@
                         this.isEnding = true;
                         this.isLoading = true;
 //                         this.endFunc().then(res => {
-// //                            this.$logger.log(`[v-scroll].${this._uid}.endFunc.after: `, res);
+// //                            console.log(`[v-scroll].${this._uid}.endFunc.after: `, res);
 //                             if (res) {
-//                                 this.$logger.log(`[v-scroll].${this._uid}.endFunc.after: `, res);
+//                                 console.log(`[v-scroll].${this._uid}.endFunc.after: `, res);
 //                                 this.reset({resetData: false, goTop: false}); // 重置，且不清数据！
 // //                                this.getList();
 //                             } else {
@@ -428,7 +428,7 @@
 //                             this.isLoading = false;
 //                         });
                         if (this.endFunc()) {
-                            // this.$logger.log(`[v-scroll].${this._uid}.endFunc.after: `, res);
+                            // console.log(`[v-scroll].${this._uid}.endFunc.after: `, res);
                             this.reset({resetData: false, goTop: false}); // 重置，且不清数据！
 //                                this.getList();
                         } else {
@@ -437,7 +437,7 @@
                         this.isEnding = false;
                         this.isLoading = false;
                     } catch (e) {
-                        this.$logger.error(`[v-scroll].${this._uid}.endFunc.after.error: ${e}`);
+                        console.error(`[v-scroll].${this._uid}.endFunc.after.error: ${e}`);
                     }
                 }
                 if (!this.hasMore) return;  // 无数据
@@ -445,7 +445,7 @@
                  * end mod. on 2017.12.5
                  */
 
-                this.$logger.log(`[v-scroll].${this._uid}.getList.befor: `, target);
+                console.log(`[v-scroll].${this._uid}.getList.befor: `, target);
                 let func = null;
                 if (this.funcType === 'section') {
                     func = this.getListBySection;
@@ -468,7 +468,7 @@
                             // 可以试试在上面加上return Promis.resove();，之前上面那句不好使是忘记了返回Promis对象。。。回头试试。。。Dio Zhu. on 2017.6.30
                             // 结束语判断
                             if (this.scrollTarget) {
-                                this.$logger.log(`[v-scroll].${this._uid}.getList.after: `, this.scrollTarget.scrollHeight, this.scrollTarget.offsetHeight);
+                                console.log(`[v-scroll].${this._uid}.getList.after: `, this.scrollTarget.scrollHeight, this.scrollTarget.offsetHeight);
                                 // 判断页面是否加载完毕 2017-06-30 孙乐卿
                                 this.$nextTick(() => {
                                     this.scrollEndTxt = this.scrollEndFlowTag ? true : this.scrollTarget.scrollHeight > (this.scrollTarget.offsetHeight * 5 / 4);
@@ -480,14 +480,14 @@
                             }
                         });
                     } catch (e) {
-                        this.$logger.error(`[v-scroll].${this._uid}.getList.after.error: ${e}`);
+                        console.error(`[v-scroll].${this._uid}.getList.after.error: ${e}`);
                     }
                 }
             },
 
             /** nodejs一般采用的区间方式 */
             getListBySection ({ refresh = false } = {}) { // nodejs方式
-                this.$logger.log(`[v-scroll].${this._uid}.getListBySection...`);
+                console.log(`[v-scroll].${this._uid}.getListBySection...`);
                 try {
                     this.isLoading = true;          // 开始加载
 
@@ -501,7 +501,7 @@
                         limit: limit,
                         refresh: refresh
                     }).then(res => {
-                        this.$logger.log(`[v-scroll].${this._uid}.getListBySection.success: ${res}`, this.offset, this.limit);
+                        console.log(`[v-scroll].${this._uid}.getListBySection.success: ${res}`, this.offset, this.limit);
 
                         if (res && res.length > 0) {
                             this.hasData = true;              // 数据标识
@@ -516,19 +516,19 @@
                         this.isLoading = false;
                         return Promise.resolve(res);
                     }).catch(e => {
-                        this.$logger.error(`[v-scroll].${this._uid}.getListBySection.error: ${e}`);
+                        console.error(`[v-scroll].${this._uid}.getListBySection.error: ${e}`);
                         this.isLoading = false;
                         return Promise.reject(e);
                     });
                 } catch (e) {
-                    this.$logger.error(`[v-scroll].${this._uid}.getListBySection.error: ${e}`);
+                    console.error(`[v-scroll].${this._uid}.getListBySection.error: ${e}`);
                     this.isLoading = false;
                     return Promise.reject(e);
                 }
             },
             /** go一般采用的区间方式 */
             getListByLimit ({ refresh = false } = {}) { // go方式
-                this.$logger.log(`[v-scroll].${this._uid}.getListByLimit...`);
+                console.log(`[v-scroll].${this._uid}.getListByLimit...`);
                 try {
                     this.isLoading = true;          // 开始加载
                     return this.func({
@@ -536,7 +536,7 @@
                         limit: this.limit,
                         refresh: refresh
                     }).then(res => {
-                        this.$logger.log(`[v-scroll].${this._uid}.getListByLimit.success: ${res}`, this.offset, this.limit);
+                        console.log(`[v-scroll].${this._uid}.getListByLimit.success: ${res}`, this.offset, this.limit);
 
                         if (res && res.length > 0) {
                             this.hasData = true;            // 数据标识
@@ -551,12 +551,12 @@
                         this.isLoading = false;
                         return Promise.resolve(res);
                     }).catch(e => {
-                        this.$logger.error(`[v-scroll].${this._uid}.getListByLimit.error: ${e}`);
+                        console.error(`[v-scroll].${this._uid}.getListByLimit.error: ${e}`);
                         this.isLoading = false;
                         return Promise.reject(e);
                     });
                 } catch (e) {
-                    this.$logger.error(`[v-scroll].${this._uid}.getListByLimit.error: ${e}`);
+                    console.error(`[v-scroll].${this._uid}.getListByLimit.error: ${e}`);
                     this.isLoading = false;
                     return Promise.reject(e);
                 }
@@ -564,7 +564,7 @@
 
             /** php一般采用的分页方式 */
             getListByPage ({ refresh = false } = {}) { // php方式
-                this.$logger.log(`[v-scroll].${this._uid}.getListByPage...`, this.page, this.pageNum);
+                console.log(`[v-scroll].${this._uid}.getListByPage...`, this.page, this.pageNum);
                 try {
                     this.isLoading = true;          // 开始加载
                     return this.func({
@@ -572,7 +572,7 @@
                         pageNum: this.pageNum,
                         refresh: refresh
                     }).then(res => {
-                        this.$logger.log(`[v-scroll].${this._uid}.getListByPage.success: ${res}`);
+                        console.log(`[v-scroll].${this._uid}.getListByPage.success: ${res}`);
 
                         if (res && res.length > 0) {
                             this.hasData = true;            // 数据标识
@@ -587,12 +587,12 @@
                         this.isLoading = false;
                         return Promise.resolve(res);
                     }).catch(e => {
-                        this.$logger.error(`[v-scroll].${this._uid}.getListByPage.error: ${e}`);
+                        console.error(`[v-scroll].${this._uid}.getListByPage.error: ${e}`);
                         this.isLoading = false;
                         return Promise.reject(e);
                     });
                 } catch (e) {
-                    this.$logger.error(`[v-scroll].${this._uid}.getListByPage.error: ${e}`);
+                    console.error(`[v-scroll].${this._uid}.getListByPage.error: ${e}`);
                     this.isLoading = false;
                     return Promise.reject(e);
                 }
@@ -600,7 +600,7 @@
 
             /** 时间戳分页，秘语中的分页方式. Author by Feng Xu. on 2017.4.17 */
             getListByTime ({ refresh = false } = {}) {
-                this.$logger.log(`[v-scroll].${this._uid}.getListByTime...`, this.oTime, this.pageSize);
+                console.log(`[v-scroll].${this._uid}.getListByTime...`, this.oTime, this.pageSize);
                 var self = this;
                 try {
                     self.isLoading = true;          // 开始加载
@@ -635,7 +635,7 @@
             refreshList () {
                 // 添加了 || this._isDestroyed的判断，源于食上的详情页，非keepalive，从评论列表到发布评论再返回时，会初始化多个列表实例，造成多个请求。。。
                 if (!this.isEnabled || this._isDestroyed) return;  // 当前滚动条非可用时，直接返回，用于同页面多个实例的时候
-                this.$logger.log(`!!!v-scroll.${this._uid}.refreshList...`);
+                console.log(`!!!v-scroll.${this._uid}.refreshList...`);
                 if (typeof this.func !== 'function') return;  // 无效函数、无数据，直接返回
                 this.refreshTag = true;
                 let func = null;
@@ -655,7 +655,7 @@
                         this.reset({resetData: false, goTop: true}); // 重置，不清除数据，回调之后按照分页数量删除数组内容，避免重新渲染时屏幕闪~ Author by Dio Zhu. on 2017.4.12
 
                         func({refresh: true}).then(res => {
-                            this.$logger.log(`[v-scroll].${this._uid}.refreshList.after: `, this.currentValue.length);
+                            console.log(`[v-scroll].${this._uid}.refreshList.after: `, this.currentValue.length);
                             if (res && res.length) {
                                 this.currentValue = res;
                             } else { // 如果删除了第一条，然后调用此方法，返回的是空数据。 mod by Dio Zhu. on 2017.7.1
@@ -670,7 +670,7 @@
                         }).then(res => {
                             // 结束语判断
                             if (this.scrollTarget) {
-                                this.$logger.log(`[v-scroll].${this._uid}.refreshList.after: `, this.scrollTarget.scrollHeight, this.scrollTarget.offsetHeight);
+                                console.log(`[v-scroll].${this._uid}.refreshList.after: `, this.scrollTarget.scrollHeight, this.scrollTarget.offsetHeight);
                                 this.scrollEndTxt = this.scrollEndFlowTag ? true : this.scrollTarget.scrollHeight > (this.scrollTarget.offsetHeight * 5 / 4);
                             }
 //                        }).then(res => { // 新增逻辑，如果只有一条记录，点击类目时，开启了endFunc，这里需要继续执行getList。 Author by Dio Zhu. on 2017.12.7
@@ -678,16 +678,16 @@
 //                                !this.hasMore && this.hasMoreTotal && this.endFuncEnable &&
 //                                this.currentValue && this.currentValue.length <= 1
 //                            ) { // 如果有结束回调
-//                                this.$logger.log(`[v-scroll].${this._uid}.refreshList.after.endFunc: `, typeof this.endFunc, this.endFuncEnable);
+//                                console.log(`[v-scroll].${this._uid}.refreshList.after.endFunc: `, typeof this.endFunc, this.endFuncEnable);
 //                                try {
 //                                    if (this.isLoading) return;
 //                                    if (this.isEnding) return;
 //                                    this.isEnding = true;
 //                                    this.isLoading = true;
 //                                    this.endFunc().then(res => {
-//             //                            this.$logger.log(`[v-scroll].${this._uid}.endFunc.after: `, res);
+//             //                            console.log(`[v-scroll].${this._uid}.endFunc.after: `, res);
 //                                        if (res) {
-//                                            this.$logger.log(`[v-scroll].${this._uid}.refreshList.endFunc.after: `, res);
+//                                            console.log(`[v-scroll].${this._uid}.refreshList.endFunc.after: `, res);
 //                                            this.reset({resetData: false, goTop: false}); // 重置，且不清数据！
 //                                            this.getList();
 //                                        } else {
@@ -697,16 +697,16 @@
 //                                        this.isLoading = false;
 //                                    });
 //                                } catch (e) {
-//                                    this.$logger.error(`[v-scroll].${this._uid}.refreshList.endFunc.after.error: ${e}`);
+//                                    console.error(`[v-scroll].${this._uid}.refreshList.endFunc.after.error: ${e}`);
 //                                }
 //                            }
                         }).catch(e => {
                             this.refreshTag = false;
-                            this.$logger.error(`[v-scroll].${this._uid}.refreshList.after.error: ${e}`);
+                            console.error(`[v-scroll].${this._uid}.refreshList.after.error: ${e}`);
                         });
                     } catch (e) {
                         this.refreshTag = false;
-                        this.$logger.error(`[v-scroll].${this._uid}.refreshList.after.error: ${e}`);
+                        console.error(`[v-scroll].${this._uid}.refreshList.after.error: ${e}`);
                     }
                 }
             }

@@ -74,17 +74,17 @@
 
         watch: {
             value (val) {
-                this.$logger.log(`v-search.watch.value: ${val}`);
+                console.log(`v-search.watch.value: ${val}`);
                 this.currentValue = val;
             },
 
             currentValue (val) {
-                this.$logger.log(`v-search.watch.currentValue: ${val}`);
+                console.log(`v-search.watch.currentValue: ${val}`);
                 this.$emit('input', val);
             },
 
             visible (val) {
-                this.$logger.log(`v-search.watch.visible: ${val}`);
+                console.log(`v-search.watch.visible: ${val}`);
 //                this.currentValue = '';
 //                if (val) this.$refs.input.focus(); // use v-focus
             }
@@ -92,7 +92,7 @@
 
         activated () {
 //            this.autofocus && this.$refs.input.focus();
-            this.$logger.log('v-search.activated!');
+            console.log('v-search.activated!');
             if (this.autofocus) {
                 this.visible = true;
 //                this.$refs.input.focus();
@@ -103,7 +103,7 @@
         },
 
         mounted () {
-            this.$logger.log('v-search.mounted!');
+            console.log('v-search.mounted!');
 //            this.autofocus && this.$refs.input.focus();
             if (this.autofocus) {
                 this.visible = true;
@@ -117,10 +117,10 @@
         methods: {
             searchFocus () {
                 this.visible = true;
-                this.$logger.log('v-search.searchFocus: ', this.visible, this.placeholder);
+                console.log('v-search.searchFocus: ', this.visible, this.placeholder);
             },
             onClick () {
-                this.$logger.log('v-search.onClick: ');
+                console.log('v-search.onClick: ');
                 this.visible = true;
 //                this.$refs.input.focus();
 //                this.$nextTick().then(() => { // use v-focus
@@ -128,7 +128,7 @@
 //                });
             },
 //            onFocus () {
-//                this.$logger.log('v-search.onFocus: ');
+//                console.log('v-search.onFocus: ');
 //                this.visible = true;
 // //                this.$refs.input.focus();
 //                this.$nextTick(() => { // use v-focus
@@ -136,11 +136,11 @@
 //                });
 //            },
             onBlur () {
-                this.$logger.log('v-search.onBlur: ');
+                console.log('v-search.onBlur: ');
                 this.visible = false;
             },
             onEnter () {
-                this.$logger.log('v-search.onEnter: ');
+                console.log('v-search.onEnter: ');
                 this.$emit('handle-search', this.currentValue);
             },
             /**
@@ -153,11 +153,11 @@
                 this.currentValue = e.target.value;
             },
             onCcompositionStart (e) {
-                this.$logger.log('v-search.onCcompositionStart: ', e.target.value);
+                console.log('v-search.onCcompositionStart: ', e.target.value);
                 this.isLock = true;
             },
             onCompositionEnd (e) {
-                this.$logger.log('v-search.onCompositionEnd: ', e.target.value);
+                console.log('v-search.onCompositionEnd: ', e.target.value);
                 this.isLock = false;
                 this.currentValue = e.target.value;
             },

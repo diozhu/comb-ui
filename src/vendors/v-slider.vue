@@ -168,8 +168,8 @@
             };
         },
         created () {
-            this.$logger.log(this.$root.pages, '-------this.$root.pages');
-            this.$logger.log(this.$root.sliderinit, '-------this.$root.sliderinit');
+            console.log(this.$root.pages, '-------this.$root.pages');
+            console.log(this.$root.sliderinit, '-------this.$root.sliderinit');
             this.pages = this.$root.pages;
             this.sliderinit = this.$root.sliderinit;
         },
@@ -203,12 +203,12 @@
                     }
                     // 遍历子集
                     let $sliderChildren = $slider.children; // 取出slider下的所有item
-                    this.$logger.log(lastPage, '最后一页数');
+                    console.log(lastPage, '最后一页数');
                     let offsetLeft = $sliderChildren[lastPage].offsetLeft;
                     if (this.sliderinit.loop) {
                         offsetLeft = $sliderChildren[lastPage].offsetLeft;
                     }
-                    this.$logger.log(offsetLeft, '最后一页的offsetleft');
+                    console.log(offsetLeft, '最后一页的offsetleft');
                     return offsetLeft;
                 },
                 set: function (value) {
@@ -236,7 +236,7 @@
             } else if (!that.sliderinit.isPreview && that.sliderinit.height) {
                 that.basicdata.height = that.sliderinit.height / 37.5 + 'rem';
             }
-            this.$logger.log(that.height);
+            console.log(that.height);
             // 自动轮播 支持无缝滚动
             that.clock().begin(that);
         },
@@ -254,7 +254,7 @@
                 }
                 // 阻止页面滚动
                 // document.addEventListener('touchmove', that.preventDefault(e));
-                this.$logger.log(e, 'v-slider');
+                console.log(e, 'v-slider');
                 if (e.type === 'touchstart') {
                     if (e.touches.length > 1) {
                         this.basicdata.tracking = false;
@@ -277,19 +277,19 @@
                         this.basicdata.end.x = e.targetTouches[0].clientX;
                         this.basicdata.end.y = e.targetTouches[0].clientY;
                     }
-                    this.$logger.log(this.basicdata.end.x - this.basicdata.start.x, '移动的距离');
-                    this.$logger.log(this.currentWidth, '宽度');
+                    console.log(this.basicdata.end.x - this.basicdata.start.x, '移动的距离');
+                    console.log(this.currentWidth, '宽度');
                     this.basicdata.poswidth = -(this.currentWidth) + this.basicdata.end.x - this.basicdata.start.x + 'px';
-                    this.$logger.log(this.basicdata.poswidth, '最后的距离');
+                    console.log(this.basicdata.poswidth, '最后的距离');
                 }
             },
             swipeEnd (e) {
                 this.basicdata.tracking = false;
                 let now = new Date().getTime();
                 let deltaTime = now - this.basicdata.start.t;
-                this.$logger.log(deltaTime, '移动的时间');
+                console.log(deltaTime, '移动的时间');
                 let deltaX = this.basicdata.end.x - this.basicdata.start.x;
-                this.$logger.log(deltaX, 'deltaX');
+                console.log(deltaX, 'deltaX');
                 if (deltaX === 0) {
                     window.history.back();
                     return;
@@ -359,7 +359,7 @@
                 }
 
                 that.basicdata.poswidth = -that.currentWidth + 'px';
-                this.$logger.log(that.currentWidth, '最后的宽度slider');
+                console.log(that.currentWidth, '最后的宽度slider');
 
                 // 广播事件
                 if (that.sliderinit.currentPage < 0 || that.sliderinit.currentPage >= that.pagenums) {

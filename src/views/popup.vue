@@ -81,7 +81,7 @@ export default {
         },
 
         confirm () {
-            this.$logger.log('popup.confirm: ');
+            console.log('popup.confirm: ');
             this.$toast(this.dateValue);
             this.popupVisible4 = false;
         }

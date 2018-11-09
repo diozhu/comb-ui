@@ -64,7 +64,7 @@
         },
 
         created () {
-//            this.$logger.log('v-feed created...');
+//            console.log('v-feed created...');
         },
 
         methods: {

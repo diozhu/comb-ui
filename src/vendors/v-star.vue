@@ -58,7 +58,7 @@
         },
 
         mounted () {
-            this.$logger.log('v-star.mounted!');
+            console.log('v-star.mounted!');
         },
 
         methods: {

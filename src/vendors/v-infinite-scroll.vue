@@ -171,11 +171,11 @@
 
         computed: {
             listVisible () { // 可视的数组
-//                this.$logger.log(`v-infinite-scroll.${this._uid}.computed.listVisible: `, this.listData, Math.max(0, this.start - this.size), Math.min(this.currentValue.length, this.start + this.size));
+//                console.log(`v-infinite-scroll.${this._uid}.computed.listVisible: `, this.listData, Math.max(0, this.start - this.size), Math.min(this.currentValue.length, this.start + this.size));
                 return this.listData.slice(Math.max(0, this.start - this.size), Math.min(this.listData.length, this.start + this.size));
             },
             tombHeight () {
-//                this.$logger.log(`v-infinite-scroll.${this._uid}.computed.tombHeight: `, this.tombstone, this.$refs, this.$refs.tomb);
+//                console.log(`v-infinite-scroll.${this._uid}.computed.tombHeight: `, this.tombstone, this.$refs, this.$refs.tomb);
                 return this.tombstone ? this.$refs.tomb && this.$refs.tomb.offsetHeight : 0;
             },
             wrapperHeight () { // 容器高度
@@ -185,7 +185,7 @@
 
         watch: {
             value (val) {
-//                this.$logger.log(`v-infinite-scroll.${this._uid}.watch.value: `, val);
+//                console.log(`v-infinite-scroll.${this._uid}.watch.value: `, val);
 
                 this.currentValue = val;
 
@@ -200,17 +200,17 @@
             },
             listData (val) {
                 if (val && val.length > this.currentValue.length) { // 如果是墓碑序列大于真实数据，触发加载
-                    this.$logger.log(`v-infinite-scroll.${this._uid}.watch.listData: get more ~~~`);
+                    console.log(`v-infinite-scroll.${this._uid}.watch.listData: get more ~~~`);
                     bus.$emit('v-scroll.getList'); // 触发滚动条组件的数据获取方法
                 }
             }
         },
 
         created () {
-            this.$logger.log(`v-infinite-scroll.${this._uid}.created...`);
+            console.log(`v-infinite-scroll.${this._uid}.created...`);
         },
         mounted () {
-            this.$logger.log(`v-infinite-scroll.${this._uid}.mounted...`);
+            console.log(`v-infinite-scroll.${this._uid}.mounted...`);
 //            this.init();
 
             this.$nextTick().then(() => { // 滚动元素
@@ -223,7 +223,7 @@
 
         methods: {
             init () { // 初始化
-                this.$logger.log(`v-infinite-scroll.${this._uid}.init...`);
+                console.log(`v-infinite-scroll.${this._uid}.init...`);
                 this.reset();
                 this.load();
             },
@@ -249,11 +249,11 @@
             },
 
             reset () { // 重置
-                this.$logger.log(`v-infinite-scroll.${this._uid}.reset...`);
+                console.log(`v-infinite-scroll.${this._uid}.reset...`);
             },
 
             load () {
-                this.$logger.log(`v-infinite-scroll.${this._uid}.load...`);
+                console.log(`v-infinite-scroll.${this._uid}.load...`);
                 if (this.tombstone) {
                     this.listData.length += this.size;
                     this.loadList();
@@ -263,7 +263,7 @@
             },
 
             getList () { // 不能直接获取，需要通过scroll组件回调
-                this.$logger.log(`v-infinite-scroll.${this._uid}.getList...`);
+                console.log(`v-infinite-scroll.${this._uid}.getList...`);
 
 //                // 判断墓碑标识
 //                if (this.tombstone) { // 如果墓碑模式，补充进异步列表，并计算高度
@@ -296,7 +296,7 @@
             },
 
             loadList () { // 计算高度、位置
-                this.$logger.log(`v-infinite-scroll.${this._uid}.loadList...`);
+                console.log(`v-infinite-scroll.${this._uid}.loadList...`);
                 let list = [],
                     start = 0,
                     end = this.tombstone ? this.listData.length : this.currentValue.length;
@@ -320,7 +320,7 @@
             },
 
             updateDomHeight (idx) { // 计算高度
-//                this.$logger.log(`v-infinite-scroll.${this._uid}.updateDomHeight...`);
+//                console.log(`v-infinite-scroll.${this._uid}.updateDomHeight...`);
                 let item = this.listData[idx],
                     dom = this.$refs['item' + idx];
                 if (dom && dom[0]) { // 实际dom高度
@@ -331,7 +331,7 @@
             },
 
             updateDomPosition () { // 计算dom位置、内容高度、可视范围
-                this.$logger.log(`v-infinite-scroll.${this._uid}.updateDomPosition...`);
+                console.log(`v-infinite-scroll.${this._uid}.updateDomPosition...`);
                 this.height = 0;
                 for (let i = 0, len = this.listData.length;i < len;i++) {
                     let pre = this.listData[i - 1];
@@ -347,7 +347,7 @@
             },
 
             updateVisual () { // 更新可视范围
-//                this.$logger.log(`v-infinite-scroll.${this._uid}.updateVisual...`);
+//                console.log(`v-infinite-scroll.${this._uid}.updateVisual...`);
 //                let scrollTarget = this.$refs.scroll.$data.scrollTarget;
 //                if (!scrollTarget) return;
 
@@ -355,17 +355,17 @@
                 let top = -this.y - this.$refs.container.offsetHeight;
                 for (let i = 0, len = this.listData.length;i < len;i++) {
                     if (this.listData[i].top > top) {
-//                        this.$logger.log(`v-infinite-scroll.${this._uid}.updateVisual...1`, i, top, this.listData[i].top, this.start);
+//                        console.log(`v-infinite-scroll.${this._uid}.updateVisual...1`, i, top, this.listData[i].top, this.start);
 //                        this.start = Math.max(0, i - 1);
                         this.$set(this, 'start', Math.max(0, i - 1));
-//                        this.$logger.log(`v-infinite-scroll.${this._uid}.updateVisual..2.`, i, top, this.listData[i].top, this.start);
+//                        console.log(`v-infinite-scroll.${this._uid}.updateVisual..2.`, i, top, this.listData[i].top, this.start);
                         break;
                     }
                 }
             },
 
             onScroll (e) {
-//                this.$logger.log(`v-infinite-scroll.${this._uid}.onScroll...`);
+//                console.log(`v-infinite-scroll.${this._uid}.onScroll...`);
 /*
                 if (this.scrollTarget.scrollTop + this.scrollTarget.offsetHeight > this.height - this.scrollDistance) {
                     this.load();
@@ -375,7 +375,7 @@
 */
                 let center = -(this.totalHeight - this.$el.offsetHeight) / 2;
 //                let center = -(this.totalHeight - this.$el.offsetHeight);
-//                this.$logger.log(`v-infinite-scroll.${this._uid}.onScroll...`, center);
+//                console.log(`v-infinite-scroll.${this._uid}.onScroll...`, center);
                 if (this.y < center) {
                     this.load();
                 }
@@ -384,10 +384,10 @@
             },
 
             onMousewheel (e) {
-//                this.$logger.log(`v-infinite-scroll.${this._uid}.onMousewheel...`, e);
+//                console.log(`v-infinite-scroll.${this._uid}.onMousewheel...`, e);
                 let wheelDeltaY = -e.deltaY,
                     newY = this.y + Math.round(wheelDeltaY);
-//                this.$logger.log(`v-infinite-scroll.${this._uid}.onMousewheel...`, wheelDeltaY, newY, this.$el.offsetHeight);
+//                console.log(`v-infinite-scroll.${this._uid}.onMousewheel...`, wheelDeltaY, newY, this.$el.offsetHeight);
 
                 if (newY > 0) {
                     newY = 0;
@@ -403,11 +403,11 @@
 //                e.stopPropagation();
                 e.preventDefault();
 
-//                this.$logger.log(`v-infinite-scroll.${this._uid}.onTouchStart...`);
+//                console.log(`v-infinite-scroll.${this._uid}.onTouchStart...`);
                 if (!this.enabled) return;
 
                 let point = e.touches ? e.touches[0] : e;
-//                this.$logger.log(`v-infinite-scroll.${this._uid}.onTouchStart...`, point.pageY);
+//                console.log(`v-infinite-scroll.${this._uid}.onTouchStart...`, point.pageY);
                 this.isAnimating = false;
                 this.moved = false;
                 this.startY = this.y;
@@ -423,7 +423,7 @@
                     deltaY = point.pageY - this.pointY,
                     newY = this.startY + deltaY;
                 this.distY = deltaY;
-//                this.$logger.log(`v-infinite-scroll.${this._uid}.onTouchMove...${newY}`);
+//                console.log(`v-infinite-scroll.${this._uid}.onTouchMove...${newY}`);
                 if (newY > 0) {
                     newY = 0;
                 } else if (newY <= -(this.totalHeight - this.$el.offsetHeight)) {
@@ -444,14 +444,14 @@
                     momentumY = 0,
                     deceleration = 0.002,
                     easing = ''; // this.ease.circular;
-//                this.$logger.log(`v-infinite-scroll.${this._uid}.onTouchEnd...`);
+//                console.log(`v-infinite-scroll.${this._uid}.onTouchEnd...`);
 
                 this._translate(0, newY);
 
                 this.onScroll();
 
                 if (duration < 300) {
-                    this.$logger.log(`v-infinite-scroll.${this._uid}.onTouchEnd...`, duration);
+                    console.log(`v-infinite-scroll.${this._uid}.onTouchEnd...`, duration);
                     momentumY = this._momentum(this.y, this.startY, duration, this.totalHeight, this.wrapperHeight, deceleration) || {
                         destination: newY,
                         duration: 0
@@ -467,7 +467,7 @@
 
             _translate (x, y) { // 移动到指定位置
                 if (this.y === y) return;
-//                this.$logger.log(`v-infinite-scroll.${this._uid}._translate...${x}, ${y}`);
+//                console.log(`v-infinite-scroll.${this._uid}._translate...${x}, ${y}`);
                 if (y > 0) {
                     y = 0;
                 } else if (y <= -(this.totalHeight - this.$el.offsetHeight)) {

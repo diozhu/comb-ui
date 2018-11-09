@@ -75,7 +75,7 @@
         },
 
         mounted () {
-            this.$logger.log('v-viewImage.mounted: ', this.initIndex, this.$root.img);
+            console.log('v-viewImage.mounted: ', this.initIndex, this.$root.img);
             this.$nextTick(() => {
                 this.init();
             });
@@ -186,7 +186,7 @@
              *              -- Author by Dio Zhu. on 2017.2.14
              */
             swipe: function (e) {
-                this.$logger.log('swipe in viewImage...', this.swiper.activeIndex, this.swiper.previousIndex);
+                console.log('swipe in viewImage...', this.swiper.activeIndex, this.swiper.previousIndex);
                 e.srcEvent.stopPropagation();
                 if (!this.swiper.previousIndex) {
                     this.$router.go(-1);
@@ -194,44 +194,44 @@
             },
 
             onTouchStart (o, e) {
-                this.$logger.log('v-viewImage.swiper.onTouchStart: ');
+                console.log('v-viewImage.swiper.onTouchStart: ');
                 this.fingerType = e.touches.length > 1 ? 'pinch' : 'swipe'; // 确定手势
             },
             onTouchMove (o, e) {
-                this.$logger.log('v-viewImage.swiper.onTouchMove: ', this.fingerType);
+                console.log('v-viewImage.swiper.onTouchMove: ', this.fingerType);
             },
             onTouchEnd (o, e) {
-                this.$logger.log('v-viewImage.swiper.onTouchEnd: ');
+                console.log('v-viewImage.swiper.onTouchEnd: ');
             }
             // goToPre () {
             //     window.history.back();
             // },
 
 //             pinchIn (e) { // 根据移动距离计算比率
-// //                this.$logger.log('v-viewImage.pinchIn: ', e.distance);
+// //                console.log('v-viewImage.pinchIn: ', e.distance);
 //                 this.rote = (this.rote - e.distance / 60) > 1 ? this.rote - e.distance / 60 : 1;
 //                 this.$set(this.imgStyle, 'width', this.rote * 100 + '%');
-//                 this.$logger.log('v-viewImage.pinchIn: ', this.imgStyle.width);
+//                 console.log('v-viewImage.pinchIn: ', this.imgStyle.width);
 //             },
 //             pinchOut (e) {
-// //                this.$logger.log('v-viewImage.pinchOut: ', e.distance);
+// //                console.log('v-viewImage.pinchOut: ', e.distance);
 //                 this.rote = (this.rote + e.distance / 60) < this.maxRote ? this.rote + e.distance / 60 : this.maxRote;
 // //                this.imgStyle.width = this.rote * 100 + '%';
 //                 this.$set(this.imgStyle, 'width', this.rote * 100 + '%');
-//                 this.$logger.log('v-viewImage.pinchOut: ', this.imgStyle.width);
+//                 console.log('v-viewImage.pinchOut: ', this.imgStyle.width);
 //             },
 
 //             panStart (e) {
-//                 this.$logger.log('v-viewImage.panStart: ');
+//                 console.log('v-viewImage.panStart: ');
 //                 this.startX = e.srcEvent.touches ? e.srcEvent.touches[0].clientX : e.srcEvent.clientX;
 //                 this.startY = e.srcEvent.touches ? e.srcEvent.touches[0].clientY : e.srcEvent.clientY;
 // //                this.domLeft =
 //             },
 //             panMove (e) {
-//                 this.$logger.log('v-viewImage.panMove: ', e);
+//                 console.log('v-viewImage.panMove: ', e);
 //             },
 //             panEnd (e) {
-//                 this.$logger.log('v-viewImage.panEnd: ', e);
+//                 console.log('v-viewImage.panEnd: ', e);
 //             },
 //             _getPinchDist (startTouchs, currentTouchs) {
 //                 // console.log('#############', startTouchs, currentTouchs);
@@ -262,7 +262,7 @@
 //                 }
 //                 if (r > 300) r = 300;
 //                 // obj.style.backgroundSize = r === 100 ? 'contain' : r + '%';
-//                 // this.$logger.log(`v-viewImage.onPinch..., pinch: ${currentRatio} => ${ratio}`, r);
+//                 // console.log(`v-viewImage.onPinch..., pinch: ${currentRatio} => ${ratio}`, r);
 //                 if (r <= 100) { // 还原
 //                     // obj.style.backgroundSize = 'contain';
 //                     // obj.style.backgroundPosition = '50% 50%';
@@ -292,9 +292,9 @@
 //                 if (distX > maxX) distX = maxX;
 //                 if (distY < minY) distY = minY;
 //                 if (distY > maxY) distY = maxY;
-//                 this.$logger.log(`v-swipe.handleTouchMove => pic move: `, oldX, oldY, distX, distY, ' ::: ', minX, maxX, minY, maxY);
-//                 // this.$logger.log(`v-swipe.handleTouchMove => pic move: 222: `, targetW, distRatioX);
-//                 // this.$logger.log(`v-swipe.handleTouchMove => pic move: 333 : `, parseFloat(pos[0]), (distRatioX * 100));
+//                 console.log(`v-swipe.handleTouchMove => pic move: `, oldX, oldY, distX, distY, ' ::: ', minX, maxX, minY, maxY);
+//                 // console.log(`v-swipe.handleTouchMove => pic move: 222: `, targetW, distRatioX);
+//                 // console.log(`v-swipe.handleTouchMove => pic move: 333 : `, parseFloat(pos[0]), (distRatioX * 100));
 //                 this.imgStyle.transform = 'translate3d(' + (distX) + 'px, ' + (distY) + 'px, 0)';
 //                 // this.imgStyle.WebkitTransform = 'translate3d(' + distX + 'px, ' + distY + 'px, 0)';
 //             }

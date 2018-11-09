@@ -25,7 +25,7 @@
             };
         },
         created () {
-//            this.$logger.log('v-text.created: ', this.expandEnabled);
+//            console.log('v-text.created: ', this.expandEnabled);
         },
         methods: {
             handleClick () {

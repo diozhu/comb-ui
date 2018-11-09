@@ -131,7 +131,7 @@
         },
 
         mounted () {
-//            this.$logger.log('=====>>> ', this.comment);
+//            console.log('=====>>> ', this.comment);
 //            // 初始化评论赞对象
             if (!this.comment.CommentId && !this.subjects.hasOwnProperty(this.comment.Id)) {
                 this.$store.commit('SET_COMMENT', Object.create(this.comment));
@@ -162,7 +162,7 @@
 //                        e.target.classList.add('done');
                         this.$store.commit('ADD_PRAISE', this.comment);
                     }).catch(e => {
-                        this.$logger.error('post praise error: ', e);
+                        console.error('post praise error: ', e);
                     });
                 } else { // 取消点赞
                     MicroComment.delPraise({
@@ -177,14 +177,14 @@
 //                        e.target.classList.add('cancel');
                         this.$store.commit('DEL_PRAISE', this.comment);
                     }).catch(e => {
-                        this.$logger.error('delete praise error: ', e);
+                        console.error('delete praise error: ', e);
                     });
                 }
             },
 
             addComment (e) {
                 if (!this.commentEnable) return;
-                this.$logger.log('v-comment-bar.method.addComment...');
+                console.log('v-comment-bar.method.addComment...');
                 e.stopPropagation();
 
                 // 如果是主题，直接返回parent = 0，如果有parent直接返回，如果没有，取第一级评论的commentId
@@ -197,10 +197,10 @@
 //                MicroComment.delTopic({
 //                    topicId: this.$route.params.topicId || 0
 //                }).then(res => {
-//                    this.$logger.log('v-comment-bar.delTopic.SUCCESS: ', res);
+//                    console.log('v-comment-bar.delTopic.SUCCESS: ', res);
 //                    this.$router.go(-1);
 //                }).catch(e => {
-//                    this.$logger.error('v-comment-bar.delTopic.ERROR: ', e);
+//                    console.error('v-comment-bar.delTopic.ERROR: ', e);
 //                });
             },
 
@@ -209,11 +209,11 @@
                     subjectId: this.$route.params.id,
                     commentId: this.comment.CommentId
                 }).then(res => {
-                    this.$logger.log('v-comment-bar.delComment.SUCCESS: ', res);
+                    console.log('v-comment-bar.delComment.SUCCESS: ', res);
                     this.$store.commit('DEL_COMMENT_NUM', {Id: this.comment.Id}); // 提交变更
                     this.$emit('handle-del-comment', res);
                 }).catch(e => {
-                    this.$logger.error('v-comment-bar.delComment.ERROR: ', e);
+                    console.error('v-comment-bar.delComment.ERROR: ', e);
                 });
             }
         }

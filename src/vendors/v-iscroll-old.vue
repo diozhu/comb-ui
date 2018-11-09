@@ -150,7 +150,7 @@
 //            },
 
             isShowText () {
-//                this.$logger.log('--------> ', this.dataExist, this.isLoadMore);
+//                console.log('--------> ', this.dataExist, this.isLoadMore);
                 return !!(this.hasData && !this.hasMore);
 //                return !!(this.hasData && !this.hasMore && document.body.scrollTop > 100);
             }
@@ -164,7 +164,7 @@
                 this.$emit('input', val);
             },
             enabled (val) {
-                this.$logger.log('v-iscroll.watch.enabled! ');
+                console.log('v-iscroll.watch.enabled! ');
                 this.isEnabled = val;
             }
         },
@@ -174,7 +174,7 @@
             // bus.$on('v-iscroll.getList', this.getList); // 监听上拉加载事件
         },
         mounted () {
-            this.$logger.log(`[v-iscroll].${this._uid}.mounted...`, this.$route.name, this.$parent.$route.name);
+            console.log(`[v-iscroll].${this._uid}.mounted...`, this.$route.name, this.$parent.$route.name);
             this.init();
         },
 
@@ -195,7 +195,7 @@
             },
 
             init () {
-                this.$logger.log(`[v-iscroll].${this._uid}.init...`);
+                console.log(`[v-iscroll].${this._uid}.init...`);
 
                 this.reset(); // 重置
 
@@ -214,12 +214,12 @@
              * 获取数据
              */
             getList () {
-                this.$logger.log(`[v-iscroll].${this._uid}.getList.befor: !!!`);
+                console.log(`[v-iscroll].${this._uid}.getList.befor: !!!`);
                 if (!this.isEnabled) return;  // 当前滚动条非可用时，直接返回，用于同页面多个实例的时候
                 // // 结束语判断
                 // if (!this.scrollEndTxt) this.scrollEndTxt = document.body.scrollHeight > document.body.offsetHeight;
                 let target = this.scrollTarget;
-                this.$logger.log(`[v-iscroll].${this._uid}.getList.befor: `, target);
+                console.log(`[v-iscroll].${this._uid}.getList.befor: `, target);
 
                 if (typeof this.func !== 'function' || !this.hasMore) return;  // 无效函数、无数据，直接返回
 
@@ -244,23 +244,23 @@
 
                             // // 结束语判断
                             // if (this.scrollTarget) {
-                            //     this.$logger.log(`[v-iscroll].${this._uid}.getList.after: `, this.scrollTarget.scrollHeight, this.scrollTarget.offsetHeight);
+                            //     console.log(`[v-iscroll].${this._uid}.getList.after: `, this.scrollTarget.scrollHeight, this.scrollTarget.offsetHeight);
                             //     this.scrollEndTxt = this.scrollTarget.scrollHeight > this.scrollTarget.offsetHeight;
                             // }
                         });
                     } catch (e) {
-                        this.$logger.error(`[v-iscroll].${this._uid}.getList.after.error: ${e}`);
+                        console.error(`[v-iscroll].${this._uid}.getList.after.error: ${e}`);
                     }
                 }
             },
 
             updateList (el, data) {
-                this.$logger.warn(`[v-iscroll].${this._uid}.updateList: `, el, data);
+                console.warn(`[v-iscroll].${this._uid}.updateList: `, el, data);
             },
 
             /** nodejs一般采用的区间方式 */
             getListBySection ({ refresh = false } = {}) { // nodejs方式
-                this.$logger.log(`[v-iscroll].${this._uid}.getListBySection...`);
+                console.log(`[v-iscroll].${this._uid}.getListBySection...`);
                 try {
                     this.isLoading = true;          // 开始加载
 
@@ -274,7 +274,7 @@
                         limit: limit,
                         refresh: refresh
                     }).then(res => {
-                        this.$logger.log(`[v-iscroll].${this._uid}.getListBySection.success: ${res}`, this.offset, this.limit);
+                        console.log(`[v-iscroll].${this._uid}.getListBySection.success: ${res}`, this.offset, this.limit);
 
                         if (res && res.length > 0) {
                             this.hasData = true;              // 数据标识
@@ -289,19 +289,19 @@
                         this.isLoading = false;
                         return Promise.resolve(res);
                     }).catch(e => {
-                        this.$logger.error(`[v-iscroll].${this._uid}.getListBySection.error: ${e}`);
+                        console.error(`[v-iscroll].${this._uid}.getListBySection.error: ${e}`);
                         this.isLoading = false;
                         return Promise.reject(e);
                     });
                 } catch (e) {
-                    this.$logger.error(`[v-iscroll].${this._uid}.getListBySection.error: ${e}`);
+                    console.error(`[v-iscroll].${this._uid}.getListBySection.error: ${e}`);
                     this.isLoading = false;
                     return Promise.reject(e);
                 }
             },
             /** go一般采用的区间方式 */
             getListByLimit ({ refresh = false } = {}) { // go方式
-                this.$logger.log(`[v-iscroll].${this._uid}.getListByLimit...`);
+                console.log(`[v-iscroll].${this._uid}.getListByLimit...`);
                 try {
                     this.isLoading = true;          // 开始加载
                     return this.func({
@@ -309,7 +309,7 @@
                         limit: this.limit,
                         refresh: refresh
                     }).then(res => {
-                        this.$logger.log(`[v-iscroll].${this._uid}.getListByLimit.success: ${res}`, this.offset, this.limit);
+                        console.log(`[v-iscroll].${this._uid}.getListByLimit.success: ${res}`, this.offset, this.limit);
 
                         if (res && res.length > 0) {
                             this.hasData = true;            // 数据标识
@@ -324,12 +324,12 @@
                         this.isLoading = false;
                         return Promise.resolve(res);
                     }).catch(e => {
-                        this.$logger.error(`[v-iscroll].${this._uid}.getListByLimit.error: ${e}`);
+                        console.error(`[v-iscroll].${this._uid}.getListByLimit.error: ${e}`);
                         this.isLoading = false;
                         return Promise.reject(e);
                     });
                 } catch (e) {
-                    this.$logger.error(`[v-iscroll].${this._uid}.getListByLimit.error: ${e}`);
+                    console.error(`[v-iscroll].${this._uid}.getListByLimit.error: ${e}`);
                     this.isLoading = false;
                     return Promise.reject(e);
                 }
@@ -337,7 +337,7 @@
 
             /** php一般采用的分页方式 */
             getListByPage ({ refresh = false } = {}) { // php方式
-                this.$logger.log(`[v-iscroll].${this._uid}.getListByPage...`, this.page, this.pageNum);
+                console.log(`[v-iscroll].${this._uid}.getListByPage...`, this.page, this.pageNum);
                 try {
                     this.isLoading = true;          // 开始加载
                     return this.func({
@@ -345,7 +345,7 @@
                         pageNum: this.pageNum,
                         refresh: refresh
                     }).then(res => {
-                        this.$logger.log(`[v-iscroll].${this._uid}.getListByPage.success: ${res}`);
+                        console.log(`[v-iscroll].${this._uid}.getListByPage.success: ${res}`);
 
                         if (res && res.length > 0) {
                             this.hasData = true;            // 数据标识
@@ -360,12 +360,12 @@
                         this.isLoading = false;
                         return Promise.resolve(res);
                     }).catch(e => {
-                        this.$logger.error(`[v-iscroll].${this._uid}.getListByPage.error: ${e}`);
+                        console.error(`[v-iscroll].${this._uid}.getListByPage.error: ${e}`);
                         this.isLoading = false;
                         return Promise.reject(e);
                     });
                 } catch (e) {
-                    this.$logger.error(`[v-iscroll].${this._uid}.getListByPage.error: ${e}`);
+                    console.error(`[v-iscroll].${this._uid}.getListByPage.error: ${e}`);
                     this.isLoading = false;
                     return Promise.reject(e);
                 }
@@ -373,7 +373,7 @@
 
             /** 时间戳分页，秘语中的分页方式. Author by Feng Xu. on 2017.4.17 */
             getListByTime ({ refresh = false } = {}) {
-                this.$logger.log(`[v-iscroll].${this._uid}.getListByTime...`, this.oTime, this.pageSize);
+                console.log(`[v-iscroll].${this._uid}.getListByTime...`, this.oTime, this.pageSize);
                 var self = this;
                 try {
                     self.isLoading = true;          // 开始加载
@@ -406,7 +406,7 @@
 
             refreshList () {
                 if (!this.isEnabled) return;  // 当前滚动条非可用时，直接返回，用于同页面多个实例的时候
-                this.$logger.log(`!!!v-iscroll.${this._uid}.refreshList...`);
+                console.log(`!!!v-iscroll.${this._uid}.refreshList...`);
                 if (typeof this.func !== 'function') return;  // 无效函数、无数据，直接返回
 
                 this.refreshTag = true;
@@ -427,7 +427,7 @@
                         this.reset({resetData: false}); // 重置，不清除数据，回调之后按照分页数量删除数组内容，避免重新渲染时屏幕闪~ Author by Dio Zhu. on 2017.4.12
 
                         func({refresh: true}).then(res => {
-                            this.$logger.log(`[v-iscroll].${this._uid}.refreshList.after: `, this.currentValue.length);
+                            console.log(`[v-iscroll].${this._uid}.refreshList.after: `, this.currentValue.length);
                             if (res && res.length) {
                                 this.currentValue = res;
                             }
@@ -437,18 +437,18 @@
 //                            }
                             // 结束语判断
                             // let target = this.scrollTarget;
-                            // this.$logger.log(`[v-iscroll].${this._uid}.refreshList.after: `, target.scrollHeight, target.offsetHeight);
+                            // console.log(`[v-iscroll].${this._uid}.refreshList.after: `, target.scrollHeight, target.offsetHeight);
                             // this.scrollEndTxt = target.scrollHeight > target.offsetHeight;
 
                             this.refreshTag = false;
 //                            this.inertia(this.translate);
                         }).catch(e => {
                             this.refreshTag = false;
-                            this.$logger.error(`[v-iscroll].${this._uid}.refreshList.after.error: ${e}`);
+                            console.error(`[v-iscroll].${this._uid}.refreshList.after.error: ${e}`);
                         });
                     } catch (e) {
                         this.refreshTag = false;
-                        this.$logger.error(`[v-iscroll].${this._uid}.refreshList.after.error: ${e}`);
+                        console.error(`[v-iscroll].${this._uid}.refreshList.after.error: ${e}`);
                     }
                 }
             }

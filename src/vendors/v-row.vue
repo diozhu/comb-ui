@@ -60,7 +60,7 @@
             }
         },
         mounted () {
-            // this.$logger.log('v-row.mounted: ', this.$el, this.$el.childNodes);
+            // console.log('v-row.mounted: ', this.$el, this.$el.childNodes);
             if (this.avg && this.gutter) {
                 [].forEach.call(this.$el.childNodes, (v, i) => {
                     if (i === 0) {

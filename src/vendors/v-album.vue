@@ -92,17 +92,17 @@
                 });
             },
             handleClick (e, idx) {
-                this.$logger.log('v-album.handleClick: ', ...arguments);
+                console.log('v-album.handleClick: ', ...arguments);
                 this.$emit('click', ...arguments);
             },
             goViewer (idx) {
-                this.$logger.log('v-album.goViewer: ', idx);
+                console.log('v-album.goViewer: ', idx);
 //                this.$root.img = this.imgList;
                 this.$root.pages = [];
                 this.currentValue.forEach((v, i) => {
                     this.$root.pages.push(v.url);
                 });
-                this.$logger.log(this.$root.pages, '---------v-album');
+                console.log(this.$root.pages, '---------v-album');
                 this.$root.sliderinit = {currentPage: idx};
 //                this.$root.sliderinit.currentPage = idx;
                 this.$router.push({name: 'viewer'});

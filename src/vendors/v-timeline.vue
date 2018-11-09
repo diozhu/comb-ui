@@ -57,7 +57,7 @@
         },
 
         created () {
-            this.$logger.log('v-timeline.created... ');
+            console.log('v-timeline.created... ');
         },
 
         methods: {

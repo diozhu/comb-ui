@@ -162,7 +162,7 @@
                         hour: [0, 23],
                         min: [0, 59]
                     };
-//                    this.$logger.log(`v-datetime-picker[${this._uid}].rims: `, this.currentValue, this.startDate, this.startHour, this.endHour);
+//                    console.log(`v-datetime-picker[${this._uid}].rims: `, this.currentValue, this.startDate, this.startHour, this.endHour);
 //                    this.rimDetect(result, 'start');
 //                    this.rimDetect(result, 'end');
                     return result;
@@ -364,7 +364,7 @@
                     m: this.rims.min
                 };
                 let typesArr = this.typeStr.split('');
-                // this.$logger.log('!!!!!!!!!!!!!!! dateSlots: ', INTERVAL_MAP, typesArr);
+                // console.log('!!!!!!!!!!!!!!! dateSlots: ', INTERVAL_MAP, typesArr);
                 typesArr.forEach(type => {
                     if (INTERVAL_MAP[type]) {
                         this.pushSlots.apply(null, [dateSlots, type].concat(INTERVAL_MAP[type]));
@@ -388,7 +388,7 @@
                     dateSlots.splice(5, 0, { divider: true, content: '日', className: 'dayStr' });
                 }
                 this.dateSlots = dateSlots;
-                // this.$logger.log('v-datetime-picker.generateSlots: ', this.rims, dateSlots);
+                // console.log('v-datetime-picker.generateSlots: ', this.rims, dateSlots);
                 this.handleExceededValue();
             },
 

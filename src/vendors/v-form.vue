@@ -108,7 +108,7 @@
                 this.currentValue = val;
             },
             currentValue (val) {
-                // this.$logger.log('【v-form】watch.currentValue: ', val);
+                // console.log('【v-form】watch.currentValue: ', val);
                 this.$emit('input', val);
             },
             options (val) {
@@ -126,7 +126,7 @@
 
         methods: {
             init () {
-                // this.$logger.log('【v-form】init... ', this.options);
+                // console.log('【v-form】init... ', this.options);
                 for (let key in this.options) { // 自定义显示条件，根据传入的表达式对象进行显示判断。
                     if (this.options.hasOwnProperty(key) && this.options[key]['displayExpr']) {
                         this.bindWatcher(key, this.options[key]['displayExpr']);
@@ -138,7 +138,7 @@
                 if (!expr || !expr.exp || !expr.key || !expr.val) return;
                 let key = 'currentValue.' + expr.key;
                 let fn = (k, v, o) => {
-                    // this.$logger.log('【v-form】bindWatcher.fn:**** ', k, v, o, this.options, attr);
+                    // console.log('【v-form】bindWatcher.fn:**** ', k, v, o, this.options, attr);
                     if (expr.exp === '!==') {
                         // 数据还没有加载过来，此处就执行，会报错 - Added By 刘俊俊 2018.6.28
                         if (this.options[attr]) {
@@ -154,17 +154,17 @@
                     else obj = obj[v];
                 });
                 fn(key, obj);
-                // this.$logger.log('【v-form】bindWatcher: ', expr, expr.key, obj);
+                // console.log('【v-form】bindWatcher: ', expr, expr.key, obj);
             },
             checkValidator () { // 检测默认特定逻辑的校验规则，比如证件类型、证件号~ Author by Dio Zhu. on 2018.5.15
-                // this.$logger.log('【v-form】checkValidator: ', this.validators);
+                // console.log('【v-form】checkValidator: ', this.validators);
                 if (!this.validators) return;
                 let fn = (k, v, o) => { // 根据证类型校验证件号的合法性
                     let attr = k.replace('IdentyType', 'IdentyNo'), // 根据证件类型，找到证件号码的字段名
                         key = this.options[k] && this.options[k]['key'] || 'key', // 取出options中指定的key标识
                         val = v[key],   // 按标识取出当前证件对象的key值
                         vid = this.validators && this.validators[attr] && this.validators[attr]['key']; // 取出之前validator的key值，用于还原提示顺序
-                    // this.$logger.log('【v-form】checkValidator.fn: ', k, attr, val, vid, v, key);
+                    // console.log('【v-form】checkValidator.fn: ', k, attr, val, vid, v, key);
                     if (parseInt(val) === 0 || parseInt(val) === 1) { // 身份证
                         this.$set(this.validators, attr, { key: vid, required: { rule: true, message: '请填写身份证号码' }, card: { message: '请输入正确的身份证号' } });
                     } else if (parseInt(val) === 2) { // 护照验证
@@ -190,7 +190,7 @@
                         imgId = this.validators && this.validators[imgAttr] && this.validators[imgAttr]['key']; // 取出之前validator的key值，用于还原提示顺序
                         // imgVal = this.currentValue[imgAttr],
                         // imgMsg = this.validators[imgAttr] && this.validators[imgAttr]['required'] && this.validators[imgAttr]['required']['message'];
-                    // this.$logger.log('【v-form】checkValidator.checkIdentyImages: ', imgAttr, imgId, imgVal, imgMsg, this.$parent.$validation);
+                    // console.log('【v-form】checkValidator.checkIdentyImages: ', imgAttr, imgId, imgVal, imgMsg, this.$parent.$validation);
 
                     let attrName = '';
                     if (imgAttr.indexOf('firstparty') >= 0) {

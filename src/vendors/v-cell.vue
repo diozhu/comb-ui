@@ -46,7 +46,7 @@
             href () {
                 if (this.to && !this.added && this.$router) {
                     const resolved = this.$router.match(this.to);
-                    // this.$logger.log('v-cell.computed.href: ', resolved);
+                    // console.log('v-cell.computed.href: ', resolved);
                     if (!resolved.matched.length) return this.to;
 
                     this.$nextTick(() => {
@@ -60,12 +60,12 @@
         },
 
         created () {
-            // this.$logger.log('v-cell.created: ');
+            // console.log('v-cell.created: ');
         },
 
         methods: {
             handleClick ($event) {
-                // this.$logger.log('v-cell.handleClick: ');
+                // console.log('v-cell.handleClick: ');
                 $event.preventDefault();
                 this.$router.push(this.to);
             }

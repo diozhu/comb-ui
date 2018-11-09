@@ -267,14 +267,14 @@
         },
 
         created () {
-            // this.$logger.log(`v-calendar.${this._uid}.created: `, this.value);
+            // console.log(`v-calendar.${this._uid}.created: `, this.value);
             if (!this.currentValue) this.currentValue = utils.formatTime(this.today, 'yyyy-MM');
             this.init({year: this.today.getFullYear(), month: this.today.getMonth() + 1});
         },
 
         methods: {
             init ({year, month}) { // 初始化
-                // this.$logger.log('v-calendar.init...', year, month);
+                // console.log('v-calendar.init...', year, month);
                 // if (this.selectedDateStr) this.selectedDt = new Date(this.selectedDateStr);
                 // this.attributesInit(this.attributes);
                 // this.firstDay -= 1;

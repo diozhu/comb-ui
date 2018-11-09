@@ -20,7 +20,7 @@
         },
 
         created () {
-//            this.$logger.log('fading-circle.created: ', this._uid);
+//            console.log('fading-circle.created: ', this._uid);
             if (this.$isServer) return;
             this.styleNode = document.createElement('style');
             const css = `.circle-color-${this._uid} > div::before { background-color: ${this.spinnerColor}; }`;

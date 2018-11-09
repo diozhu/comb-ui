@@ -157,7 +157,7 @@
                 this.currentValue.splice(idx, 1);
             },
             handleClick () {
-                this.$logger.log('v-upload-image.handleClick: ');
+                console.log('v-upload-image.handleClick: ');
                 this.popupTag = true;
             },
             handleTapPreview (item, idx) { // 点击大图预览
@@ -278,22 +278,22 @@
 //                document.querySelector('.v-modal') && document.querySelector('.v-modal').parentNode.removeChild(document.querySelector('.v-modal'));
                 // return wechatApi.chooseImage().then(res => {
                 //     // this.$toast(res[0]);
-                //     this.$logger.log('v-upload-image.handleClick.chooseImage.success: ', res[0]);
+                //     console.log('v-upload-image.handleClick.chooseImage.success: ', res[0]);
                 //     // return wechatApi.getLocalImgData({localId: res[0]});
                 //     return wechatApi.uploadImage({localId: res[0]});
                 //     // }).then(rtn => {
-                //     //     this.$logger.log('v-upload-image.handleClick.uploadImage.success: ', rtn);
+                //     //     console.log('v-upload-image.handleClick.uploadImage.success: ', rtn);
                 //     //     this.$set(this.currentValue, 'url', rtn);
                 //     // }).then(rtn => {
                 //     //     // this.$toast(rtn);
-                //     //     this.$logger.log('v-upload-image.handleClick.uploadImage.success: ', rtn);
+                //     //     console.log('v-upload-image.handleClick.uploadImage.success: ', rtn);
                 //     //     // return Promise.resolve(wechatApi.downloadImage({serverId: res}));
                 //     //     return wechatApi.downloadImage({serverId: rtn});
                 // }).then(dat => {
                 //     // this.$toast(dat);
-                //     this.$logger.log('v-upload-image.handleClick.downloadImage.success: ', dat);
+                //     console.log('v-upload-image.handleClick.downloadImage.success: ', dat);
                 // }).catch(e => {
-                //     this.$logger.error('v-upload-image.handleClick.wx.error: ', e);
+                //     console.error('v-upload-image.handleClick.wx.error: ', e);
                 //     this.$toast(e.errMsg);
                 // });
                 let uploadImageSuccessFunc = (res) => {
@@ -382,7 +382,7 @@
                 });
             },
             imageuploaded (res) {
-                this.$logger.log('v-upload-image.imageuploaded: ', ...arguments);
+                console.log('v-upload-image.imageuploaded: ', ...arguments);
                 if (res.errcode === 0) {
                     // this.src = res.data.src;
                     this.$set(this, 'currentValue', res.data.src);

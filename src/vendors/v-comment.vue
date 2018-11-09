@@ -54,7 +54,7 @@
         },
         watch: {
             value (val) {
-                this.$logger.log('v-comment', val);
+                console.log('v-comment', val);
                 this.scoreCon = scoreContent[val];
                 this.score = val;
             },
@@ -90,7 +90,7 @@
                     result.push(starOff);// 类似
                 }
                 this.scoreCon = scoreContent[Math.floor(this.score)];
-                // this.$logger.log('liuweliuweliuaaaaaa', this.scoreCon);
+                // console.log('liuweliuweliuaaaaaa', this.scoreCon);
                 return result;
             }
         }

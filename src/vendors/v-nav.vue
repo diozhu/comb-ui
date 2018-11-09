@@ -31,7 +31,7 @@
         },
 
         created () {
-            this.$logger.log('v-nav.created...');
+            console.log('v-nav.created...');
         },
 
         methods: {

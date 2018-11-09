@@ -33,15 +33,15 @@
         watch: {
             '$route.name' (val) { // 如果使用了keep-alive，根据路由变化，判断组件的_inactive，设置isEnabled，避免事件重复触发
                 if (!this._inactive) { // 激活
-                    this.$logger.log('v-swipe-item.watch.in...');
+                    console.log('v-swipe-item.watch.in...');
                 } else { // 失效
-                    this.$logger.log('v-swipe-item.watch.back...');
+                    console.log('v-swipe-item.watch.back...');
                 }
             }
         },
 
         created () {
-            this.$logger.log('v-swipe-item.created...');
+            console.log('v-swipe-item.created...');
         },
 
         mounted () {
@@ -50,10 +50,10 @@
 
         methods: {
             init () {
-                this.$logger.log('v-swipe-item.init...');
+                console.log('v-swipe-item.init...');
             },
             handleClick () {
-                this.$logger.log('v-swipe-item.handleClick...');
+                console.log('v-swipe-item.handleClick...');
                 // this.$router.go(-1);
             }
         }

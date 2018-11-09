@@ -45,15 +45,15 @@
         watch: {
             '$route.name' (val) { // 如果使用了keep-alive，根据路由变化，判断组件的_inactive，设置isEnabled，避免事件重复触发
                 if (!this._inactive) { // 激活
-                    this.$logger.log('v-swipe.watch.in...');
+                    console.log('v-swipe.watch.in...');
                 } else { // 失效
-                    this.$logger.log('v-swipe.watch.back...');
+                    console.log('v-swipe.watch.back...');
                 }
             }
         },
 
         created () {
-            this.$logger.log('v-swipe.created: listdata: ', this.listdata);
+            console.log('v-swipe.created: listdata: ', this.listdata);
             // 测试数据 start
             if (!this.$root.swipes) {
                 this.$root.swipes = {
@@ -71,7 +71,7 @@
             if (!this.$root.swipes) this.$router.go(-1); // 无值返回上一页
             this.listdata = this.$root.swipes.list;
             this.idx = this.$root.swipes.idx || 0;
-            this.$logger.log('v-swipe.created: listdata: ', this.listdata, this.idx);
+            console.log('v-swipe.created: listdata: ', this.listdata, this.idx);
         },
 
         mounted () {
@@ -80,13 +80,13 @@
 
         methods: {
             init () {
-                this.$logger.log('v-swipe.init...');
+                console.log('v-swipe.init...');
                 if (this.idx >= 0) {
                     this.goSlide();
                 }
             },
             goSlide (direction) {
-                this.$logger.log('v-swipe.slideTo...', this.idx, ...arguments);
+                console.log('v-swipe.slideTo...', this.idx, ...arguments);
 
                 let currentItem = this.$refs.items[this.idx].$el,
                     nextItem,
@@ -108,12 +108,12 @@
                 }
 
                 nextItem = this.$refs.items[newIndex].$el;
-                this.$logger.log('v-swipe.slideTo...', this.idx, newIndex, currentItem, nextItem);
+                console.log('v-swipe.slideTo...', this.idx, newIndex, currentItem, nextItem);
                 if (direction) {
                     // currentItem.style.display = 'block';
                     dom.addClass(currentItem, 'is-active');
                     let callback = () => {
-                        this.$logger.log('v-swipe.goSlide.currentItem.callback: ', currentItem);
+                        console.log('v-swipe.goSlide.currentItem.callback: ', currentItem);
                         dom.removeClass(currentItem, 'is-active');
                         this.idx = newIndex;
                     };
@@ -122,13 +122,13 @@
                 // nextItem.style.display = 'block';
                 dom.addClass(nextItem, 'is-active');
                 let nextCallback = () => {
-                    this.$logger.log('v-swipe.goSlide.nextItem.callback: ', nextItem);
+                    console.log('v-swipe.goSlide.nextItem.callback: ', nextItem);
                     nextItem.style.transform = `translate3d(0, 0, 0)`;
                 };
                 this.translate(nextItem, nextOffsetLeft, speed, nextCallback);
             },
             translate (element, offset, speed, callback) {
-//                this.$logger.log('v-swipe.translate...', ...arguments);
+//                console.log('v-swipe.translate...', ...arguments);
                 if (speed) {
                     this.animating = true;
                     // element.style.webkitTransition = '-webkit-transform ' + speed + 'ms ease-in-out';
@@ -148,12 +148,12 @@
                             if (callback) {
                                 callback.apply(this, arguments);
                             }
-                            this.$logger.log('v-swipe.translate...cb...', element.style.webkitTransform);
+                            console.log('v-swipe.translate...cb...', element.style.webkitTransform);
                         };
 
                     dom.once(element, 'webkitTransitionEnd', transitionEndCallback);
                     setTimeout(transitionEndCallback, speed + 100); // webkitTransitionEnd maybe not fire on lower version android.
-//                    this.$logger.log('v-swipe.translate...', element.style.webkitTransform);
+//                    console.log('v-swipe.translate...', element.style.webkitTransform);
                 } else {
                     element.style.webkitTransition = '';
                     element.style.webkitTransform = `translate3d(${offset}px, 0, 0)`;
@@ -161,7 +161,7 @@
             },
 
             swipe () {
-                this.$logger.log('v-swipe.swipe...');
+                console.log('v-swipe.swipe...');
             },
 
             onPinch (e, direction, positions) { // 双指缩放
@@ -173,7 +173,7 @@
                     currentRatio = currentSize.indexOf('%') > -1 ? currentSize.substr(0, currentSize.indexOf('%')) * 1 : 100,
                     r;
 
-                // this.$logger.log(`v-swipe.handleTouchMove..., pinch: ${currentRatio} => ${ratio}`);
+                // console.log(`v-swipe.handleTouchMove..., pinch: ${currentRatio} => ${ratio}`);
                 if (positions.dist === 'pinchout') { // 放
                     // r = (currentRatio + ratio) > 300 ? 300 : (currentRatio + ratio);
                     r = currentRatio + ratio;
@@ -204,9 +204,9 @@
                     distRatioY = -(positions.y / maxY) * window.lib.flexible.dpr * 2,
                     fx = parseFloat(pos[0]) + (distRatioX * 100),
                     fy = parseFloat(pos[1]) + (distRatioY * 100);
-                // this.$logger.log(`v-swipe.handleTouchMove => pic move: `, currentSize, maxX, pos, positions);
-                // this.$logger.log(`v-swipe.handleTouchMove => pic move: 222: `, targetW, distRatioX);
-                // this.$logger.log(`v-swipe.handleTouchMove => pic move: 333 : `, parseFloat(pos[0]), (distRatioX * 100));
+                // console.log(`v-swipe.handleTouchMove => pic move: `, currentSize, maxX, pos, positions);
+                // console.log(`v-swipe.handleTouchMove => pic move: 222: `, targetW, distRatioX);
+                // console.log(`v-swipe.handleTouchMove => pic move: 333 : `, parseFloat(pos[0]), (distRatioX * 100));
                 if (fx < 0) fx = 0;
                 if (fx > 100) fx = 100;
                 if (fy < 0) fy = 0;
@@ -234,10 +234,10 @@
             },
             handleTouchStart (e) {
 //                this.currentPage = e.target;
-                this.$logger.log('v-swipe.handleTouchStart...');
+                console.log('v-swipe.handleTouchStart...');
             },
             handleTouchMove (e, direction, positions) {
-                this.$logger.log(`v-swipe.handleTouchMove..., ${direction}, ${JSON.stringify(positions)}`);
+                console.log(`v-swipe.handleTouchMove..., ${direction}, ${JSON.stringify(positions)}`);
                 let currentSize = utils.getComputedStyle(e.target).backgroundSize; // contain = 300%
                 if (direction === 'pinchin' || direction === 'pinchout') { // 缩放
                     this.onPinch(e, direction, positions);
@@ -248,7 +248,7 @@
                 }
             },
             handleTouchEnd (e, direction, positions) {
-                this.$logger.log('v-swipe.handleTouchEnd...', ...arguments);
+                console.log('v-swipe.handleTouchEnd...', ...arguments);
                 let obj = e.target,
                     currentSize = utils.getComputedStyle(obj).backgroundSize; // contain = 300%
                 if (currentSize !== 'contain') { // 移动图片
@@ -258,14 +258,14 @@
                 }
             },
             handleTap (e) { // 点击图片返回上一页
-                this.$logger.log('v-swipe.handleTap: ', e);
+                console.log('v-swipe.handleTap: ', e);
                 this.$router.go(-1);
             },
             handleDoubleTap (e) { // 双击击图片恢复原始大小
-                this.$logger.log('v-swipe.handleDoubleTap: ', e);
+                console.log('v-swipe.handleDoubleTap: ', e);
             },
             handleClick () {
-                this.$logger.log('v-swipe.handleClick: ');
+                console.log('v-swipe.handleClick: ');
             }
         }
     };

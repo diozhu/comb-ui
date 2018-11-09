@@ -183,7 +183,7 @@
                 return result;
             },
             setCurrentValue (value, event) {
-                this.$logger.log(`v-search.watch.currentValue: 30`);
+                console.log(`v-search.watch.currentValue: 30`);
                 if (this.disabled) {
                     return;
                 }
@@ -214,7 +214,7 @@
                 this.hoverIndex = -1;
             },
             selectValue () {
-                this.$logger.log(`v-search.watch.currentValue: 20`);
+                console.log(`v-search.watch.currentValue: 20`);
             }
         },
         created () {

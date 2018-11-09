@@ -185,7 +185,7 @@
 
         computed: {
             isShowText () {
-//                this.$logger.log('--------> ', this.dataExist, this.isLoadMore);
+//                console.log('--------> ', this.dataExist, this.isLoadMore);
                 return !!(this.hasData && !this.hasMore);
 //                return !!(this.hasData && !this.hasMore && document.body.scrollTop > 100);
             }
@@ -199,7 +199,7 @@
                 this.$emit('input', val);
             },
             enabled (val) {
-                this.$logger.log('v-scroll.watch.enabled! ');
+                console.log('v-scroll.watch.enabled! ');
 //                this.isEnabled = !this._inactive && val;
                 this.isEnabled = val;
 //                if (val) this.$router.scrollTarget = this.scrollTarget; // 保存滚动容器
@@ -212,7 +212,7 @@
         },
 
         created () {
-            this.$logger.log(`[v-scrollor].${this._uid}.created...`);
+            console.log(`[v-scrollor].${this._uid}.created...`);
             bus.$on('v-scroll.refreshList', this.refreshList); // 监听下拉刷新的事件
             bus.$on('v-scroll.getList', this.getList); // 监听上拉加载事件
 //            this.init();
@@ -220,11 +220,11 @@
         },
         mounted () {
             this.pageHeight = window.screen.height;
-            this.$logger.log(`[v-scrollor].${this._uid}.mounted...`, this.$route.name, this.$parent.$route.name);
+            console.log(`[v-scrollor].${this._uid}.mounted...`, this.$route.name, this.$parent.$route.name);
         },
 
         activated () {
-            this.$logger.log(`*[v-scrollor].${this._uid}.activated...`, this._inactive, this.$router.direct());
+            console.log(`*[v-scrollor].${this._uid}.activated...`, this._inactive, this.$router.direct());
             this.isEnabled = this.enabled;
             // this.init(); // 如果当前页面是keep-alive的，这里重新初始化
             if (this.$router.direct()) { // in
@@ -236,13 +236,13 @@
             // dom.addClass(window.document.documentElement, 'overflow'); // body绑定overflow样式
         },
         deactivated () {
-            this.$logger.log(`*[v-scrollor].${this._uid}.deactivated...`, this._inactive);
+            console.log(`*[v-scrollor].${this._uid}.deactivated...`, this._inactive);
             this.isEnabled = false;
 
             // dom.removeClass(window.document.documentElement, 'overflow'); // 移除overflow样式
         },
         beforeDestroy () {
-            this.$logger.log(`*[v-scrollor].${this._uid}.beforeDestroy...`);
+            console.log(`*[v-scrollor].${this._uid}.beforeDestroy...`);
         },
 
         methods: {
@@ -269,7 +269,7 @@
             },
 
             init () {
-                this.$logger.log(`[v-scrollor].${this._uid}.init...`);
+                console.log(`[v-scrollor].${this._uid}.init...`);
                 this.reset(); // 重置
 
                 if (!this.isGoInit) return false; // 是否一进来就自动加载
@@ -283,19 +283,19 @@
                         e(t);
                     };
                 if (this.tombstone) t();
-                // this.$logger.log(`[v-scrollor].${this._uid}.init...`, this.$refs.content.$el);
+                // console.log(`[v-scrollor].${this._uid}.init...`, this.$refs.content.$el);
             },
 
             updateItems () {
-                // this.$logger.log(`[v-scrollor].${this._uid}.updateItems: `);
+                // console.log(`[v-scrollor].${this._uid}.updateItems: `);
                 let e = this.$refs.container,
                     t = e.offsetTop,
                     i = window.scrollY,
                     n = i + window.innerHeight,
                     o = t;
                 [].forEach.call(this.currentValue, (val, idx) => {
-                    // this.$logger.log(`[v-scrollor].${this._uid}.updateItems.forEach: ${idx}`, o > i - 500, o < n + 500);
-                    // this.$logger.log(`[v-scrollor].${this._uid}.updateItems.forEach: ${idx}`, o, i, n);
+                    // console.log(`[v-scrollor].${this._uid}.updateItems.forEach: ${idx}`, o > i - 500, o < n + 500);
+                    // console.log(`[v-scrollor].${this._uid}.updateItems.forEach: ${idx}`, o, i, n);
                     // o > i - 500 && o < n + 500 && (val.shown = !0);
                     o > i - 500 && o < n + 500 && this.$set(this.currentValue[idx], 'shown', !0);
                     o += val.height || 0;
@@ -305,14 +305,14 @@
             updateItemsHeight () {
                 [].forEach.call(this.currentValue, (val, idx) => {
                     let i = this.$refs.content.$el.children[idx];
-                    // this.$logger.log(`[v-scrollor].${this._uid}.updateItemsHeight.forEach: ${idx}`, i.offsetHeight);
+                    // console.log(`[v-scrollor].${this._uid}.updateItemsHeight.forEach: ${idx}`, i.offsetHeight);
                     // let i = document.querySelector(`.item-${idx}`);
                     i && (val.height = i.offsetHeight);
                 });
             },
             goTop () {
                 let target = this.scrollTarget === window ? document.body : this.scrollTarget;
-                this.$logger.log(`[v-scrollor].${this._uid}.getList.after: `, target.scrollHeight, target.offsetHeight);
+                console.log(`[v-scrollor].${this._uid}.getList.after: `, target.scrollHeight, target.offsetHeight);
                 if (target.scrollTop > 0) {
                     target.scrollTop -= 1000;
                     setTimeout(this.goTop, 30);
@@ -323,7 +323,7 @@
              * 获取数据
              */
             getList () {
-                this.$logger.log(`[v-scrollor].${this._uid}.getList.befor: !!!`);
+                console.log(`[v-scrollor].${this._uid}.getList.befor: !!!`);
                 if (!this.isEnabled) return Promise.reject({});  // 当前滚动条非可用时，直接返回，用于同页面多个实例的时候
                 if (this.isLoading) return Promise.reject({});  // 加载时不处理分页
                 // 结束语判断
@@ -345,9 +345,9 @@
                         this.isEnding = true;
                         this.isLoading = true;
                         return this.endFunc().then(res => {
-//                            this.$logger.log(`[v-scrollor].${this._uid}.endFunc.after: `, res);
+//                            console.log(`[v-scrollor].${this._uid}.endFunc.after: `, res);
                             if (res) {
-                                this.$logger.log(`[v-scrollor].${this._uid}.endFunc.after: `, res);
+                                console.log(`[v-scrollor].${this._uid}.endFunc.after: `, res);
                                 this.reset({resetData: false, goTop: false}); // 重置，且不清数据！
 //                                this.getList();
                             } else {
@@ -358,7 +358,7 @@
                             return Promise.resolve({});
                         });
                     } catch (e) {
-                        this.$logger.error(`[v-scrollor].${this._uid}.endFunc.after.error: ${e}`);
+                        console.error(`[v-scrollor].${this._uid}.endFunc.after.error: ${e}`);
                         return Promise.reject({});
                     }
                 }
@@ -376,7 +376,7 @@
                     this.isLoading = true;
                     if (!this.fetcher) this.fetcher = api.getFetcher(this.func, this.funcType); // 初始化fetcher
                     return this.fetcher.fetch().then(res => {
-                        this.$logger.log(`[v-scrollor].${this._uid}.getList.api.after.success: `, res);
+                        console.log(`[v-scrollor].${this._uid}.getList.api.after.success: `, res);
                         if (res && res.length) { // 设定有、无数据的标识
                             this.hasData = true;
                             this.currentValue = this.currentValue.concat(res); // 数据绑定
@@ -386,19 +386,19 @@
                         /** 只返回数据, 根据请求数和返回数判断是否没数据了 */
                         if (!res || res.length < this.fetcher.limit) this.hasMore = false; // 更多数据的标识
                     }).then(res => {
-                        this.$logger.log(`[v-scrollor].${this._uid}.getList.after: `, this.scrollTarget);
+                        console.log(`[v-scrollor].${this._uid}.getList.after: `, this.scrollTarget);
                         if (this.scrollTarget === window) {  // 超出一屏才显示. mod by Dio Zhu. on 2017.12.12
-                            this.$logger.log(`[v-scrollor].${this._uid}.getList.after: `, window.innerHeight, document.body.offsetHeight);
+                            console.log(`[v-scrollor].${this._uid}.getList.after: `, window.innerHeight, document.body.offsetHeight);
                             this.$nextTick(() => { this.scrollEndTxt = this.scrollEndFlowTag ? true : document.body.offsetHeight > (window.innerHeight * 5 / 4); });
                         } else if (this.scrollTarget) {
-                            this.$logger.log(`[v-scrollor].${this._uid}.getList.after: `, this.scrollTarget.scrollHeight, this.scrollTarget.offsetHeight);
+                            console.log(`[v-scrollor].${this._uid}.getList.after: `, this.scrollTarget.scrollHeight, this.scrollTarget.offsetHeight);
                             this.$nextTick(() => { this.scrollEndTxt = this.scrollEndFlowTag ? true : this.scrollTarget.scrollHeight > (this.scrollTarget.offsetHeight * 5 / 4); });
                         }
                         this.isLoading = false;
                         return Promise.resolve({});
                     });
                 } catch (e) {
-                    this.$logger.error(`[v-scrollor].${this._uid}.getList.after.error: ${e}`);
+                    console.error(`[v-scrollor].${this._uid}.getList.after.error: ${e}`);
                     this.isLoading = false;
                     return Promise.reject({});
                 }
@@ -407,7 +407,7 @@
             refreshList () {
                 // 添加了 || this._isDestroyed的判断，源于食上的详情页，非keepalive，从评论列表到发布评论再返回时，会初始化多个列表实例，造成多个请求。。。
                 if (!this.isEnabled || this._isDestroyed) return;  // 当前滚动条非可用时，直接返回，用于同页面多个实例的时候
-                this.$logger.log(`!!!v-scroll.${this._uid}.refreshList...`);
+                console.log(`!!!v-scroll.${this._uid}.refreshList...`);
                 if (typeof this.func !== 'function') return;  // 无效函数、无数据，直接返回
                 this.refreshTag = true;
 
@@ -421,7 +421,7 @@
                     if (!this.fetcher) this.fetcher = api.getFetcher(this.func, this.funcType); // 初始化fetcher
                     this.reset({resetData: false, goTop: true}); // 重置，不清除数据，回调之后按照分页数量删除数组内容，避免重新渲染时屏幕闪~ Author by Dio Zhu. on 2017.4.12
                     return this.fetcher.fetch().then(res => {
-                        this.$logger.log(`[v-scrollor].${this._uid}.refreshList.api.after.success: `, res);
+                        console.log(`[v-scrollor].${this._uid}.refreshList.api.after.success: `, res);
                         if (res && res.length) { // 设定有、无数据的标识
                             this.hasData = true;
                             this.currentValue = res; // 数据绑定
@@ -432,12 +432,12 @@
                         /** 只返回数据, 根据请求数和返回数判断是否没数据了 */
                         if (!res || res.length < this.fetcher.limit) this.hasMore = false; // 更多数据的标识
                     }).then(res => {
-                        this.$logger.log(`[v-scrollor].${this._uid}.refreshList.after: `, this.scrollTarget);
+                        console.log(`[v-scrollor].${this._uid}.refreshList.after: `, this.scrollTarget);
                         if (this.scrollTarget === window) {  // 超出一屏才显示. mod by Dio Zhu. on 2017.12.12
-                            this.$logger.log(`[v-scrollor].${this._uid}.refreshList.after: `, window.innerHeight, document.body.offsetHeight);
+                            console.log(`[v-scrollor].${this._uid}.refreshList.after: `, window.innerHeight, document.body.offsetHeight);
                             this.$nextTick(() => { this.scrollEndTxt = this.scrollEndFlowTag ? true : document.body.offsetHeight > (window.innerHeight * 5 / 4); });
                         } else if (this.scrollTarget) {
-                            this.$logger.log(`[v-scrollor].${this._uid}.refreshList.after: `, this.scrollTarget.scrollHeight, this.scrollTarget.offsetHeight);
+                            console.log(`[v-scrollor].${this._uid}.refreshList.after: `, this.scrollTarget.scrollHeight, this.scrollTarget.offsetHeight);
                             this.$nextTick(() => { this.scrollEndTxt = this.scrollEndFlowTag ? true : this.scrollTarget.scrollHeight > (this.scrollTarget.offsetHeight * 5 / 4); });
                         }
                         this.isLoading = false;
@@ -447,16 +447,16 @@
 // //                                !this.hasMore && this.hasMoreTotal && this.endFuncEnable &&
 // //                                this.currentValue && this.currentValue.length <= 1
 // //                            ) { // 如果有结束回调
-// //                                this.$logger.log(`[v-scrollor].${this._uid}.refreshList.after.endFunc: `, typeof this.endFunc, this.endFuncEnable);
+// //                                console.log(`[v-scrollor].${this._uid}.refreshList.after.endFunc: `, typeof this.endFunc, this.endFuncEnable);
 // //                                try {
 // //                                    if (this.isLoading) return;
 // //                                    if (this.isEnding) return;
 // //                                    this.isEnding = true;
 // //                                    this.isLoading = true;
 // //                                    this.endFunc().then(res => {
-// //             //                            this.$logger.log(`[v-scrollor].${this._uid}.endFunc.after: `, res);
+// //             //                            console.log(`[v-scrollor].${this._uid}.endFunc.after: `, res);
 // //                                        if (res) {
-// //                                            this.$logger.log(`[v-scrollor].${this._uid}.refreshList.endFunc.after: `, res);
+// //                                            console.log(`[v-scrollor].${this._uid}.refreshList.endFunc.after: `, res);
 // //                                            this.reset({resetData: false, goTop: false}); // 重置，且不清数据！
 // //                                            this.getList();
 // //                                        } else {
@@ -466,12 +466,12 @@
 // //                                        this.isLoading = false;
 // //                                    });
 // //                                } catch (e) {
-// //                                    this.$logger.error(`[v-scrollor].${this._uid}.refreshList.endFunc.after.error: ${e}`);
+// //                                    console.error(`[v-scrollor].${this._uid}.refreshList.endFunc.after.error: ${e}`);
 // //                                }
 // //                            }
                     });
                 } catch (e) {
-                    this.$logger.error(`[v-scrollor].${this._uid}.refreshList.after.error: ${e}`);
+                    console.error(`[v-scrollor].${this._uid}.refreshList.after.error: ${e}`);
                     this.isLoading = false;
                     this.refreshTag = false;
                 }

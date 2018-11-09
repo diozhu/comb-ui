@@ -138,7 +138,7 @@
 //            },
 
             isShowText () {
-//                this.$logger.log('--------> ', this.dataExist, this.isLoadMore);
+//                console.log('--------> ', this.dataExist, this.isLoadMore);
                 return !!(this.hasData && !this.hasMore);
 //                return !!(this.hasData && !this.hasMore && document.body.scrollTop > 100);
             }
@@ -150,7 +150,7 @@
 
                 // 取消此方式刷新数据，如果要刷新，使用eventbus。 mod by Dio Zhu. on 2017.7.1
 //                if (val.length < 1 && this.isEnabled && !this.isLoading && !this.refreshTag) { // 客户端直接清空listdata，触发刷新事件
-//                    this.$logger.log(`[v-scroll].${this._uid}.watch: value`, val);
+//                    console.log(`[v-scroll].${this._uid}.watch: value`, val);
 //                    this.refreshList();
 //                }
             },
@@ -158,7 +158,7 @@
                 this.$emit('input', val);
             },
             enabled (val) {
-                this.$logger.log('v-scroll.watch.enabled! ');
+                console.log('v-scroll.watch.enabled! ');
 //                this.isEnabled = !this._inactive && val;
                 this.isEnabled = val;
 //                if (val) this.$router.scrollTarget = this.scrollTarget; // 保存滚动容器
@@ -171,21 +171,21 @@
         },
 
         created () {
-            this.$logger.log(`[v-scroll].${this._uid}.created...`);
+            console.log(`[v-scroll].${this._uid}.created...`);
             bus.$on('v-scroll.refreshList', this.refreshList); // 监听下拉刷新的事件
             bus.$on('v-scroll.getList', this.getList); // 监听上拉加载事件
             if (!this.$route.matched.some(record => record.meta.keepAlive)) this.init(); // 非keep-alive时执行，否则放在activated中初始化. add by Dio Zhu. on 2017.9.11
         },
         mounted () {
-            this.$logger.log(`[v-scroll].${this._uid}.mounted...`, this.$route.name, this.$parent.$route.name, this.$store.state.route.name);
+            console.log(`[v-scroll].${this._uid}.mounted...`, this.$route.name, this.$parent.$route.name, this.$store.state.route.name);
             // let ob = new window.IntersectionObserver((res) => {
-            //     this.$logger.warn('@@@@@@@@', res);
+            //     console.warn('@@@@@@@@', res);
             // });
-            this.$logger.log(`###### [v-scroll].${this._uid}.mounted...`, 'IntersectionObserver' in window);
+            console.log(`###### [v-scroll].${this._uid}.mounted...`, 'IntersectionObserver' in window);
         },
 
         activated () {
-            this.$logger.log(`*[v-scroll].${this._uid}.activated...`, this._inactive);
+            console.log(`*[v-scroll].${this._uid}.activated...`, this._inactive);
             this.isEnabled = this.enabled;
             // this.init(); // 如果当前页面是keep-alive的，这里重新初始化
             if (this.$router.direct()) { // in
@@ -197,13 +197,13 @@
             // dom.addClass(window.document.documentElement, 'overflow'); // body绑定overflow样式
         },
         deactivated () {
-            this.$logger.log(`*[v-scroll].${this._uid}.deactivated...`, this._inactive);
+            console.log(`*[v-scroll].${this._uid}.deactivated...`, this._inactive);
             this.isEnabled = false;
 
             // dom.removeClass(window.document.documentElement, 'overflow'); // 移除overflow样式
         },
         beforeDestroy () {
-            this.$logger.log(`*[v-scroll].${this._uid}.beforeDestroy...`);
+            console.log(`*[v-scroll].${this._uid}.beforeDestroy...`);
         },
 
         methods: {
@@ -223,7 +223,7 @@
             },
 
             init () {
-                this.$logger.log(`[v-scroll].${this._uid}.init...`);
+                console.log(`[v-scroll].${this._uid}.init...`);
 
                 // dom.addClass(window.document.documentElement, 'overflow'); // body绑定overflow样式
                 this.scrollTarget = dom.getScrollEventTarget(this.$refs.container);
@@ -243,7 +243,7 @@
 
             goTop () {
                 let target = this.scrollTarget;
-                this.$logger.log(`[v-scroll].${this._uid}.getList.after: `, target.scrollHeight, target.offsetHeight);
+                console.log(`[v-scroll].${this._uid}.getList.after: `, target.scrollHeight, target.offsetHeight);
                 if (target === window) {
                     window.scrollTo(0, 0);
                 } else {
@@ -259,7 +259,7 @@
              * 获取数据
              */
             getList () {
-                this.$logger.log(`[v-scroll].${this._uid}.getList.befor: !!!`);
+                console.log(`[v-scroll].${this._uid}.getList.befor: !!!`);
                 if (!this.isEnabled) return;  // 当前滚动条非可用时，直接返回，用于同页面多个实例的时候
                 if (this.isLoading) return;  // 加载时不处理分页
                 // 结束语判断
@@ -290,7 +290,7 @@
 //                             // 可以试试在上面加上return Promis.resove();，之前上面那句不好使是忘记了返回Promis对象。。。回头试试。。。Dio Zhu. on 2017.6.30
 //                             // 结束语判断
 //                             if (this.scrollTarget) {
-//                                 this.$logger.log(`[v-scroll].${this._uid}.getList.after: `, this.scrollTarget.scrollHeight, this.scrollTarget.offsetHeight);
+//                                 console.log(`[v-scroll].${this._uid}.getList.after: `, this.scrollTarget.scrollHeight, this.scrollTarget.offsetHeight);
 //                                 // 判断页面是否加载完毕 2017-06-30 孙乐卿
 //                                 this.$nextTick(() => {
 //                                     this.scrollEndTxt = this.scrollTarget.scrollHeight > (this.scrollTarget.offsetHeight * 5 / 4);
@@ -298,7 +298,7 @@
 //                             }
 //                         });
 //                     } catch (e) {
-//                         this.$logger.error(`[v-scroll].${this._uid}.getList.after.error: ${e}`);
+//                         console.error(`[v-scroll].${this._uid}.getList.after.error: ${e}`);
 //                     }
 //                 }
 
@@ -306,7 +306,7 @@
                     this.isLoading = true;
                     if (!this.fetcher) this.fetcher = api.getFetcher(this.func, this.funcType);
                     return this.fetcher.fetch().then(res => {
-                        this.$logger.log(`[v-scroll].${this._uid}.getList.api.after.success: `, res);
+                        console.log(`[v-scroll].${this._uid}.getList.api.after.success: `, res);
                         if (res && res.length) {
                             this.hasData = true;
                             this.currentValue = this.currentValue.concat(res); // 数据绑定
@@ -316,9 +316,9 @@
                         /** 只返回数据, 根据请求数和返回数判断是否没数据了 */
                         if (!res || res.length < this.fetcher.limit) this.hasMore = false;
                     }).then(res => {
-                        this.$logger.log(`[v-scroll].${this._uid}.getList.after: `, this.scrollTarget);
+                        console.log(`[v-scroll].${this._uid}.getList.after: `, this.scrollTarget);
                         if (this.scrollTarget) {
-                            this.$logger.log(`[v-scroll].${this._uid}.getList.after: `, this.scrollTarget.scrollHeight, this.scrollTarget.offsetHeight);
+                            console.log(`[v-scroll].${this._uid}.getList.after: `, this.scrollTarget.scrollHeight, this.scrollTarget.offsetHeight);
                             // 判断页面是否加载完毕 2017-06-30 孙乐卿
                             this.$nextTick(() => {
                                 this.scrollEndTxt = this.scrollTarget.scrollHeight > (this.scrollTarget.offsetHeight * 5 / 4);
@@ -327,7 +327,7 @@
                         this.isLoading = false;
                     });
                 } catch (e) {
-                    this.$logger.error(`[v-scroll].${this._uid}.getList.after.error: ${e}`);
+                    console.error(`[v-scroll].${this._uid}.getList.after.error: ${e}`);
                     this.isLoading = false;
                 }
             },
@@ -335,7 +335,7 @@
             refreshList () {
                 // 添加了 || this._isDestroyed的判断，源于食上的详情页，非keepalive，从评论列表到发布评论再返回时，会初始化多个列表实例，造成多个请求。。。
                 if (!this.isEnabled || this._isDestroyed) return;  // 当前滚动条非可用时，直接返回，用于同页面多个实例的时候
-                this.$logger.log(`!!!v-scroll.${this._uid}.refreshList...`);
+                console.log(`!!!v-scroll.${this._uid}.refreshList...`);
                 if (typeof this.func !== 'function') return;  // 无效函数、无数据，直接返回
 
                 this.refreshTag = true;
@@ -356,7 +356,7 @@
                         this.reset({resetData: false}); // 重置，不清除数据，回调之后按照分页数量删除数组内容，避免重新渲染时屏幕闪~ Author by Dio Zhu. on 2017.4.12
 
                         func({refresh: true}).then(res => {
-                            this.$logger.log(`[v-scroll].${this._uid}.refreshList.after: `, this.currentValue.length);
+                            console.log(`[v-scroll].${this._uid}.refreshList.after: `, this.currentValue.length);
                             if (res && res.length) {
                                 this.currentValue = res;
                             } else { // 如果删除了第一条，然后调用此方法，返回的是空数据。 mod by Dio Zhu. on 2017.7.1
@@ -371,16 +371,16 @@
                         }).then(res => {
                             // 结束语判断
                             if (this.scrollTarget) {
-                                this.$logger.log(`[v-scroll].${this._uid}.refreshList.after: `, this.scrollTarget.scrollHeight, this.scrollTarget.offsetHeight);
+                                console.log(`[v-scroll].${this._uid}.refreshList.after: `, this.scrollTarget.scrollHeight, this.scrollTarget.offsetHeight);
                                 this.scrollEndTxt = this.scrollTarget.scrollHeight > (this.scrollTarget.offsetHeight * 5 / 4);
                             }
                         }).catch(e => {
                             this.refreshTag = false;
-                            this.$logger.error(`[v-scroll].${this._uid}.refreshList.after.error: ${e}`);
+                            console.error(`[v-scroll].${this._uid}.refreshList.after.error: ${e}`);
                         });
                     } catch (e) {
                         this.refreshTag = false;
-                        this.$logger.error(`[v-scroll].${this._uid}.refreshList.after.error: ${e}`);
+                        console.error(`[v-scroll].${this._uid}.refreshList.after.error: ${e}`);
                     }
                 }
             }

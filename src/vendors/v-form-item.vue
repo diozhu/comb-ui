@@ -227,7 +227,7 @@
                     *   Modified by 刘俊俊 2018.6.11
                     * */
                     // 当前有值 && type === 0，表明是自己选择值，需要计算结束日期
-                    // this.$logger.log(`【v-form-item】${this._uid}.defaultTxt... `, this.currentValue, this.option['time']);
+                    // console.log(`【v-form-item】${this._uid}.defaultTxt... `, this.currentValue, this.option['time']);
                     if (this.currentValue && this.option['time'] && this.option['time']['type'] === 0) {
                         // 设置了隐藏日 && 当前年月相等,签约页面 有效期，如果非当月，则从1号开始
                         // console.log('hiddenDay:', this.option['hiddenDay'], this.currentValue);
@@ -282,7 +282,7 @@
                     this.option['className']
                 ];
 
-                // this.$logger.error(`value`, this.value);
+                // console.error(`value`, this.value);
                 if (this.option && this.option['pickerType'] === 'region') this.initRegion();
                 if (this.option && this.option['type'] === 'picker' && this.currentValue) this.$nextTick(() => { this.initPickerDefaults(); });
                 if (this.option && this.option['pickerType'] === 'region' && this.currentValue) this.$nextTick(() => { this.initRegionDefaults(); });
@@ -290,9 +290,9 @@
                 if (this.option && this.option['pickerType'] === 'date' && this.currentValue) this.initDatetimeDefaults();
             },
             initRegion () { // 初始化地区选择数据，联动。 Author by Dio Zhu. on 2018.5.10
-                // this.$logger.log(`【v-form-item】${this._uid}.initRegion... `);
+                // console.log(`【v-form-item】${this._uid}.initRegion... `);
                 api.getProvinceList().then(res => {
-                    // this.$logger.log(`【v-form-item】${this._uid}.getProvinceList.response: `, res);
+                    // console.log(`【v-form-item】${this._uid}.getProvinceList.response: `, res);
                     if (!res || !res.length) return;
                     this._changeDatas(res, 0, 'province_id');
                 }).catch(e => {
@@ -301,13 +301,13 @@
                 });
             },
             initPickerDefaults () { // 初始化picker默认值。 Author by Dio Zhu. on 2018.5.16
-                // this.$logger.log(`【v-form-item】${this._uid}.initPickerDefaults... `, this.attr, this.currentValue, this.$refs['picker' + this.attr]);
+                // console.log(`【v-form-item】${this._uid}.initPickerDefaults... `, this.attr, this.currentValue, this.$refs['picker' + this.attr]);
                 if (this.currentValue && this.currentValue[this.option.key || 'key']) {
                     this.$refs['picker' + this.attr].setSlotValue(0, {key: this.currentValue[this.option.key || 'key'], values: this.currentValue[this.option.valueKey || 'valueKey']});
                 }
             },
             initRegionDefaults () { // 区域设定默认值
-                // this.$logger.log(`【v-form-item】${this._uid}.initRegionDefaults... `, this.attr, this.$refs, this);
+                // console.log(`【v-form-item】${this._uid}.initRegionDefaults... `, this.attr, this.$refs, this);
                 // console.log('this.option.slots:', this.option.slots);
                 if (!this.option.slots || !this.option.slots[2].values || !this.option.slots[2].values.length) { // 异步初始化如果未完成，递归。。。Author by Dio Zhu. on 2018.5.11
                     this.timmer = setTimeout(() => { return this.initRegionDefaults(); }, 500);
@@ -320,10 +320,10 @@
                 } else {
                     this.$refs['picker' + this.attr].setSlotValue(0, {key: '1', values: '北京'});
                 }
-                // this.$logger.log(`【v-form-item】${this._uid}.initRegionDefaults... ==================>>> region init done!!! start setting default...`);
+                // console.log(`【v-form-item】${this._uid}.initRegionDefaults... ==================>>> region init done!!! start setting default...`);
             },
             initDatetimeDefaults () { // 时间picker的默认值
-                // this.$logger.log(`【v-form-item】${this._uid}.initDatetimeDefaults...`, this.currentValue);
+                // console.log(`【v-form-item】${this._uid}.initDatetimeDefaults...`, this.currentValue);
                 if (this.currentValue) this.$set(this, 'currentValueDt', new Date(this.currentValue));
             },
             handleClear () { // 点击input后面的清除图标
@@ -336,7 +336,7 @@
             },
             // 改变省市区，数据格式变成key->value格式 -----v1.0.5 修改地区选择默认值  -by dinglei 2018.3.26
             _changeDatas (data, num, sty) {
-                // this.$logger.log(`【v-form-item】${this._uid}._changeDatas: `, data, num, sty, this.option.slots[num]);
+                // console.log(`【v-form-item】${this._uid}._changeDatas: `, data, num, sty, this.option.slots[num]);
                 let ary = [];
                 data.forEach(item => { ary.push({key: item[sty], values: item.name}); });
                 this.$set(this.option.slots[num], 'values', ary);
@@ -344,7 +344,7 @@
             handleClick (key) {
                 // console.log('handleClick:', this.option, this.isLink);
                 if (!this.isLink) return;
-                // this.$logger.log(`【v-form-item】${this._uid}.handleClick: `, key, this.$refs);
+                // console.log(`【v-form-item】${this._uid}.handleClick: `, key, this.$refs);
                 if (this.option && this.option['type'] === 'datetime-picker') {
                     // this.$set(this.popupVisibles, key, true);
                     this.$refs.pickerDatetime.open();
@@ -366,7 +366,7 @@
                 // console.log(key);
                 // console.log(obj);
                 // console.log(val);
-                // this.$logger.log(`【v-form-item】${this._uid}.onPickerChange: --------->>> `, key, JSON.stringify(val), this.currentValue);
+                // console.log(`【v-form-item】${this._uid}.onPickerChange: --------->>> `, key, JSON.stringify(val), this.currentValue);
                 if (key === 'region') { // 地区组件的change
                     // console.warn('this.pickerValue城市信息:', this.pickerValue, val);
                     let sameProvince = !!(val[0] && this.pickerValue[0] && this.pickerValue[0]['key'].toString() === val[0]['key'].toString() && this.pickerValue[0]['values'].toString() === val[0]['values'].toString()),
@@ -376,21 +376,21 @@
                         cityTag = !!((val[1] && !sameCity) || (val[1] && !val[2])),
                         countyTag = !!(!this.defaultCompleted && this.currentValue[2] && this.currentValue[2]['key']),
                         hasCityDefault = !this.defaultCompleted && (val[1] && this.currentValue[1] && this.currentValue[1]['key'].toString() !== val[1]['key'].toString() && this.currentValue[1]['values'] !== val[1]['values']);
-                    // this.$logger.log(`【v-form-item】${this._uid}.onPickerChange: sameProvince: ${sameProvince}, sameCity: ${sameCity}, sameCounty: ${sameCounty}, hasCityDefault: ${hasCityDefault}`);
-                    // this.$logger.log(`【v-form-item】${this._uid}.onPickerChange: provinceTag: ${provinceTag}, cityTag: ${cityTag}, countyTag: ${countyTag}`);
+                    // console.log(`【v-form-item】${this._uid}.onPickerChange: sameProvince: ${sameProvince}, sameCity: ${sameCity}, sameCounty: ${sameCounty}, hasCityDefault: ${hasCityDefault}`);
+                    // console.log(`【v-form-item】${this._uid}.onPickerChange: provinceTag: ${provinceTag}, cityTag: ${cityTag}, countyTag: ${countyTag}`);
                     if (!sameProvince && provinceTag) {
-                        // this.$logger.log(`【v-form-item】${this._uid}.onPickerChange: => province!!!`);
+                        // console.log(`【v-form-item】${this._uid}.onPickerChange: => province!!!`);
                         this.$set(this.pickerValue, 0, val[0]);
                         this.getCitiesByProvince(val[0].key); // 根据省id获取市列表
                     } else if (!sameCity && cityTag && hasCityDefault) {
-                        // this.$logger.log(`【v-form-item】${this._uid}.onPickerChange: => city: set default!!!`);
+                        // console.log(`【v-form-item】${this._uid}.onPickerChange: => city: set default!!!`);
                         this.$refs['picker' + this.attr].setSlotValue(1, {key: this.currentValue[1]['key'], values: this.currentValue[1][this.option.valueKey || 'valueKey']});
                     } else if (!sameCity && cityTag) {
-                        // this.$logger.log(`【v-form-item】${this._uid}.onPickerChange: => city!!!`);
+                        // console.log(`【v-form-item】${this._uid}.onPickerChange: => city!!!`);
                         this.$set(this.pickerValue, 1, val[1]);
                         this.getCountiesByCity(val[1].key); // 根据市，拉区信息
                     } else if (!sameCounty && countyTag) {
-                        // this.$logger.log(`【v-form-item】${this._uid}.onPickerChange: => county: default value complete!!!`);
+                        // console.log(`【v-form-item】${this._uid}.onPickerChange: => county: default value complete!!!`);
                         this.$set(this.pickerValue, 2, Object.assign({}, this.currentValue[2]));
                         this.defaultCompleted = true; // 还原默认值标识
                         this.$refs['picker' + this.attr].setSlotValue(2, {key: this.currentValue[2]['key'], values: this.currentValue[2][this.option.valueKey || 'valueKey']});
@@ -413,7 +413,7 @@
                 // let obj = this.pickerValue[key][0],
                 //     k = this.options[key]['valueKey'],
                 //     v = obj[k];
-                // this.$logger.log(`【v-form-item】${this._uid}.handlePickerConfirm: `, ...arguments, obj, k, v);
+                // console.log(`【v-form-item】${this._uid}.handlePickerConfirm: `, ...arguments, obj, k, v);
                 // this.$set(this.currentValue, key, v);
                 if (key === 'region') {
                     // console.error('this.pickerValue:', this.pickerValue);
@@ -423,7 +423,7 @@
                 }
             },
             handlePickerDatetime (key, dt) {
-                // this.$logger.log(`【v-form-item】${this._uid}.handlePickerDatetime: `, ...arguments);
+                // console.log(`【v-form-item】${this._uid}.handlePickerDatetime: `, ...arguments);
                 this.$set(this, 'currentValue', utils.formatTime(dt, 'yyyy-MM-dd'));
                 this.$nextTick(() => {
                     this.$emit('fun', utils.formatTime(dt, 'yyyy-MM-dd'));
@@ -431,14 +431,14 @@
             },
             getCitiesByProvince (id) { // 根据省id获取市列表
                 api.getCityLists({province_id: id}).then(res => { // 根据省，拉市信息
-                    // this.$logger.log(`【v-form-item】${this._uid}.onPickerChange.getCityLists.success: `, res);
+                    // console.log(`【v-form-item】${this._uid}.onPickerChange.getCityLists.success: `, res);
                     // if (!res || !res.length) return;
                     this._changeDatas(res, 1, 'city_id');   // 修改数据格式变成key->values格式
                 }).catch(e => { this.$toast(trans(e)); });
             },
             getCountiesByCity (id) { // 根据省id获取市列表
                 api.getCountyList({city_id: id}).then(res => { // 根据市，拉区信息
-                    // this.$logger.log(`【v-form-item】${this._uid}.onPickerChange.getCountyList.success: `, res);
+                    // console.log(`【v-form-item】${this._uid}.onPickerChange.getCountyList.success: `, res);
                     // if (!res || !res.length) return;
                     this._changeDatas(res, 2, 'county_id');
                 }).catch(e => { this.$toast(trans(e)); });

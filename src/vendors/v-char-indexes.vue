@@ -62,17 +62,17 @@
         },
 
         created () {
-            this.$logger.log(`v-char-indexes.created: `, this.value);
+            console.log(`v-char-indexes.created: `, this.value);
             this.init();
         },
 
         methods: {
             init () { // 初始化
-                this.$logger.log('v-char-indexes.init...');
+                console.log('v-char-indexes.init...');
                 // for (let i = 0, len = 26;i < len;i++) this.keys.push(String.fromCharCode(65 + i));
             },
             handleClick (item) {
-                // this.$logger.log('v-char-indexes.handleClick...', item);
+                // console.log('v-char-indexes.handleClick...', item);
                 this.showValue = ''; // 清除显示字符
                 this.$emit('input', item);
             },
@@ -87,7 +87,7 @@
                     idx = parseInt((y - t) / h),
                     // letter = this.letters[idx] || this.letters[0];
                     letter = this.letters[idx] || '';
-                // this.$logger.log('v-char-indexes.handleMove... =========>>> ', idx, letter);
+                // console.log('v-char-indexes.handleMove... =========>>> ', idx, letter);
                 e.preventDefault();
                 e.stopPropagation();
                 if (this.value !== letter) this.$emit('input', letter);

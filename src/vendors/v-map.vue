@@ -96,7 +96,7 @@
             }
         },
         mounted () {
-            this.$logger.log(`v-map.${this._uid}.mounted: `);
+            console.log(`v-map.${this._uid}.mounted: `);
 
             bus.$on('v-map.changeMarker', this.changeMarker); // 监听切换标记
 
@@ -106,7 +106,7 @@
                     if (tryCount > 50) return; //eslint-disable-line
                     tryCount++;
                     if (window.AMap) {
-                        this.$logger.log(`v-map.${this._uid}.mounted.then: `);
+                        console.log(`v-map.${this._uid}.mounted.then: `);
                         this.mapReady = true;
                         this.init();
                         this.dealMap();
@@ -119,13 +119,13 @@
             }
 
             this.load().then(() => {
-                this.$logger.log(`v-map.${this._uid}.mounted.then: `);
+                console.log(`v-map.${this._uid}.mounted.then: `);
                 this.mapReady = true;
                 this.init();
                 this.dealMap();
             }).catch((e) => {
                 this.mapReady = false;
-                this.$logger.error(`v-map.${this._uid}.mounted.error: `, e);
+                console.error(`v-map.${this._uid}.mounted.error: `, e);
             });
         },
 
@@ -134,7 +134,7 @@
                 if (window.AMap) {
                     return Promise.resolve();
                 }
-                this.$logger.log(`v-map.${this._uid}.load: `);
+                console.log(`v-map.${this._uid}.load: `);
                 let script = this.createScript();
                 // document.body.appendChild(script);
                 document.head.appendChild(script);
@@ -155,7 +155,7 @@
                 return script;
             },
             init () {
-                this.$logger.log(`v-map.${this._uid}.init: `, this.mapReady, window.AMap);
+                console.log(`v-map.${this._uid}.init: `, this.mapReady, window.AMap);
                 this.amap = new window.AMap.Map('vAMap_' + this._uid, {
                     dragEnable: this.dragEnable,
                     keyboardEnable: false,
@@ -183,7 +183,7 @@
 
 //                        this.placeSearcher.searchNearBy('', [this.lng, this.lat], 200, (status, result) => {
 //                            if (status === 'complete' && result.info === 'OK') {
-//                                this.$logger.log('v-map.onDragEnd: ', status, result);
+//                                console.log('v-map.onDragEnd: ', status, result);
 // //                            this.locations = result.poiList.pois;
 //                                this.$emit('locations-change', result.poiList.pois);
 //                            }
@@ -304,13 +304,13 @@
             },
             onMoveEnd (e) { // 拖拽地图
                 let lnglat = this.amap.getCenter();
-                this.$logger.log('v-map.onMoveEnd: ', lnglat);
+                console.log('v-map.onMoveEnd: ', lnglat);
 //                this.amapPlaceSearch.searchNearBy('', lnglat, 200, (status, result) => {
-//                    this.$logger.log('v-map.onDragEnd: ', status, result);
+//                    console.log('v-map.onDragEnd: ', status, result);
 //                });
             },
             searchNearBy ({keywords = '', refreshTag = false} = {}) {
-                this.$logger.log(`v-map.searchNearBy: ${keywords}, ${refreshTag}, ${this.page}, ${this.placeSearch}, ${this.hasMore}`);
+                console.log(`v-map.searchNearBy: ${keywords}, ${refreshTag}, ${this.page}, ${this.placeSearch}, ${this.hasMore}`);
                 if (!this.placeSearch || !this.hasMore) return Promise.reject('placeSearch false');
 
                 if (refreshTag) this.page = 1; // 如果需要刷新，则page置为1
@@ -318,11 +318,11 @@
                 try {
                     return this.placeSearcher.searchNearBy(keywords, [this.lng, this.lat], this.radius, (status, result) => { // 以[this.lng, this.lat]为中心，搜寻半径为radius的keywords相关内容
 //                        return new Promise((resolve, reject) => {
-                        this.$logger.log('v-map.searchNearBy.response: ', status, result);
+                        console.log('v-map.searchNearBy.response: ', status, result);
                         if (status === 'complete' && result.info === 'OK') { // 搜索完成
                             this.page += 1;
 
-                            this.$logger.log('v-map.searchNearBy: ', status, result);
+                            console.log('v-map.searchNearBy: ', status, result);
 //                            this.locations = result.poiList.pois;
 //                            this.locations = this.locations.concat(result.poiList.pois);
                             this.$emit('locations-change', {data: result.poiList.pois, refreshTag: refreshTag}); // 触发父级locations-change事件，传出搜索数据
@@ -336,7 +336,7 @@
 //                        });
                     });
                 } catch (e) {
-                    this.$logger.error('v-map.searchNearBy.error: ', e);
+                    console.error('v-map.searchNearBy.error: ', e);
                     return Promise.reject('v-map.searchNearBy.error: ', e);
                 }
             },
@@ -344,7 +344,7 @@
                 this.changeMarker(defaultMaker.position);
             },
             changeMarker (pos) {
-                this.$logger.log('v-map.changeMarker: ', pos, this.mapMarker);
+                console.log('v-map.changeMarker: ', pos, this.mapMarker);
                 if (!this.mapMarker || this.mapMarker.length < 1) return;
                 let marker = this.mapMarker[0];
                 this.amap.panTo(pos);// 地图平移到指定中心

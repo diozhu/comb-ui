@@ -51,7 +51,7 @@
         },
 
         created () {
-            this.$logger.log('v-animat.created: ');
+            console.log('v-animat.created: ');
         },
 
         methods: {

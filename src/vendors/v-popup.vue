@@ -86,7 +86,7 @@
                  */
 //                let touchObj = document.getElementById('container');
                 let touchObj = document.getElementsByClassName('page')[0];
-                // this.$logger.log('v-popup.watch.currentValue: ', val, touchObj);
+                // console.log('v-popup.watch.currentValue: ', val, touchObj);
                 if (val && touchObj) {
 //                    touchObj.style.height = '100%';
                     // touchObj.style.overflow = 'hidden';
@@ -124,7 +124,7 @@
 
         methods: {
             confirm () {
-                // this.$logger.log('v-popup.methods.confirm: ', ...arguments);
+                // console.log('v-popup.methods.confirm: ', ...arguments);
                 if (this.closeEnable) { // 查看外部条件是否允许关闭当前组件
                     this.$emit('handleConfirm', this.currentValue);
                     this.currentValue = false;
@@ -133,7 +133,7 @@
                 }
             },
             touchHandler (e) {
-                this.$logger.log('v-popup.methods.touchHandler: ', e);
+                console.log('v-popup.methods.touchHandler: ', e);
 //                e.preventDefault();
 //                e.stopPropagation();
 //                return false;

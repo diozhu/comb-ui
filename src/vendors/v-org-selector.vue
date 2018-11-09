@@ -101,7 +101,7 @@
 
         watch: {
             values (val) { // 每次选择后，重新计算提示语
-                this.$logger.log('v-org-selector.watch.values: ', val);
+                console.log('v-org-selector.watch.values: ', val);
 
                 this.selectedDepts = [];
                 this.selectedUsers = [];
@@ -121,7 +121,7 @@
                 if (!this.selectedUserNum && this.selectedDepts.length < 1) this.msg = '';
             },
             keywords (val) {
-                this.$logger.log('v-org-selector.watch.keywords: ', val);
+                console.log('v-org-selector.watch.keywords: ', val);
                 if (/[^\u0000-\u00FF]/.test(val)) { // 检索中文
                     this.onSearch();
                 }
@@ -129,7 +129,7 @@
         },
 
         mounted () {
-            this.$logger.log('v-org-selector.mounted...');
+            console.log('v-org-selector.mounted...');
             this.init();
         },
 
@@ -168,10 +168,10 @@
 //                    loading: true
 //                }).then(res => {
 //                    this.loading = false;
-//                    this.$logger.log('v-org-selector.onSearch...');
+//                    console.log('v-org-selector.onSearch...');
 //                    this.formatResponse(1, res); // 整理返回数据
 //                }).catch(e => {
-//                    this.$logger.error('v-org-selector.onSearch: ERROR, ', e);
+//                    console.error('v-org-selector.onSearch: ERROR, ', e);
 //                    this.loading = false;
 //                });
             },
@@ -181,7 +181,7 @@
              *              -- Author by Dio Zhu. on 2017.5.5
              */
             getOrgTree ({nodeId = 1, nodeName = '联系人', isIncludeEmp = 1, isCalcEmpNum = 1} = {}, e) {
-                this.$logger.log('v-org-selector.getOrgTree: ', nodeId, this.loading, !!e, nodeId);
+                console.log('v-org-selector.getOrgTree: ', nodeId, this.loading, !!e, nodeId);
                 let self = this;
                 if (this.loading) return;
                 if (e) {
@@ -220,10 +220,10 @@
 //                    loading: true
 //                }).then((res) => {
 //                    this.$set(this, 'loading', false);
-//                    this.$logger.log('v-org-selector.getOrgTree: SUCCESS, ', res);
+//                    console.log('v-org-selector.getOrgTree: SUCCESS, ', res);
 //                    this.formatResponse(nodeId, res); // 整理返回数据
 //                }).catch(e => {
-//                    this.$logger.error('v-org-selector.getOrgTree: ERROR, ', e);
+//                    console.error('v-org-selector.getOrgTree: ERROR, ', e);
 //                    this.$set(this, 'loading', false);
 //                });
             },
@@ -277,7 +277,7 @@
              *              -- Author by Dio Zhu. on 2017.5.5
              */
             onNavClick (obj) {
-                this.$logger.log('v-org-selector.onNavClick: ', obj);
+                console.log('v-org-selector.onNavClick: ', obj);
                 this.getOrgTree({nodeId: obj.value, nodeName: obj.label});
             },
 
@@ -286,11 +286,11 @@
              *              -- Author by Dio Zhu. on 2017.5.5
              */
             checkAllFunc (val) {
-                this.$logger.log('v-org-selector.checkAllFunc: ', val, this.selectedUserNum, this.totalUsers);
+                console.log('v-org-selector.checkAllFunc: ', val, this.selectedUserNum, this.totalUsers);
                 let tag = true;
                 this.options.forEach((v) => {
 //                    if (!_.contains(this.values, v)) tag = false;
-//                    this.$logger.log('@@@@@@@@@', _.find(this.values, function (i) { return parseInt(i.nodeId) === parseInt(v.nodeId); }));
+//                    console.log('@@@@@@@@@', _.find(this.values, function (i) { return parseInt(i.nodeId) === parseInt(v.nodeId); }));
                     if (!_.find(this.values, function (i) { return parseInt(i.nodeId) === parseInt(v.nodeId); })) tag = false;
                 });
 //                if (this.selectedUserNum && this.selectedUserNum === this.totalUsers) { // 简单用总数判断是否全选，指的是总数

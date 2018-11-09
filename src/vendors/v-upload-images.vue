@@ -185,7 +185,7 @@
                         tag = false;
                     }
                 }
-                this.$logger.log('handle-uploaded-status: ', this.imgList.length, tag);
+                console.log('handle-uploaded-status: ', this.imgList.length, tag);
                 if (tag) {
                     this.uploadedStatus = true;
 //                    this.$emit('handle-uploaded-status', true);

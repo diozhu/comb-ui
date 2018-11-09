@@ -104,7 +104,7 @@
         computed: {},
 
         mounted () {
-            this.$logger.log('v-viewImage.mounted: ', this.initIndex, this.$root.img);
+            console.log('v-viewImage.mounted: ', this.initIndex, this.$root.img);
             this.$nextTick(() => {
                 this.init();
             });
@@ -114,8 +114,8 @@
 
         methods: {
             init () {
-                this.$logger.log('v-viewer.init: ', this.images);
-                // this.$logger.log('v-viewer.mounted: ', this.$root.img);
+                console.log('v-viewer.init: ', this.images);
+                // console.log('v-viewer.mounted: ', this.$root.img);
                 if (!this.$root.img) this.$router.go(-1);
                 // this.images = this.$root.img;
                 this.images = [];
@@ -129,10 +129,10 @@
                 this.open();
             },
             open () {
-                // this.$logger.log('v-viewer.open: ', this.images);
+                // console.log('v-viewer.open: ', this.images);
                 // this.galleryEle = document.querySelectorAll('.pswp')[0];
                 this.galleryEle = document.getElementById(this.id);
-                // this.$logger.log('v-viewer.open: ', this.galleryEle);
+                // console.log('v-viewer.open: ', this.galleryEle);
                 this.galleryOptions = {
                     barsSize: { top: 44, bottom: 'auto' },
                     captionEl: false,
@@ -155,7 +155,7 @@
                     closeFunc.call(this.gallery, params);
                     this.$router.go(-1);
                 };
-                this.$logger.log('v-viewer.open: ', this.gallery.close);
+                console.log('v-viewer.open: ', this.gallery.close);
                 this.gallery.init();
             },
             /**
@@ -163,7 +163,7 @@
              *              -- Author by Dio Zhu. on 2017.2.14
              */
             swipe: function (e) {
-                this.$logger.log('swipe in viewImage...', this.swiper.activeIndex, this.swiper.previousIndex);
+                console.log('swipe in viewImage...', this.swiper.activeIndex, this.swiper.previousIndex);
                 e.srcEvent.stopPropagation();
                 if (!this.swiper.previousIndex) {
                     this.$router.go(-1);

@@ -73,7 +73,7 @@
 //            setTimeout(() => {
 //                this.swiper.updateSlidesSize();
 //                this.swiper.updatePagination();
-//                this.$logger.log('-------------------------');
+//                console.log('-------------------------');
 //            }, 3000);
         },
         computed: {
