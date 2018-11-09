@@ -13,7 +13,7 @@
  */
 import Vue from 'vue';
 import * as dom from '../js/utils/dom.js';
-import bus from '../vendor/eventbus.js'; //eslint-disable-line
+import bus from './eventbus.js'; //eslint-disable-line
 
 const ctx = '@@ScrollPosition'; //eslint-disable-line
 let lockTags = {};  //eslint-disable-line
