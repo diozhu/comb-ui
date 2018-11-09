@@ -24,12 +24,12 @@ import MessageBox from './v-message-box.js';
 import vPicker from './v-picker.vue';
 import vPopup from './v-popup.vue';
 import vDatetimePicker from './v-datetime-picker.vue';
-import vSwipe from './v-swipe.vue';
 // import Logger from '../js/utils/logger';
 import vSpinner from './v-spinner';
 
-import vSticky from './v-sticky.js';
-import vScrollPosition from './v-scroll-position.js';
+import Swipe from './v-swipe.js';
+import Sticky from './v-sticky.js';
+import ScrollPosition from './v-scroll-position.js';
 
 const version = '1.0.1';
 const install = function (Vue) {
@@ -45,7 +45,7 @@ const install = function (Vue) {
     Vue.component(vPicker.name, vPicker);
     Vue.component(vPopup.name, vPopup);
     Vue.component(vDatetimePicker.name, vDatetimePicker);
-    Vue.component(vSwipe.name, vSwipe);
+    // Vue.component(vSwipe.name, vSwipe);
     Vue.component(vImage.name, vImage);
     // Vue.component(vFeed.name, vFeed);
     // Vue.component(vRefresh.name, vRefresh);
@@ -53,8 +53,9 @@ const install = function (Vue) {
     // Vue.component(vInfiniteScroll.name, vInfiniteScroll);
     Vue.component(vSpinner.name, vSpinner);
     //
-    Vue.use(vSticky);
-    Vue.use(vScrollPosition);
+    Vue.use(Swipe);
+    Vue.use(Sticky);
+    Vue.use(ScrollPosition);
     // Vue.use(Refresh);
     // Vue.use(Scroll);
     // Vue.use(InfiniteScroll);
@@ -83,7 +84,6 @@ export {
     vPicker,
     vPopup,
     vDatetimePicker,
-    vSwipe,
     vImage,
     // vFeed,
     //
@@ -96,8 +96,9 @@ export {
     vSpinner,
     // Swipe,
     // ScrollPosition,
-    vSticky,
-    vScrollPosition,
+    Swipe,
+    Sticky,
+    ScrollPosition,
     //
     MessageBox,
     Toast
