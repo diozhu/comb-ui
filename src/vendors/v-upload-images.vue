@@ -16,7 +16,7 @@
 </template>
 
 <script>
-    import vSpinner from '../vendor/v-spinner/';
+    import vSpinner from './v-spinner/';
     import logger from '../js/utils/logger';
     import { uploadImages } from '../js/core/core';
 

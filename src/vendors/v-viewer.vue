@@ -52,7 +52,7 @@
     // Vue.use(VueAwesomeSwiper);
     // mount with component(can't work in Nuxt.js/SSR)
     // import { swiper, swiperSlide } from 'vue-awesome-swiper';
-    import bus from '../vendor/eventbus.js';
+    import bus from './eventbus.js';
     import PhotoSwipe from 'photoswipe'; //eslint-disable-line
     import PhotoSwipeUI_Default from 'photoswipe/dist/photoswipe-ui-default.js'; //eslint-disable-line
     // console.log('!!!!!!!!!!!!!!!!!!!', PhotoSwipe, PhotoSwipeUI_Default);

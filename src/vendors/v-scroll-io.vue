@@ -36,12 +36,12 @@
 </template>
 <script type="text/ecmascript-6">
     // import Scroll from './v-scroll';
-    import vSpinner from '../vendor/v-spinner/';
+    import vSpinner from './v-spinner/';
     import CONFIG from '../config';
-    import vIntersect from '../vendor/v-intersect.vue';
+    import vIntersect from './v-intersect.vue';
 //    import { mapState } from 'vuex';
-//    import ScrollPosition from '../vendor/v-scroll-position.js'; // 滚动条位置信息
-    import bus from '../vendor/eventbus';
+//    import ScrollPosition from './v-scroll-position.js'; // 滚动条位置信息
+    import bus from './eventbus';
     import * as api from '../js/core/api.js'; //eslint-disable-line
     import * as dom from '../js/utils/dom.js';
 

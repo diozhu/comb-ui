@@ -93,11 +93,11 @@
     };
     //    import logger from '../js/utils/logger';
     //    import Clickoutside from 'src/js/utils/clickoutside';
-    import vCell from '../vendor/v-cell';
+    import vCell from './v-cell';
     import clickoutside from '../js/utils/clickoutside';
     import * as utils from '../js/utils/utils';
     import Vue from 'vue';
-    import Validator from '../vendor/v-validator.js';
+    import Validator from './v-validator.js';
     Vue.use(Validator);
 
     export default {

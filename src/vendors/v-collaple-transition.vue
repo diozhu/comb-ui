@@ -1,5 +1,5 @@
 <script>
-    import bus from '../vendor/eventbus.js'; //eslint-disable-line
+    import bus from './eventbus.js'; //eslint-disable-line
 
     const elTransition = '0.3s height ease-in-out, 0.3s padding-top ease-in-out, 0.3s padding-bottom ease-in-out';
     const Transition = {

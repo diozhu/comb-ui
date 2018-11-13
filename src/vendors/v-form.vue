@@ -60,16 +60,16 @@
      * @param validators Object 传入的校验对象；
      *              -- Author by Dio Zhu. on 2018.5.17
      */
-    import vFormItem from '../vendor/v-form-item';
-    import vCell from '../vendor/v-cell';
-    import vRadio from '../vendor/v-radio';
+    import vFormItem from './v-form-item';
+    import vCell from './v-cell';
+    import vRadio from './v-radio';
     import clickoutside from '../js/utils/clickoutside';
-    import vPopup from '../vendor/v-popup';
+    import vPopup from './v-popup';
     import * as utils from '../js/utils/utils'; //eslint-disable-line
-    import vPicker from '../vendor/v-picker';
-    import vDatetimePicker from '../vendor/v-datetime-picker';
+    import vPicker from './v-picker';
+    import vDatetimePicker from './v-datetime-picker';
     import Vue from 'vue';
-    import Validator from '../vendor/v-validator.js';
+    import Validator from './v-validator.js';
     Vue.use(Validator);
 
     export default {

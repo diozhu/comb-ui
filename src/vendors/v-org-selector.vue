@@ -37,15 +37,15 @@
     </div>
 </template>
 <script type="text/ecmascript-6">
-    import vRow from '../vendor/v-row.vue';
-    import vCol from '../vendor/v-col.vue';
-    import vSearch from '../vendor/v-search.vue';
+    import vRow from './v-row.vue';
+    import vCol from './v-col.vue';
+    import vSearch from './v-search.vue';
     import * as api from '../js/core/api';
-    import MicroOrg from '../vendor/v-org-selector';
-    import vNav from '../vendor/v-nav.vue';
-    import vCheckbox from '../vendor/v-checkbox';
-    import vButton from '../vendor/v-button.vue';
-    import vFeed from '../vendor/v-feed.vue';
+    import MicroOrg from './v-org-selector';
+    import vNav from './v-nav.vue';
+    import vCheckbox from './v-checkbox';
+    import vButton from './v-button.vue';
+    import vFeed from './v-feed.vue';
     import _ from 'underscore';
 
     /**

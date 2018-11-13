@@ -65,7 +65,7 @@
 </template>
 <script>
     import * as utils from '../js/utils/utils'; //eslint-disable-line
-    import vCollapleTransition from '../vendor/v-collaple-transition';
+    import vCollapleTransition from './v-collaple-transition';
 
     /**
      *              -- Author by Dio Zhu. on 2018.4.10

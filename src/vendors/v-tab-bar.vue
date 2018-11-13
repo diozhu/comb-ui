@@ -23,9 +23,9 @@
 </template>
 
 <script>
-    import vRow from '../vendor/v-row.vue';
-    import vCol from '../vendor/v-col.vue';
-    import vText from '../vendor/v-text.vue';
+    import vRow from './v-row.vue';
+    import vCol from './v-col.vue';
+    import vText from './v-text.vue';
 /**
  * vTabbar
  * @module vendor/v-tab-bar.vue

@@ -21,7 +21,7 @@
 </template>
 <script>
     import config from '../config';
-    import MicroComment from '../vendor/v-comment';
+    import MicroComment from './v-comment';
     import * as utils from '../js/utils/utils';
     import { mapState } from 'vuex'; //eslint-disable-line
 

@@ -8,7 +8,7 @@
         preventDefaultException,
         assign
     } from '../js/utils/util.js';
-    import bus from '../vendor/eventbus.js';
+    import bus from './eventbus.js';
 
     const Loading = {
         render (h) {

@@ -33,9 +33,9 @@
     </div>
 </template>
 <script type="text/ecmascript-6">
-    import vField from '../vendor/v-field.vue';
+    import vField from './v-field.vue';
     import Vue from 'vue';
-    import vFocus from '../vendor/v-focus.js';
+    import vFocus from './v-focus.js';
     Vue.use(vFocus);
 
     /**

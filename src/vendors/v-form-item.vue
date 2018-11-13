@@ -120,18 +120,18 @@
      * 支持地址三级联动；
      *              -- Author by Dio Zhu. on 2018.5.17
      */
-    import vCell from '../vendor/v-cell';
-    import vRadio from '../vendor/v-radio';
+    import vCell from './v-cell';
+    import vRadio from './v-radio';
     import clickoutside from '../js/utils/clickoutside';
-    import vPopup from '../vendor/v-popup';
+    import vPopup from './v-popup';
     import * as api from '../js/core/api'; //eslint-disable-line
     import * as utils from '../js/utils/utils'; //eslint-disable-line
     import trans from '../js/core/trans.js';
-    import vPicker from '../vendor/v-picker';
-    import vDatetimePicker from '../vendor/v-datetime-picker';
+    import vPicker from './v-picker';
+    import vDatetimePicker from './v-datetime-picker';
     import Vue from 'vue';
-    import Validator from '../vendor/v-validator.js';
-    import vUploadImage from '../vendor/v-upload-image';
+    import Validator from './v-validator.js';
+    import vUploadImage from './v-upload-image';
     Vue.use(Validator);
 
     export default {

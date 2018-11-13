@@ -5,7 +5,7 @@
 </template>
 <script>
     import logger from '../js/utils/logger';
-    import bus from '../vendor/eventbus';
+    import bus from './eventbus';
     export default {
         components: { logger },
         name: 'v-video',

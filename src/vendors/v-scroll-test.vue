@@ -68,11 +68,11 @@
 <script type="text/ecmascript-6">
     import Vue from 'vue';
     import Scroll from './v-scroll';
-    import vSpinner from '../vendor/v-spinner/';
+    import vSpinner from './v-spinner/';
     import CONFIG from '../config';
 //    import { mapState } from 'vuex';
-//    import ScrollPosition from '../vendor/v-scroll-position.js'; // 滚动条位置信息
-    import bus from '../vendor/eventbus';
+//    import ScrollPosition from './v-scroll-position.js'; // 滚动条位置信息
+    import bus from './eventbus';
     // import * as dom from '../js/utils/dom.js';
 
     Vue.use(Scroll);

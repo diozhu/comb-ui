@@ -53,7 +53,7 @@
     import vScroll from './v-scroll.vue';
     import CONFIG from '../config';
     import _ from 'underscore';
-    import bus from '../vendor/eventbus'; //eslint-disable-line
+    import bus from './eventbus'; //eslint-disable-line
 
     // 使用requestAnimationFrame比setTimeout效率高，1000/60是为了达到每秒60帧的效率才能让人眼感觉到流畅~
     const rAF = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function (callback) { window.setTimeout(callback, 1000 / 60); }; //eslint-disable-line

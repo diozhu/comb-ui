@@ -32,7 +32,7 @@
     //    require('../../static/js/vendor/jquery.sticky');
     //    import $ from 'jquery';
     //    import '../../static/js/vendor/jquery.sticky';
-    //    import vSticky from '../vendor/v-sticky';
+    //    import vSticky from './v-sticky';
 
     /**
      * 滑动菜单

@@ -7,7 +7,7 @@
     </div>
 </template>
 <script type="text/ecmascript-6">
-    import bus from '../vendor/eventbus.js';
+    import bus from './eventbus.js';
     import CONFIG from '../config';
 
     let defaultMaker = {

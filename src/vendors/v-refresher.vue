@@ -44,10 +44,10 @@
 </template>
 <script type="text/ecmascript-6">
     import Vue from 'vue';
-    import vSpinner from '../vendor/v-spinner/';
+    import vSpinner from './v-spinner/';
     import { mapState } from 'vuex';
     import Refresher from './v-refresher';
-    import bus from '../vendor/eventbus';
+    import bus from './eventbus';
     // import * as dom from '../js/utils/dom.js';
 
     Vue.use(Refresher);

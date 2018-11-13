@@ -52,10 +52,10 @@
 <script type="text/ecmascript-6">
     import Vue from 'vue';
     import ScrollerJS from './v-scroller.js';
-    import vSpinner from '../vendor/v-spinner/';
+    import vSpinner from './v-spinner/';
     import CONFIG from '../config';
     import * as api from '../js/core/api.js'; //eslint-disable-line
-    import bus from '../vendor/eventbus.js';
+    import bus from './eventbus.js';
     import * as utils from '../js/utils/utils.js';
     // import * as dom from '../js/utils/dom.js';
     Vue.use(ScrollerJS);
