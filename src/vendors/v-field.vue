@@ -65,6 +65,14 @@
     </v-cell>
 </template>
 <script>
+    //    import Clickoutside from 'src/js/utils/clickoutside';
+    import vCell from './v-cell';
+    import clickoutside from '../js/utils/clickoutside';
+    import * as utils from '../js/utils/utils';
+    import Vue from 'vue';
+    import Validator from './v-validator.js';
+    Vue.use(Validator);
+
     String.prototype.subBtyesString = function (length) { //eslint-disable-line
         var tStr = '';  // 返回的字符串
         var pEnd = 0;   // 截取字符串的结束位置
@@ -91,14 +99,6 @@
         }
         return tStr;
     };
-    //    import logger from '../js/utils/logger';
-    //    import Clickoutside from 'src/js/utils/clickoutside';
-    import vCell from './v-cell';
-    import clickoutside from '../js/utils/clickoutside';
-    import * as utils from '../js/utils/utils';
-    import Vue from 'vue';
-    import Validator from './v-validator.js';
-    Vue.use(Validator);
 
     export default {
         name: 'v-field',

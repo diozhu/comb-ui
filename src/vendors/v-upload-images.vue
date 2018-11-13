@@ -17,7 +17,6 @@
 
 <script>
     import vSpinner from './v-spinner/';
-    import logger from '../js/utils/logger';
     import { uploadImages } from '../js/core/core';
 
     /**
@@ -114,7 +113,7 @@
                     this.$toast(`您最多只能选择${this.max}张`);
                     return;
                 }
-                logger.log('v-upload-images.uploadImage: ');
+                console.log('v-upload-images.uploadImage: ');
 //                this.uploadedStatus = false; // 开始上传
                 let max = this.max - this.imgList.length,
                     option = {
@@ -124,7 +123,7 @@
                         'maxCount': max     // 最大可选数
                     };
                 uploadImages(option, (e) => { // 返回base64的回调, 用于显示图片正在上传的状态, 避免白屏等待
-                    logger.log('v-upload-images.uploadImage. -> back', e);
+                    console.log('v-upload-images.uploadImage. -> back', e);
                     let i, len;
                     if (e === 'cancel') {
                         this.checkStatus(); // 检查状态，返回通知                    this.uploadedStatus = true; // 结束上传
@@ -136,7 +135,7 @@
                         if (this.imgList.length < this.max) this.imgList.push(e[i]);
                     }
                 }, (e) => { // 成功上传七牛后的回调, url回写, 并清除图片上传的状态
-                    logger.log('v-upload-images.uploadImage.qiqiu -> back', e);
+                    console.log('v-upload-images.uploadImage.qiqiu -> back', e);
                     let i, len;
                     for (i = 0, len = this.imgList.length;i < len;i++) {
                         if (e.id === this.imgList[i].id) {
@@ -149,7 +148,7 @@
                 }, (e) => { // 中途错误回调, 清除本次上传的图片信息
 //                    this.uploadedStatus = true; // 结束上传
                     this.checkStatus(); // 检查状态，返回通知                    this.uploadedStatus = true; // 结束上传
-                    logger.error('v-upload-images.uploadImage.error: ', e);
+                    console.error('v-upload-images.uploadImage.error: ', e);
                     let i, len, j, jlen, img;
                     if (!e) { //  返回错误
                         // do nothing...
@@ -195,7 +194,7 @@
                 }
             },
             delImage (idx) {
-                logger.log('v-upload-images.delImage: ', idx);
+                console.log('v-upload-images.delImage: ', idx);
                 this.imgList.splice(idx, 1);
             },
 
@@ -203,7 +202,7 @@
              * 图片预览
              */
             goViewer (idx) {
-                logger.log('v-upload-images.goViewer: ', idx);
+                console.log('v-upload-images.goViewer: ', idx);
 //                this.$root.img = this.imgList;
                 this.$root.img = [];
                 this.imgList.forEach((v, i) => {

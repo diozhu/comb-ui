@@ -16,8 +16,6 @@
     </div>
 </template>
 <script>
-    import logger from '../js/utils/logger';
-
     /**
      * radio-tag组件
      * @param {string[], object[]} options - 选项数组，格式：
@@ -52,13 +50,13 @@
             },
             currentValue (val) {
                 this.$emit('input', val);
-                logger.log('v-radio.watch.currentValue: ', val, this._uid);
+                console.log('v-radio.watch.currentValue: ', val, this._uid);
             }
         },
 
         methods: {
             onClick: function () {
-                logger.log('v-radio.onClick: ');
+                console.log('v-radio.onClick: ');
                 if (this.cb && typeof this.cb === 'function') {
                     this.cb();
                 }

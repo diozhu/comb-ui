@@ -7,10 +7,8 @@
     </div>
 </template>
 <script>
-    import logger from '../js/utils/logger';
     import bus from './eventbus';
     export default {
-        components: { logger },
         name: 'v-audio',
 
         props: {
@@ -45,7 +43,7 @@
         },
         methods: {
             audioPlaying (id, ids) {
-                logger.log('!!!broadcast from app: v-audio: ', id, ids);
+                console.log('!!!broadcast from app: v-audio: ', id, ids);
                 // if (id !== this.id) this.stop(); // 接收通知，关掉其他播放器，确保只有一个在播放。 Author by Dio Zhu. on 2017.5.11
                 if (id !== this.id && this.audio && !this.audio.paused) { // 接收通知，关掉其他播放器，确保只有一个在播放。 Author by Dio Zhu. on 2017.5.11
                     this.audio.pause();
@@ -59,13 +57,13 @@
              *              -- Author by Dio Zhu. on 2016.11.15
              */
             play () {
-                logger.log('play...');
+                console.log('play...');
                 if (!this.audio) {
-                    logger.error('audio init error');
+                    console.error('audio init error');
                     return;
                 }
                 if (this.audio.paused) {
-                    logger.log('pause...', this.id);
+                    console.log('pause...', this.id);
                     bus.$emit('audio-playing', this.id); // 通知其他播放器
                     this.audio.play();
                     this.btnPlay = false;
@@ -85,9 +83,9 @@
              */
             playing () {
                 var _self = this;
-                logger.log('playing...', (new Date()), ', this.audio.ended: ', this.audio.ended);
+                console.log('playing...', (new Date()), ', this.audio.ended: ', this.audio.ended);
                 if (this.audio.ended) {
-                    logger.log('is done...');
+                    console.log('is done...');
                     this.stop();
                 }
 
@@ -110,7 +108,7 @@
              *              -- Author by Dio Zhu. on 2016.11.15
              */
             stop () {
-                logger.log('stop...', this.audio);
+                console.log('stop...', this.audio);
                 this.audio.pause();
                 this.audio.startTime = 0;
                 this.btnPlay = true;

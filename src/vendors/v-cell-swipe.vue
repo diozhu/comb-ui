@@ -53,7 +53,6 @@
     </v-touch>
 </template>
 <script>
-    import logger from '../js/utils/logger';
     import {once} from '../js/utils/dom';
     import vCell from './v-cell.vue';
     import Clickoutside from '../js/utils/clickoutside';
@@ -64,9 +63,7 @@
      */
     export default {
         name: 'v-cell-swipe',
-
         components: { vCell },
-
         directives: { Clickoutside },
 
         props: {
@@ -90,7 +87,7 @@
         },
 
         mounted () {
-            logger.log('v-cell-swipe.monted: ');
+            console.log('v-cell-swipe.monted: ');
             this.wrap = this.$refs.cell.$el.querySelector('.v-cell__wrapper');
 //            this.leftElm = this.$refs.left;
             this.rightElm = this.$refs.right;
@@ -112,7 +109,7 @@
 
         methods: {
             swipe: function (e) {
-                logger.log('v-cell-swipe.swipe: ', e);
+                console.log('v-cell-swipe.swipe: ', e);
                 e.srcEvent.stopPropagation();
             }, // index中用了右划翻页, 此处阻止冒泡. -- Author by Dio Zhu. on 2017.2.14
 
@@ -125,7 +122,7 @@
                 this.rightWrapElm.style.webkitTransform = this.translate3d(this.rightWidth + offset);
 //                this.leftWrapElm.style.webkitTransform = this.translate3d(-this.leftWidth + offset);
                 if (offset === 0) { //  || offset < this.wrap.getBoundingClientRect().width 如果归位，恢复状态。 Add by Dio Zhu. on 2017.2.16
-//                    logger.log('v-cell-swipe.swipeMove: ', offset, this.dragging, this.swiping, this.opened, this.offsetLeft);
+//                    console.log('v-cell-swipe.swipeMove: ', offset, this.dragging, this.swiping, this.opened, this.offsetLeft);
                     this.opened = false;
                     this.swiping = false;
                 } else {
@@ -153,7 +150,7 @@
 
                     this.swipeMove(0);
                     once(this.wrap, 'webkitTransitionEnd', _ => {
-//                        logger.log('v-cell-swipe.swipeLeaveTransition.once: ');
+//                        console.log('v-cell-swipe.swipeLeaveTransition.once: ');
                         this.wrap.style.webkitTransform = '';
                         this.rightWrapElm.style.webkitTransform = this.rightDefaultTransform;
 //                        this.leftWrapElm.style.webkitTransform = this.leftDefaultTransform;
@@ -164,7 +161,7 @@
             },
 
             startDrag (evt) {
-//                logger.log('v-cell-swipe.startDrag: ');
+//                console.log('v-cell-swipe.startDrag: ');
 //                evt.preventDefault();   //
                 evt = evt.changedTouches ? evt.changedTouches[0] : evt;
                 this.dragging = true;
@@ -179,7 +176,7 @@
 //                    if (this.swiping) return;
                     !this.swiping && this.swipeMove(0);
 //                    this.right && this.right[0] && this.right[0].handler && typeof this.right[0].handler === 'function' && this.right[0].handler();
-//                    logger.log('this.leftDefaultTransform: ', -this.wrap.getBoundingClientRect().width);
+//                    console.log('this.leftDefaultTransform: ', -this.wrap.getBoundingClientRect().width);
 //                    !this.swiping && this.swipeMove(-this.wrap.getBoundingClientRect().width);
 //                    this.opened = false;  // 原意应该是打开状态如果左滑，直接划回去。。。但这样写有问题啊。。。得到move函数去判断。。。
                     return;
@@ -208,7 +205,7 @@
             },
 
             endDrag () {
-//                logger.log('v-cell-swipe.endDrag: ');
+//                console.log('v-cell-swipe.endDrag: ');
                 if (!this.swiping) return;
                 this.swipeLeaveTransition(this.offsetLeft > 0 ? -1 : 1);    // 左滑：1， 右划：-1
             }

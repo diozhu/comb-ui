@@ -2,7 +2,7 @@
  * 暂时项目只要获取地理位置，没有地图显示的需求。。。偷懒实现了高德地图的引入，后续可按options实现初始化。。。
  *              -- Author by Dio Zhu on 2017/11/9
  */
-import CONFIG from '../config.js';
+import CONFIG from '~@/config.js';
 
 let obj = {
     init () {

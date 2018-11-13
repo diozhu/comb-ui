@@ -55,14 +55,14 @@
     import wx from 'weixin-js-sdk';
     // import Popup from '../js/utils/popup';
     import vPopup from './v-popup';
-    import * as api from '../js/core/api.js';
+    import * as api from '~@/js/core/api.js';
     // import * as wechatApi from '../js/utils/wechat-api.js'; // 引入wechat-api，需要组件的引用页面混入m-wechat-api.js做微信jssdk的config！
     import vueCoreImageUpload from 'vue-core-image-upload';
     import vSpinner from './v-spinner';
     import trans from '../js/core/trans.js';
     import * as utils from '../js/utils/utils.js';
-    import CONFIG from '../config.js';
-    import {usercenter} from '../image';
+    import CONFIG from '~@/config.js';
+    import {usercenter} from '~@/image';
     import {path} from '../js/core/api';
 
     /**

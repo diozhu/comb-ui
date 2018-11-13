@@ -10,8 +10,6 @@
     </div>
 </template>
 <script>
-//    import logger from '../js/utils/logger';
-
     /**
      * 标签（label）
      * 关于删除功能：
@@ -34,7 +32,7 @@
         },
         methods: {
 //            onClick: function () {
-//                logger.log('v-label.onClick: ');
+//                console.log('v-label.onClick: ');
 //                if (this.cb && typeof this.cb === 'function') {
 //                    this.cb();
 //                }

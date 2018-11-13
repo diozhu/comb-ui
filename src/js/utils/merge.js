@@ -1,9 +1,8 @@
 /**
- * export from mint-ui.
- *              -- mod by Dio Zhu on 2017.2.6
+ * Created by diozhu on 2017/2/6.
  */
 export default function (target) {
-    for (let i = 1, j = arguments.length; i < j; i++) {
+    for (let i = 1, j = arguments.length;i < j;i++) {
         let source = arguments[i] || {};
         for (let prop in source) {
             if (source.hasOwnProperty(prop)) {

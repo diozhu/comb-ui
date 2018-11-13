@@ -8,7 +8,7 @@
 </template>
 <script type="text/ecmascript-6">
     import bus from './eventbus.js';
-    import CONFIG from '../config';
+    import CONFIG from '~@/config';
 
     let defaultMaker = {
         position: [116.458076, 39.996648],

@@ -21,7 +21,7 @@
      *              -- Author by Dio Zhu. on 2017.3.3.
      */
     export default {
-        name: 'mt-popup',
+        name: 'v-popup',
 
         mixins: [Popup],
 

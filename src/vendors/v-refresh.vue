@@ -158,7 +158,7 @@
                     let nowTime = Date.now(),
                         t = nowTime - startTime,
                         v = val / t / deceleration;
-//                    _self.$logger.log('============>', val, t, v);
+//                    _console.log('============>', val, t, v);
                     if (_self.refreshTag || Math.floor(v) === 0) {
                         _self.translate = 0;
                         return;

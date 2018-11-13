@@ -2,7 +2,7 @@
  * 链式调用后的作用域会混乱，总会提示: this.setOptions is not a function...有时间再说吧。。。
  *              -- Author by Dio Zhu on 2017/11/14
  */
-import CONFIG from '../config.js';
+import CONFIG from '~@/config.js';
 
 let obj = {
     init () {

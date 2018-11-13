@@ -9,8 +9,6 @@
     </label>
 </template>
 <script>
-    import logger from '../js/utils/logger';
-
     /**
      * radio组件
      * @param {string[], object[]} options - 选项数组，格式：
@@ -44,7 +42,7 @@
         },
         methods: {
             onClick: function () {
-                logger.log('v-radio.onClick: ');
+                console.log('v-radio.onClick: ');
                 if (this.cb && typeof this.cb === 'function') {
                     this.cb();
                 }

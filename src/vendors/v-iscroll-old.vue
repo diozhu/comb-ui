@@ -40,7 +40,7 @@
     import Vue from 'vue';
     import Iscroll from './v-iscroll.js';
     import vSpinner from './v-spinner/';
-    import CONFIG from '../config';
+    import CONFIG from '~@/config';
 //    import { mapState } from 'vuex';
 //    import ScrollPosition from './v-iscroll-position.js'; // 滚动条位置信息
     import bus from './eventbus'; //eslint-disable-line

@@ -76,7 +76,7 @@
         },
 
         created () {
-//            logger.log('v-album created...');
+//            console.log('v-album created...');
             this.initImages();
         },
 

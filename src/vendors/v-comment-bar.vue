@@ -20,7 +20,7 @@
     </div>
 </template>
 <script>
-    import config from '../config';
+    import config from '~@/config';
     import MicroComment from './v-comment';
     import * as utils from '../js/utils/utils';
     import { mapState } from 'vuex'; //eslint-disable-line
@@ -143,7 +143,7 @@
         methods: {
             togglePraise (e) {
                 if (!this.praiseEnable) return;
-//                logger.log('v-comment-bar.method.togglePraise...', e.target);
+//                console.log('v-comment-bar.method.togglePraise...', e.target);
                 e.stopPropagation();
 
                 let params = {};

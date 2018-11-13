@@ -24,7 +24,6 @@ import MessageBox from './v-message-box.js';
 import vPicker from './v-picker.vue';
 import vPopup from './v-popup.vue';
 import vDatetimePicker from './v-datetime-picker.vue';
-// import Logger from '../js/utils/logger';
 import vSpinner from './v-spinner';
 
 import Swipe from './v-swipe.js';

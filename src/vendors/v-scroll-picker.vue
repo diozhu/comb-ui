@@ -30,7 +30,6 @@
 <script>
     import IScroll from 'iscroll';
     import _ from 'underscore';
-    import logger from '../js/utils/logger';
     import vShade from './v-shade.vue';
 
     /**
@@ -121,7 +120,7 @@
         },
 
         created () {
-            logger.log('v-scroll-picker created...');
+            console.log('v-scroll-picker created...');
             this.rem2px = lib.flexible.rem2px('1rem').replace(/px/, '') * 1;  // eslint-disable-line no-undef
         },
 
@@ -141,7 +140,7 @@
                         snap: 'li'
                     });
 
-                    logger.log('===============>>> ', _self.myScroll, this.rem2px);
+                    console.log('===============>>> ', _self.myScroll, this.rem2px);
 
                     let selectedIndex = 0;
 

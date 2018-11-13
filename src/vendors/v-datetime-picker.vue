@@ -22,7 +22,6 @@
     import * as utils from '../js/utils/utils';
     import vPicker from './v-picker';
     import vPopup from './v-popup';
-//    import logger from '../js/utils/logger';
 
 //    if (process.env.NODE_ENV === 'component') {
 //        require('mint-ui/packages/picker/style.css');
@@ -206,7 +205,7 @@
             open () {
                 this.visible = true;
 
-//                logger.log('v-datetime-picker.open: ', this.$refs.picker.$refs.mask.getBoundingClientRect());
+//                console.log('v-datetime-picker.open: ', this.$refs.picker.$refs.mask.getBoundingClientRect());
 //                this.$nextTick(() => {
 //                    this.$refs.picker.$refs.mask.style.top = 0;
 //                });

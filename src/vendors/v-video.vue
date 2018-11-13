@@ -4,10 +4,8 @@
     </div>
 </template>
 <script>
-    import logger from '../js/utils/logger';
     import bus from './eventbus';
     export default {
-        components: { logger },
         name: 'v-video',
 
         props: {
@@ -42,7 +40,7 @@
 
         methods: {
             audioPlaying (id, ids) {
-                logger.log('!!![v-video]broadcast from app: v-audio: ', id, ids);
+                console.log('!!![v-video]broadcast from app: v-audio: ', id, ids);
                 if (id !== this.id && this.obj && !this.obj.paused) { // 接收通知，关掉其他播放器，确保只有一个在播放。 Author by Dio Zhu. on 2017.5.11
                     this.obj.pause();
                 }
@@ -52,14 +50,14 @@
              *              -- Author by Dio Zhu. on 2016.11.15
              */
             play () {
-                logger.log('video.play...');
+                console.log('video.play...');
             },
             /**
              * 播放中, 修改播放时间\播放动画等...
              *              -- Author by Dio Zhu. on 2016.11.11
              */
             onPlaying () {
-                logger.log('video.playing...');
+                console.log('video.playing...');
                 bus.$emit('audio-playing', this.id); // 通知其他播放器
             },
             /**
@@ -67,11 +65,11 @@
              *              -- Author by Dio Zhu. on 2016.11.15
              */
             onPause () {
-                logger.log('video.onPause...');
+                console.log('video.onPause...');
                 this.stop();
             },
             onEnded () {
-                logger.log('video.onEnded...');
+                console.log('video.onEnded...');
                 this.stop();
             },
             /**
@@ -79,7 +77,7 @@
              *              -- Author by Dio Zhu. on 2016.11.15
              */
             stop () {
-                logger.log('video.stop...');
+                console.log('video.stop...');
             }
         }
     };

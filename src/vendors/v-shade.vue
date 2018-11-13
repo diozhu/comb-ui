@@ -2,8 +2,6 @@
     <div class="v-shade" :class="shadeWrapperClass" @click="hide"></div>
 </template>
 <script>
-    import logger from '../js/utils/logger';
-
     /**
      * shade组件, 全局半透明黑色遮罩
      *              -- Author by Dio Zhu. on 2017.2.15
@@ -42,7 +40,7 @@
         },
 
         created () {
-            logger.log('v-shade created...');
+            console.log('v-shade created...');
         },
 
         methods: {

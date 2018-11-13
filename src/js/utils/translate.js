@@ -1,6 +1,5 @@
 var exportObj = {};
 import Vue from 'vue';
-
 if (!Vue.prototype.$isServer) {
     var docStyle = document.documentElement.style,
         engine,
@@ -91,7 +90,6 @@ if (!Vue.prototype.$isServer) {
         translateElement: translateElement,
         cancelTranslateElement: cancelTranslateElement
     };
-}
-;
+};
 
-export default exportObj;
+export default exportObj ;

@@ -124,7 +124,7 @@
     import vRadio from './v-radio';
     import clickoutside from '../js/utils/clickoutside';
     import vPopup from './v-popup';
-    import * as api from '../js/core/api'; //eslint-disable-line
+    import * as api from '~@/js/core/api'; //eslint-disable-line
     import * as utils from '../js/utils/utils'; //eslint-disable-line
     import trans from '../js/core/trans.js';
     import vPicker from './v-picker';
