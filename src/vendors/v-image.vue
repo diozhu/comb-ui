@@ -12,7 +12,8 @@
 </template>
 
 <script>
-    import {format} from '../js/utils/utils';
+    // import {format} from '../js/utils/utils';
+    import * as utils from '../js/utils/utils';
 
     /**
      * 缩略图，避免页面渲染时的空白以及提供给spider;
@@ -57,13 +58,13 @@
             init (val) {
                 // console.warn('v-image.init.value.url: ', val);
                 this.$set(this, 'thumb', { // 缩略图，避免页面渲染时的空白以及提供给spider...mod by Dio Zhu. on 2018.8.15
-                    url: format(val.url, { thumb: val.thumb }),
+                    url: utils.format(val.url, { thumb: val.thumb }),
                     classes: val.classes,
                     alt: val.alt
                 });
 
                 this.$set(this, 'curValue', {
-                    url: format(val.url, { width: val.width, height: val.height }),
+                    url: utils.format(val.url, { width: val.width, height: val.height }),
                     classes: val.classes,
                     alt: val.alt
                 });
