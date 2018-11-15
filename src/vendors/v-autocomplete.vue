@@ -10,7 +10,7 @@
             <i 
             :class="[classes[item - 1], { 'hover': hoverIndex === item }]"
             :style="getIconStyle(item)"
-            class="v-rate__icon icon-star-fill">
+            class="v-rate__icon icon icon-star-fill">
             </i>
         </span>
         <span class="v-rate__text"></span>
