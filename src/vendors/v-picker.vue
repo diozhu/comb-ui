@@ -195,7 +195,7 @@
         }
     }
     .v-picker-toolbar {
-        /*height: pxTorem(40px);*/
+        min-height: pxTorem(40px);
         border-bottom: 1px solid #E3E3E3;
         display: flex;
         justify-content: space-between;
