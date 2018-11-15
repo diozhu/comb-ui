@@ -52,7 +52,7 @@
         },
         methods: {
             handleClick (evt) {
-                console.log('evt:', evt);
+                // console.log('evt:', evt);
                 this.$emit('click', evt);
             }
         }
