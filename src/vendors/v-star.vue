@@ -4,7 +4,7 @@
         <div class="v-star__frm">
             <i v-for="n in 5"
                class="icon"
-               :class="[{'icon-star-fill': n <= currentValue}, {'icon-star': n > currentValue}]"
+               :class="[{'icon-star-fill': n <= currentValue}, {'icon-star-empty': n > currentValue}]"
                @click="handleClick(n)"
             ></i>
             <p class="desc" v-if="enableDesc && desc && desc.length">{{ desc[currentValue] }}</p>
