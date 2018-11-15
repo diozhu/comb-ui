@@ -38,7 +38,8 @@
             font-size: pxTorem(15px);
             line-height: pxTorem(19px);
             color: #333333;
-            @include box;
+            //@include box;
+            display: -webkit-box;
             -webkit-box-orient: vertical;
             -webkit-line-clamp: 3;
             overflow: hidden;
