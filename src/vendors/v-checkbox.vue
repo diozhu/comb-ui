@@ -44,7 +44,7 @@
     </dl>
 </template>
 <script type="text/ecmascript-6">
-    import _ from 'underscore'; //eslint-disable-line
+    import _ from 'lodash'; //eslint-disable-line
 
     /**
      * radio组件

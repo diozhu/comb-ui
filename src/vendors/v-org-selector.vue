@@ -46,7 +46,7 @@
     <!--import vCheckbox from './v-checkbox';-->
     <!--import vButton from './v-button.vue';-->
     <!--import vFeed from './v-feed.vue';-->
-    <!--import _ from 'underscore';-->
+    <!--import _ from 'lodash';-->
 
     <!--/**-->
      <!--* 企通组织结构选择器-->

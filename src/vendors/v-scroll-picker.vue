@@ -29,7 +29,7 @@
 </template>
 <script>
     import IScroll from 'iscroll';
-    import _ from 'underscore';
+    import _ from 'lodash';
     import vShade from './v-shade.vue';
 
     /**

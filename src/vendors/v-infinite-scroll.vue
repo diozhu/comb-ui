@@ -52,7 +52,7 @@
 <script type="text/ecmascript-6">
     import vScroll from './v-scroll.vue';
     import CONFIG from '~@/config';
-    import _ from 'underscore';
+    import _ from 'lodash';
     import bus from './eventbus'; //eslint-disable-line
 
     // 使用requestAnimationFrame比setTimeout效率高，1000/60是为了达到每秒60帧的效率才能让人眼感觉到流畅~
