@@ -63,7 +63,7 @@
     import * as utils from '../js/utils/utils.js';
     import CONFIG from '~@/config.js';
     import {usercenter} from '~@/image';
-    import {path} from '../js/core/api';
+    import {path} from '~@/js/core/api';
 
     /**
      * 上传图片组件，依赖于微信jssdk，需要组件的引用页面混入m-wechat-api.js做微信jssdk的config！
