@@ -3,8 +3,9 @@
         <!-- <img v-lazy="curValue.url || value" :alt="curValue.alt"/> -->
         <img
             v-lazy="curValue.url || value"
-            :src="thumb.url || value"
+            :src="thumb.url ? thumb.url : ''"
             :alt="curValue.alt"
+            :class="[{thumb: thumb.url}, animation, {loading: thumb.url}]"
             :style="thumbStyle"
         />
         <!-- <img :src="curValue.url || value" :alt="curValue.alt"/> -->
@@ -32,6 +33,10 @@
                 type: String,
                 default: ''
             },
+            animation: { // 设定图片由thumb转为原图时的动画，默认fade(渐显)
+                type: String,
+                default: 'fade' // 默认：fade（渐显）、scale（缩放）、slide（滑动）
+            },
             classes: {
                 type: String,
                 default: ''
@@ -45,9 +50,9 @@
             };
         },
         watch: {
-            value (val) {
+            'value.url' (val) {
                 // console.warn('v-image.watch.value.url: ', val);
-                this.init(val);
+                this.init(this.value);
             }
         },
         created () {
@@ -58,7 +63,7 @@
             init (val) {
                 // console.warn('v-image.init.value.url: ', val);
                 this.$set(this, 'thumb', { // 缩略图，避免页面渲染时的空白以及提供给spider...mod by Dio Zhu. on 2018.8.15
-                    url: utils.format(val.url, { thumb: val.thumb }),
+                    url: utils.format(val.url, { thumb: true }),
                     classes: val.classes,
                     alt: val.alt
                 });
@@ -97,5 +102,57 @@
             height: 100%;
             vertical-align: top;
         }
+
+        .thumb {
+
+            /* 渐显 */
+            &.fade.loading { filter: blur(25px); }
+            &.fade.loaded { animation: fadeOut 300ms linear; }
+
+            /* 缩放 */
+            &.scale.loading { filter: blur(50px); transform: scale(1.1); }
+            &.scale.loaded { animation: scaleIn 300ms ease-out; }
+
+            /* slide */
+            &.slide {
+
+                &.loading { filter: blur(25px); }
+
+                ~.shadow {
+                    width: 100%;
+                    position: absolute;
+                    left: 0;
+                    bottom: 0;
+                    overflow: hidden;
+
+                    img {
+                        position: absolute;
+                        left: 0;
+                        bottom: 0;
+                        filter: blur(25px);
+                    }
+                }
+
+                &.loaded {
+                    filter: none;
+
+                    &~.shadow {
+                        opacity: 0;
+                        animation: slide 1000ms linear;
+                    }
+                }
+            }
+            /*&.slide.loading {*/
+            /*!*filter: blur(50px);*!*/
+            /*}*/
+            /*&.slide.loaded {*/
+            /*!*animation: slide 300ms linear;*!*/
+            /*}*/
+        }
+
+        @keyframes fadeOut { 0% { filter: blur(50px); } 100% { filter: none; } }
+        @keyframes scaleIn { 0% { filter: blur(50px); transform: scale(1.1); } 100% { filter: none; transform: scale(1); } }
+        /*@keyframes slide { 0% { transform: translate3d(0, 0, 0); opacity: 1; } 100% { transform: translate3d(100%, 0, 0); opacity: 1; } }*/
+        @keyframes slide { 0% { height: 100%; opacity: 1; } 100% { height: 1%; opacity: 1; } }
     }
 </style>
