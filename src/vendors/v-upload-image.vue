@@ -16,7 +16,8 @@
             <div class="avatar-demo">
                 <i class="icon icon-error" @click="popupTag = false"></i>
                 <!--<img :src="usercenter.bg" @click.stop=""/>-->
-                <v-image @click.stop :value="{url: usercenter.bg, classes: 'popup-image'}"></v-image>
+                <!-- <v-image @click.stop :value="{url: usercenter.bg, classes: 'popup-image'}"></v-image> -->
+                <v-image @click.stop :value="{url: '//s01.dongyin.net/doing/user_center_bg.png', classes: 'popup-image'}"></v-image>
                 <!--微信环境显示按钮-->
                 <button v-if="isWechat" @click="wxChooseImage" class="wx_upload_button" :disabled="disabled">上传图片</button>
                 <!--h5环境显示input-->
@@ -55,15 +56,15 @@
     import wx from 'weixin-js-sdk';
     // import Popup from '../js/utils/popup';
     import vPopup from './v-popup';
-    import * as api from '~@/js/core/api.js';
+    import * as api from '@/js/core/api.js';
     // import * as wechatApi from '../js/utils/wechat-api.js'; // 引入wechat-api，需要组件的引用页面混入m-wechat-api.js做微信jssdk的config！
-    import vueCoreImageUpload from 'vue-core-image-upload';
+    // import vueCoreImageUpload from 'vue-core-image-upload';
     import vSpinner from './v-spinner';
     import trans from '../js/core/trans.js';
     import * as utils from '../js/utils/utils.js';
-    import CONFIG from '~@/config.js';
-    import {usercenter} from '~@/image';
-    import {path} from '~@/js/core/api';
+    import CONFIG from '@/config.js';
+    // import {usercenter} from '@/image';
+    import {path} from '@/js/core/api';
 
     /**
      * 上传图片组件，依赖于微信jssdk，需要组件的引用页面混入m-wechat-api.js做微信jssdk的config！
@@ -77,7 +78,7 @@
     export default {
         // mixins: [ Popup ],
 
-        components: { 'v-spinner': vSpinner, vueCoreImageUpload, vPopup },
+        components: { 'v-spinner': vSpinner, vPopup },
         props: {
             value: {
                 type: Array,
@@ -99,7 +100,7 @@
         },
         data () {
             return {
-                usercenter,
+                // usercenter,
                 uploadUrl: CONFIG.URL + path + '/wap/student/upload_image',
                 data: {},
                 currentValue: this.value,
