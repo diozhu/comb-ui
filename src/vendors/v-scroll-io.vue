@@ -37,7 +37,7 @@
 <!--<script type="text/ecmascript-6">-->
     <!--// import Scroll from './v-scroll';-->
     <!--import vSpinner from './v-spinner/';-->
-    <!--import CONFIG from '~@/config';-->
+    <!--import CONFIG from '@/config';-->
     <!--import vIntersect from './v-intersect.vue';-->
 <!--//    import { mapState } from 'vuex';-->
 <!--//    import ScrollPosition from './v-scroll-position.js'; // 滚动条位置信息-->

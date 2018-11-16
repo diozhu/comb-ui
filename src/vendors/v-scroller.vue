@@ -53,7 +53,7 @@
     <!--import Vue from 'vue';-->
     <!--import ScrollerJS from './v-scroller.js';-->
     <!--import vSpinner from './v-spinner/';-->
-    <!--import CONFIG from '~@/config';-->
+    <!--import CONFIG from '@/config';-->
     <!--import * as api from '../js/core/api.js'; //eslint-disable-line-->
     <!--import bus from './eventbus.js';-->
     <!--import * as utils from '../js/utils/utils.js';-->

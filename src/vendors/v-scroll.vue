@@ -70,7 +70,7 @@
     import Vue from 'vue';
     import Scroll from './v-scroll';
     import vSpinner from './v-spinner/';
-    // import CONFIG from '~@/config';
+    // import CONFIG from '@/config';
 //    import { mapState } from 'vuex';
 //    import ScrollPosition from './v-scroll-position.js'; // 滚动条位置信息
     import bus from './eventbus';

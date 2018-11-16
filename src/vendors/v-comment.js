@@ -3,7 +3,7 @@
 //  */
 //
 // import Vue from 'vue';
-// import CONFIG from '~@/config';
+// import CONFIG from '@/config';
 // import * as api from '../js/core/api';
 // import _promise from '../js/utils/promise';
 // import store from '../store';

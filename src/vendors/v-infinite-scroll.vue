@@ -51,7 +51,7 @@
 </template>
 <script type="text/ecmascript-6">
     import vScroll from './v-scroll.vue';
-    // import CONFIG from '~@/config';
+    // import CONFIG from '@/config';
     import _ from 'lodash';
     import bus from './eventbus'; //eslint-disable-line
 

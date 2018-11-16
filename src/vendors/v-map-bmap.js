@@ -2,7 +2,7 @@
  * 百度地图
  *              -- Author by Dio Zhu on 2017/11/14
  */
-import CONFIG from '~@/config.js';
+import CONFIG from '@/config.js';
 
 let obj = {
     init () {

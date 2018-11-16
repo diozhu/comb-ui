@@ -3,9 +3,9 @@
 //  */
 //
 // import Vue from 'vue';
-// import CONFIG from '~@/config';
+// import CONFIG from '@/config';
 // import _promise from '../js/utils/promise';
-// import store from '~@/store/';
+// import store from '@/store/';
 //
 // if (typeof Promise === 'undefined') {
 //     var Promise = _promise;

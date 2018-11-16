@@ -53,7 +53,7 @@
 </template>
 
 <script>
-    import wx from 'weixin-js-sdk';
+    // import wx from 'weixin-js-sdk';
     // import Popup from '../js/utils/popup';
     import vPopup from './v-popup';
     import * as api from '@/js/core/api.js';
