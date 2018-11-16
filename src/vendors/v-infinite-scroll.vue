@@ -51,7 +51,7 @@
 </template>
 <script type="text/ecmascript-6">
     import vScroll from './v-scroll.vue';
-    import CONFIG from '~@/config';
+    // import CONFIG from '~@/config';
     import _ from 'lodash';
     import bus from './eventbus'; //eslint-disable-line
 
@@ -105,7 +105,7 @@
             return {
                 uid: this._uid,
                 start: 0,               // 开始显示的序号
-                size: CONFIG.LIMIT,     // 每次加载的数量，用于墓碑的显示
+                size: parseInt(process.env.VUE_APP_LIMIT || 10),     // 每次加载的数量，用于墓碑的显示
                 height: 0,              // 容器内容高度（仅for中的内容，不包含slot）
                 totalHeight: 0,         // 容器总内容高度（加上slot）
                 currentValue: this.value,
