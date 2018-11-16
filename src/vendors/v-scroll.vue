@@ -180,12 +180,12 @@
 //                scrollTop: 0,               // 当前滚动位置
                 goTopTag: false,            // 返回顶部按钮的显示标识
 
-                oTime: -1,                                      // 最后一条数据的时间戳(秘语)
-                pageSize: process.env.VUE_APP_LIMIT || 10,      // 每一页的个数(秘语)
-                offset: 0,                                      // 当前页数(nodejs)
-                limit: process.env.VUE_APP_LIMIT || 10,         // 每页显示记录数(nodejs)
-                page: 1,                                        // 当前页数(php)
-                pageNum: process.env.VUE_APP_LIMIT || 10,       // 每页显示记录数(php)
+                oTime: -1,                  // 最后一条数据的时间戳(秘语)
+                pageSize: parseInt(process.env.VUE_APP_LIMIT || 10),        // 每一页的个数(秘语)
+                offset: 0,                                                  // 当前页数(nodejs)
+                limit: parseInt(process.env.VUE_APP_LIMIT || 10),           // 每页显示记录数(nodejs)
+                page: 1,                                                    // 当前页数(php)
+                pageNum: parseInt(process.env.VUE_APP_LIMIT || 10),         // 每页显示记录数(php)
                 hasMore: true,              // 是否还有数据, 决定最底下是否显示" - 已加载完毕 - "样式
                 hasMoreTotal: true,         // 用于打开endFunc时，判断外部是否还有需要加载的数据
                 isLoading: false,           // 正在加载
@@ -344,11 +344,11 @@
             reset ({resetData = true, goTop = true} = {}) {
                 // 初始化分页参数
                 this.oTime = -1;
-                this.pageSize = process.env.VUE_APP_LIMIT || 10;
+                this.pageSize = parseInt(process.env.VUE_APP_LIMIT || 10);
                 this.offset = 0;
-                this.limit = process.env.VUE_APP_LIMIT || 10;
+                this.limit = parseInt(process.env.VUE_APP_LIMIT || 10);
                 this.page = 1;
-                this.pageNum = process.env.VUE_APP_LIMIT || 10;
+                this.pageNum = parseInt(process.env.VUE_APP_LIMIT || 10);
                 this.hasMore = true;
                 this.hasData = true;
                 this.scrollEndTxt = false;
