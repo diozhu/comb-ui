@@ -721,122 +721,122 @@
 
     .v-scroll {
         height: 100%;
-    }
 
-    .v-scroll-container {
-        height: 100%;
-        overflow: scroll;
-        -webkit-overflow-scrolling: touch;
+        .v-scroll-container {
+            height: 100%;
+            overflow: scroll;
+            -webkit-overflow-scrolling: touch;
 
-        /*ul {*/
-        /*visibility: hidden;*/
-        /*// transform: translate3d(0, -72px, 0);*/
-        /*}*/
+            /*ul {*/
+            /*visibility: hidden;*/
+            /*// transform: translate3d(0, -72px, 0);*/
+            /*}*/
 
-        /* 可以设置不同的进入和离开动画 */
-        /* 设置持续时间和动画函数 */
-        /*.slide-fade-enter-active {
-            transition: all .2s ease;
-        }
-        .slide-fade-leave-active {
-            transition: all .8s ease; // cubic-bezier(1.0, 0.5, 0.8, 1.0);
-        }
-        .slide-fade-enter, .slide-fade-leave-active {
-            transform: translateY(-$refresh-height);
-            height: 0;
-            opacity: 0;
-        }*/
-    }
-
-    .v-scroll-refresh {
-        width: 100%;
-        height: $refresh-height;
-        position: absolute;
-        padding: 0;
-        /*background: #f2f2f4;*/
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        .v-spinner {
-            text-align: center;
-        }
-    }
-
-    .v-scroll-content {
-        /*border: red 1px solid;*/
-    }
-
-    .v-scroll-bottom {
-        /*padding: pxTorem(20px) 0;*/
-        height: pxTorem(45);
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-
-        .v-spinner {
-            text-align: center;
-        }
-    }
-    .v-scroll-bottom-txt {
-        text-align: center;
-        font-size: pxTorem(15px);
-        color: #c1c1c1;
-    }
-    .v-scroll-empty {
-        width: 100%;
-        min-height: pxTorem(100px);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    .v-scroll-top {
-        width: pxTorem(38px);
-        height: pxTorem(38px);
-        position: fixed;
-        z-index: 99;
-        bottom: pxTorem(85px);
-        right: pxTorem(22px);
-        font-size: pxTorem(23px);
-        text-align: center;
-        line-height: pxTorem(38px);
-        color: #fff;
-        border-radius: 50%;
-        background: #ccc;
-        box-shadow: 0 0 pxTorem(3px) #999;
-    }
-    .null-search-box{
-        padding:0 0 pxTorem(40px);
-        background:#fff;
-        color: #777E8C;
-        position: fixed;
-        top:pxTorem(181px);
-        width:100%;
-        .bg_icon{
-            // background:url(../img/ico_nosearch.png) no-repeat 50% 50%;
-            // background-size: pxTorem(70px);
-        }
-        .text{
-            font-size: pxTorem(14px);
-            color: #777E8C;
-            letter-spacing: 0;
-            line-height: 22px;
-            text-align: center;
-            .error-img{
-                text-align:center;
-                padding-bottom:pxTorem(35px);
-                img{
-                    width:pxTorem(70px);
-                    height:pxTorem(70px);
-                }
+            /* 可以设置不同的进入和离开动画 */
+            /* 设置持续时间和动画函数 */
+            /*.slide-fade-enter-active {
+                transition: all .2s ease;
             }
-            .error-content{
-                color:#4A4A4A;
-                font-size:pxTorem(16px);
-                line-height:pxTorem(22px);
-                text-align:center;
+            .slide-fade-leave-active {
+                transition: all .8s ease; // cubic-bezier(1.0, 0.5, 0.8, 1.0);
+            }
+            .slide-fade-enter, .slide-fade-leave-active {
+                transform: translateY(-$refresh-height);
+                height: 0;
+                opacity: 0;
+            }*/
+        }
+
+        .v-scroll-refresh {
+            width: 100%;
+            height: $refresh-height;
+            position: absolute;
+            padding: 0;
+            /*background: #f2f2f4;*/
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            .v-spinner {
+                text-align: center;
             }
         }
+
+        .v-scroll-content {
+            /*border: red 1px solid;*/
+        }
+
+        .v-scroll-bottom {
+            /*padding: pxTorem(20px) 0;*/
+            height: pxTorem(45);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            .v-spinner {
+                text-align: center;
+            }
+        }
+        .v-scroll-bottom-txt {
+            text-align: center;
+            font-size: pxTorem(15px);
+            color: #c1c1c1;
+        }
+        .v-scroll-empty {
+            width: 100%;
+            min-height: pxTorem(100px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .v-scroll-top {
+            width: pxTorem(38px);
+            height: pxTorem(38px);
+            position: fixed;
+            z-index: 99;
+            bottom: pxTorem(85px);
+            right: pxTorem(22px);
+            font-size: pxTorem(23px);
+            text-align: center;
+            line-height: pxTorem(38px);
+            color: #fff;
+            border-radius: 50%;
+            background: #ccc;
+            box-shadow: 0 0 pxTorem(3px) #999;
+        }
+        // .null-search-box{
+        //     padding:0 0 pxTorem(40px);
+        //     background:#fff;
+        //     color: #777E8C;
+        //     position: fixed;
+        //     top:pxTorem(181px);
+        //     width:100%;
+        //     .bg_icon{
+        //         // background:url(../img/ico_nosearch.png) no-repeat 50% 50%;
+        //         // background-size: pxTorem(70px);
+        //     }
+        //     .text{
+        //         font-size: pxTorem(14px);
+        //         color: #777E8C;
+        //         letter-spacing: 0;
+        //         line-height: 22px;
+        //         text-align: center;
+        //         .error-img{
+        //             text-align:center;
+        //             padding-bottom:pxTorem(35px);
+        //             img{
+        //                 width:pxTorem(70px);
+        //                 height:pxTorem(70px);
+        //             }
+        //         }
+        //         .error-content{
+        //             color:#4A4A4A;
+        //             font-size:pxTorem(16px);
+        //             line-height:pxTorem(22px);
+        //             text-align:center;
+        //         }
+        //     }
+        // }
     }
 </style>
