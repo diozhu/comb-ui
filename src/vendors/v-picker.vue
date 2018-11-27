@@ -236,6 +236,7 @@
         position: absolute;
         left: 0;
         top: -1px;
+        transform: translate3d(0, 0, 0); // ios重复点击最后一个选项的确认时会出现遮罩层异常。 mod by Dio Zhu. on 2018.11.27
         /*position: fixed;*/
         /*left: 0;*/
         /*bottom: 0;*/
