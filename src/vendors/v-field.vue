@@ -28,9 +28,15 @@
                   :readonly="readonly"
                   v-model="currentValue"
                   @change="$emit('change', currentValue)"
+                  @focus="active = true"
                   :field="field"
                   v-validator="validator"
         ></textarea>
+        <i v-if="clearEnable"
+           v-show="type === 'textarea' && active"
+           class="icon icon-error"
+           @click="handleClear('textarea')"
+        ></i>
         <slot name="after" class="multi-after"></slot>
         <div v-if="type === 'textarea' && limit"
              class="v-field__limit"
@@ -59,7 +65,7 @@
         <i v-if="clearEnable"
            v-show="type !== 'textarea' && active"
            class="icon icon-error"
-           @click="handleClear"
+           @click="handleClear('input')"
         ></i>
         <slot name="right"></slot>
     </v-cell>
@@ -187,10 +193,11 @@
                 this.active = false;
             },
 
-            handleClear () {
+            handleClear (val) {
                 if (this.disabled || this.readonly) return;
                 this.currentValue = '';
-                this.$refs.input.focus();
+                if (val === 'input') this.$refs.input.focus();
+                else this.$refs.textarea.focus();
             },
 
             handleInput (e) {
