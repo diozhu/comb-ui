@@ -73,7 +73,8 @@ module.exports = {
         'vue/attribute-hyphenation': 'off',
         'vue/html-end-tags': 'off',
         'vue/html-closing-bracket-newline': 'off',
-        'vue/html-closing-bracket-spacing': 'off'
+        'vue/html-closing-bracket-spacing': 'off',
+        'vue/no-unused-components': 'off'
     },
 
     parserOptions: {

@@ -53,6 +53,12 @@ const routes = [
             { name: 'UploadImages', path: '/toast' },
             { name: 'Validator', path: '/toast' },
         ]
+    },
+    {
+        title: 'testing...',
+        list: [
+            { name: 'HugeTable', path: '/huge-table' }
+        ]
     }
 ];
 
