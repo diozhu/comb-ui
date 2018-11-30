@@ -58,7 +58,8 @@
                     columnKey: this.columnKey,
                     label: this.label,
                     property: this.prop || this.property,
-                    width: this.width
+                    width: this.width,
+                    rowSpan: this.rowSpan || ''
                 });
                 let columnIndex = [].indexOf.call(this.$parent.$refs.hiddenColumns.children, this.$el);
                 this.owner.store.commit('insertColumn', column, columnIndex, null);

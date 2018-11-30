@@ -73,8 +73,9 @@ module.exports = {
                 }
             };
             config.output.pathinfo = true; // dev环境下，console中可显示对应的文件位置，而不是打包后的app.js，仅可用于dev环境！   -- Author by Dio Zhu. on 2017.4.20
-            config.devtool = false;
-            // // config.devtool = '#cheap-module-eval-source-map';
+            // config.devtool = false;
+            config.devtool = '#source-map';
+            // config.devtool = '#inline-source-map';
         }
     },
 

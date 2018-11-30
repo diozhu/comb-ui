@@ -25,7 +25,8 @@
                      v-for="(col, idx) in store.states._columns" :key="idx"
                      :style="getSpanStyles(row, col, index, idx)"
                 >
-                    {{ (row[col.property] ? row[col.property] : '') }}
+                    <!--{{ (row[col.property] ? row[col.property] : row[idx][col.property]) }}-->
+                    <v-text :value="(row[col.property] ? row[col.property] : row[idx][col.property])" :limit="1"></v-text>
                 </div>
             </div>
         </div>
@@ -33,6 +34,7 @@
 </template>
 
 <script>
+    import vText from './v-text.vue';
 
     class TableStore {
         constructor (table, initialState = {}) {
@@ -45,7 +47,8 @@
                 data: [],
                 columns: [],
                 originColumns: [], // 原始数据列
-                currentRow: null
+                currentRow: null,
+                rules: []   // 合并规则
             };
 
             this.mutations = {
@@ -54,6 +57,7 @@
                     const dataInstanceChanged = states._data !== data;
                     states._data = data;
                     states.data = data;
+                    this.computeRules(); // 计算合并规则
                 },
                 // clearColumn () {
                 //     this.states._columns = [];
@@ -89,6 +93,91 @@
             const _columns = this.states._columns || [];
             this.states.originColumns = _columns;
             this.states.columns = _columns;
+            // this.computeRules();
+        }
+
+        computeRules () { // 计算合并规则，行合并设定在column上，列合并设在table上，都只能做单一维度合并，不支持多合并条件。 Author by Dio Zhu. on 2018.11.30
+            let rules = [],
+                data = this.states._data,
+                columns = this.states._columns,
+                colSpanProperty = this.table.colSpan,
+                // columnNames = {},
+                rowSpanCountObj = {}; // 记录row合并次数
+
+            const rowSpanFn = function (row, col, rowIdx, colIdx, cell) {
+                if (!col.rowSpan) return cell;
+                // console.log('-> ', ...arguments);
+                let upperRow = rowIdx > 0 ? data[rowIdx - 1] : null,
+                    upperCol = null,
+                    merageTag = false;
+                if (Array.isArray(row)) { // 二维数组判断是否需要合并
+                    upperCol = upperRow ? upperRow[colIdx][col.property] : null;
+                    merageTag = upperRow && upperCol === row[colIdx][col.property];
+                } else {
+                    upperCol = upperRow ? upperRow[col.property] : null;
+                    merageTag = upperRow && upperCol === row[col.property];
+                }
+                // console.log('--------> ', upperRow, upperCol);
+                if (merageTag) { // 字符串相等，可以合并行
+                    let parentRowId = rules[rowIdx - 1][colIdx]['parentRowId']; // 上一行的合并id
+                    rules[parentRowId][colIdx]['rowSpan'] += 1; // 合并行向下合并数+1
+                    cell.rowSpan = 0; // 当前行置零
+                    // cell.rowSpan = -(rules[parentRowId][colIdx]['rowSpan'] - 1); // 当前行向上挪的行数
+                    cell.parentRowId = parentRowId;
+
+                    rowSpanCountObj[rowIdx] = 1;
+
+                    // // // cell.rowTrans = -(Object.keys(rowSpanCountObj).length);
+                    // // // console.log('--------> ', i, rowSpanCountObj, cell);
+                    // // // cell.rowTrans = -(Object.keys(rowSpanCountObj).filter(k => { return rowSpanCountObj[k] > 0; }).length + (i - parentRowId - 1));
+                    // cell.rowTrans -= (rowIdx - parentRowId - 1); // 当前行向上合并数 + 父级合并行数差
+                    // // rowSpanCountObj[rowIdx] += 1;
+                    // // cell.rowTrans = -(rowSpanCountObj[rowIdx]); // 当前行向上合并数 + 父级合并行数差
+                    // console.log('--------> ', rowIdx, rowSpanCountObj, cell.rowTrans);
+                }
+                return cell;
+            };
+            const colSpanFn = function (row, col, rowIdx, colIdx, cell) {
+                if (!colSpanProperty) return cell;
+                let prevCol = colIdx > 0 ? row[colIdx - 1] : null,
+                    merageTag = false;
+                if (Array.isArray(row)) {
+                    if (!row[colIdx][colSpanProperty]) return cell;
+                    merageTag = prevCol && prevCol[colSpanProperty] === row[colIdx][colSpanProperty] && prevCol[col.property] === row[colIdx][col.property];
+                } else {
+                    if (!row[colSpanProperty]) return cell;
+                    merageTag = prevCol && prevCol[colSpanProperty] === row[colSpanProperty] && prevCol[col.property] === row[col.property];
+                }
+                if (merageTag) {
+                    let parentColId = rules[rowIdx][colIdx - 1]['parentColId']; // 合并表格的id
+                    rules[rowIdx][parentColId]['colSpan'] += 1; // 合并列+1
+                    cell.colSpan = 0;
+                    cell.parentColId = parentColId;
+                    console.log('--------> ', cell);
+                }
+                return cell;
+            };
+
+            [].forEach.call(data, (row, rowIdx) => { // row
+                if (Object.keys(rowSpanCountObj).length) rowSpanCountObj[rowIdx] = 0;
+                [].forEach.call(columns, (col, colIdx) => { // col
+                    if (!rules[rowIdx]) rules[rowIdx] = [];
+                    let cell = { rowSpan: 1, colSpan: 1, parentRowId: rowIdx, parentColId: colIdx };
+
+                    // // 整行上移数为合并行记录次数
+                    // // if (rowSpanCountObj.hasOwnProperty(i)) cell.rowTrans = -(Object.keys(rowSpanCountObj).length);
+                    // if (rowSpanCountObj.hasOwnProperty(rowIdx)) {
+                    //     cell.rowTrans = -(Object.keys(rowSpanCountObj).filter(k => { return rowSpanCountObj[k] > 0; }).length);
+                    // }
+
+                    // console.log('--------> ', i, rowSpanCountObj, cell);
+                    cell = rowSpanFn(row, col, rowIdx, colIdx, cell); // 合并行，查找上一行同列的数据是否需要合并
+                    cell = colSpanFn(row, col, rowIdx, colIdx, cell); // 列并行，查找上一行同列的数据是否需要合并
+                    rules[rowIdx].push(cell);
+                });
+            });
+            // console.log('-----> ', rowSpanCountObj);
+            this.rules = rules;
         }
 
         updateCurrentRow () {
@@ -103,6 +192,7 @@
 
     export default {
         name: 'v-table',
+        components: { vText },
         props: {
             value: {
                 type: Array,
@@ -117,7 +207,8 @@
                 default: false
             },
             stripe: Boolean, // 斑马线样式
-            spanMethod: Function // 合并回调
+            colSpan: String // 列合并标识，只支持同行单条件合并！
+            // spanMethod: Function // 合并回调
         },
         data () {
             const store = new TableStore(this, {});
@@ -161,14 +252,20 @@
             },
             getSpanStyles (row, column, rowIndex, columnIndex) { // 单元格样式（合并）
                 // console.log('====================> ', rowIndex, columnIndex);
-                let obj = {},
+                if (!this.store.rules.length) this.store.computeRules();
+                let defWidth = column.width || 80,
+                    obj = {
+                        width: defWidth + 'px'
+                    },
                     rowSpan = 1,
                     colSpan = 1,
                     rowTrans = 0;
-                obj.width = (column.width || '80') + 'px';
+                // obj.width = (column.width || '80') + 'px';
                 // 刷新rowStyles
-                if (row && this.spanMethod && typeof this.spanMethod === 'function') {
-                    const result = this.spanMethod({row, column, rowIndex, columnIndex});
+                // if (row && this.spanMethod && typeof this.spanMethod === 'function') {
+                //     const result = this.spanMethod({row, column, rowIndex, columnIndex});
+                if (row && this.store.rules.length) {
+                    const result = this.store.rules[rowIndex][columnIndex];
                     if (Array.isArray(result)) {
                         rowSpan = result[0];
                         colSpan = result[1];
@@ -187,6 +284,14 @@
                         }
                     } else {
                         obj.height = (1 * this.defaultRowHeight) + 'px';
+                    }
+                    if (colSpan > 0) {
+                        obj.width = (defWidth * colSpan) + 'px';
+
+                        if (colSpan > 1) {
+                            obj.marginRight = -((colSpan - 1) * defWidth) + 'px';
+                            obj.zIndex = 9;
+                        }
                     }
                     // if (rowTrans < 0) {
                     //     if (rowSpan <= 0) obj.visibility = 'hidden';
@@ -249,9 +354,15 @@
         }
 
         .cell {
+            overflow: hidden;
             padding: 6px;
             background: #ffffff;
             z-index: 1;
+
+            .v-text {
+                /*font-size: pxTorem(10);*/
+                font-size: 12px;
+            }
         }
 
         &.border {

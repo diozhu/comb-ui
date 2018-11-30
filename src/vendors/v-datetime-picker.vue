@@ -108,7 +108,10 @@
                 type: Number,
                 default: 5
             },
-            value: null,
+            // value: null,
+            value: {
+                default: () => null
+            },
             validity: {
                 type: Boolean,
                 default: false
