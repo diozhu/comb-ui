@@ -22,6 +22,8 @@
             stripe
             v-model="list2"
             col-span="sub_schedule_id"
+            @touchstart.stop
+            @touchmove.stop
         >
             <!--<v-table-column label="序号" prop="subject_id" width="30"></v-table-column>-->
             <!--<v-table-column label="xx" prop="text" width="120"></v-table-column>-->

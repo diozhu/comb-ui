@@ -17,6 +17,8 @@
                  v-for="(row, index) in store.states.data" :key="index"
                  :class="getRowClass(row, index)"
                  :style="rowStyles[index]"
+                 @mouseenter="handleRowMouseEnter(index)"
+                 @mouseleave="handleRowMouseLeave"
             >
                 <!--:style="{-->
                 <!--'width': col.width + 'px'-->
@@ -35,6 +37,7 @@
 
 <script>
     import vText from './v-text.vue';
+    import * as dom from '../js/utils/dom.js';
 
     class TableStore {
         constructor (table, initialState = {}) {
@@ -48,6 +51,7 @@
                 columns: [],
                 originColumns: [], // 原始数据列
                 currentRow: null,
+                hoverRow: null,
                 rules: []   // 合并规则
             };
 
@@ -74,6 +78,10 @@
                     if (this.table.$ready) {
                         this.updateColumns();
                     }
+                },
+                setHoverRow (states, row) {
+                    // console.log('TableStore.setHoverRow...', states, row);
+                    states.hoverRow = row;
                 }
             };
         }
@@ -89,7 +97,7 @@
         }
 
         updateColumns () {
-            console.log('TableStore.updateColumns...');
+            // console.log('TableStore.updateColumns...');
             const _columns = this.states._columns || [];
             this.states.originColumns = _columns;
             this.states.columns = _columns;
@@ -153,7 +161,7 @@
                     rules[rowIdx][parentColId]['colSpan'] += 1; // 合并列+1
                     cell.colSpan = 0;
                     cell.parentColId = parentColId;
-                    console.log('--------> ', cell);
+                    // console.log('--------> ', cell);
                 }
                 return cell;
             };
@@ -226,6 +234,19 @@
             value (val) {
                 this.currentValue = val;
                 this.store.commit('setData', val);
+            },
+            'store.states.hoverRow' (newVal, oldVal) {
+                if (!this.$el) return;
+                const rows = this.$el.querySelectorAll('.v-table_b-r');
+                const oldRow = rows[oldVal];
+                const newRow = rows[newVal];
+                // console.log('v-table.watch.hoverRow: ', this.$el.querySelectorAll('.v-table_b-r'), oldVal, ' -> ', newVal, ', ', rows, ', ', oldRow, ' --> ', newRow);
+                if (oldRow) {
+                    dom.removeClass(oldRow, 'hover');
+                }
+                if (newRow) {
+                    dom.addClass(newRow, 'hover');
+                }
             }
         },
         mounted () {
@@ -239,6 +260,18 @@
                 // this.store.commit('clearColumn');
                 this.store.commit('setData', this.value);
                 this.$ready = true;
+            },
+            handleRowMouseEnter (rowIdx) {
+                this.store.commit('setHoverRow', rowIdx);
+            },
+            handleRowMouseLeave () {
+                this.store.commit('setHoverRow', null);
+            },
+            handleCellMouseEnter (e, row) {
+
+            },
+            handleCellMouseLeave () {
+
             },
             getRowClass (row, index) {
                 let classes = [];
@@ -344,6 +377,7 @@
             flex-wrap: nowrap;
             align-items: stretch;
             justify-content: left;
+            background: #ffffff;
         }
 
         .v-table_b-r-c { // body-row-content: 内容单元格
@@ -365,6 +399,7 @@
             }
         }
 
+
         &.border {
             border-left: 1px solid #ebeef5;
             border-top: 1px solid #ebeef5;
@@ -379,6 +414,12 @@
 
             .v-table_b-r.striped .cell {
                 background: #f2f2f4;
+            }
+        }
+
+        .v-table_b-r.hover { // 鼠标悬浮样式
+            .cell {
+                background: #e8e9ff !important;
             }
         }
     }
