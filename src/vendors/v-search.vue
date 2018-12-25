@@ -1,24 +1,25 @@
 <template>
-    <div :class="classStyle">
-        <div class="v-search">
+    <a class="v-search" :href="href">
+        <div class="v-search__wrapper">
             <div class="v-search__bar">
                 <!--<label :for="'vSearch'+'_'+_uid" class="v-search__frm" ref="frm" :autofocus="autofocus" @click.stop="onClick">-->
-                <label class="v-search__frm" ref="frm" @click.stop="onClick">
+                <!--<label class="v-search__frm" ref="frm" @click.stop="onClick">-->
+                <label class="v-search__frm" ref="frm">
                     <!--@focus="onFocus"-->
                     <input
-                        type="search"
-                        :id="'vSearch'+'_'+_uid"
-                        :autofocus="autofocus"
                         ref="input"
-                        :value="currentValue"
+                        :disabled="disabled"
+                        type="search"
+                        v-model="currentValue"
                         :placeholder="!visible? placeholder: ''"
                         @input="onInput"
                         @compositionstart="onCcompositionStart"
                         @compositionend="onCompositionEnd"
                         @blur="onBlur"
                         @keyup.enter="onEnter"
-                        v-focus="visible"
                     >
+                    <!--:id="'vSearch'+'_'+_uid"-->
+                    <!--v-focus-->
                     <i class="icon icon-search"></i>
                     <i class="icon icon-error" v-show="visible" @click="visible = false, currentValue = ''"></i>
                 </label>
@@ -30,7 +31,7 @@
                 </a>
             </div>
         </div>
-    </div>
+    </a>
 </template>
 <script type="text/ecmascript-6">
     import vField from './v-field.vue';
@@ -60,9 +61,11 @@
                 default: '搜索'
             },
             result: Array,
-            classStyle: {
-                default: 'v-search-style-1'
-            }
+            // classStyle: {
+            //     default: 'v-search__frm'
+            // },
+            disabled: Boolean,
+            to: [String, Object] // 要跳转的路由path
         },
         data () {
             return {
@@ -70,6 +73,22 @@
                 currentValue: this.value,
                 isLock: false
             };
+        },
+        computed: {
+            href () {
+                if (this.to && !this.added && this.$router) {
+                    const resolved = this.$router.match(this.to);
+                    console.log('v-search.computed.href: ', resolved, this.to);
+                    if (!resolved.matched.length) return this.to;
+
+                    this.$nextTick(() => {
+                        this.added = true;
+                        this.$el.addEventListener('click', this.handleClick);
+                    });
+                    return resolved.path;
+                }
+                return this.to;
+            }
         },
 
         watch: {
@@ -107,10 +126,11 @@
 //            this.autofocus && this.$refs.input.focus();
             if (this.autofocus) {
                 this.visible = true;
-//                this.$refs.input.focus();
+                this.$refs.input.focus();
 //                this.$nextTick(() => { // use v-focus
 //                    this.$refs.input.focus();
 //                });
+//                 this.$refs.input.trigger('click').focus();
             }
         },
 
@@ -119,14 +139,19 @@
                 this.visible = true;
                 console.log('v-search.searchFocus: ', this.visible, this.placeholder);
             },
-            onClick () {
-                console.log('v-search.onClick: ');
+            handleClick ($event) {
+                $event.preventDefault();
                 this.visible = true;
-//                this.$refs.input.focus();
-//                this.$nextTick().then(() => { // use v-focus
-//                    this.$refs.input.focus();
-//                });
+                this.$router.push(this.to);
             },
+//             onClick () {
+//                 console.log('v-search.onClick: ');
+//                 this.visible = true;
+// //                this.$refs.input.focus();
+// //                this.$nextTick().then(() => { // use v-focus
+// //                    this.$refs.input.focus();
+// //                });
+//             },
 //            onFocus () {
 //                console.log('v-search.onFocus: ');
 //                this.visible = true;
@@ -137,7 +162,8 @@
 //            },
             onBlur () {
                 console.log('v-search.onBlur: ');
-                this.visible = false;
+                // this.visible = false;
+                this.visible = this.currentValue ? true : false;
             },
             onEnter () {
                 console.log('v-search.onEnter: ');
@@ -172,8 +198,8 @@
 <style rel="stylesheet/scss" lang="scss">
     @import "../scss/variables";
     @import "../scss/mixins";
-    .v-search-style-1{
-        .v-search {
+    .v-search{
+        .v-search__wrapper {
             /*position: fixed;*/
             top: 0;
             left: 0;
@@ -201,7 +227,6 @@
 
                 &::-webkit-input-placeholder {text-align: center;}
                 &:-ms-input-placeholder{text-align: center;}
-
                 &:focus {
                     color: #000;
                     transition: color 0.5s ease-in-out;
@@ -290,10 +315,11 @@
             color: #007AFF;
         }
     }
+/*
 
     .v-search-style-2 {
         .v-search {
-            /*position: fixed;*/
+            !*position: fixed;*!
             top: 0;
             left: 0;
             width: 100%;
@@ -305,11 +331,11 @@
                 width: 100%;
                 height: pxTorem(28px);
                 font-size: pxTorem(12px);
-                /*background: #FFF;*/
-                /*-webkit-border-radius: pxTorem(5px);*/
-                /*-moz-border-radius: pxTorem(5px);*/
-                /*border-radius: pxTorem(5px);*/
-                /*padding-left: pxTorem(28px);*/
+                !*background: #FFF;*!
+                !*-webkit-border-radius: pxTorem(5px);*!
+                !*-moz-border-radius: pxTorem(5px);*!
+                !*border-radius: pxTorem(5px);*!
+                !*padding-left: pxTorem(28px);*!
                 color:#fff;
                 appearance: none;
                 border: 0;
@@ -332,8 +358,8 @@
                     // }
                     &.icon-error {
                         display: none;
-                        /*-webkit-transform:rotate(90deg);*/
-                        /*transition: transform 0.3s ease-in-out;*/
+                        !*-webkit-transform:rotate(90deg);*!
+                        !*transition: transform 0.3s ease-in-out;*!
                     }
                 }
             }
@@ -400,13 +426,14 @@
         }
 
         .v-search__bar_cancel {
-            /*width: pxTorem(40px);*/
-            /*height: pxTorem(18px);*/
+            !*width: pxTorem(40px);*!
+            !*height: pxTorem(18px);*!
             margin-left: pxTorem(10px);
             font-size: pxTorem(14px);
             line-height: 1;
             color: #fff;
         }
     }
+*/
 
 </style>
