@@ -69,7 +69,6 @@
     import Vue from 'vue';
     import Scroll from './v-scroll';
     import vSpinner from './v-spinner/';
-    import CONFIG from '@/config';
 //    import { mapState } from 'vuex';
 //    import ScrollPosition from './v-scroll-position.js'; // 滚动条位置信息
     import bus from './eventbus';
@@ -174,11 +173,11 @@
                 goTopTag: false,            // 返回顶部按钮的显示标识
 
                 oTime: -1,                  // 最后一条数据的时间戳(秘语)
-                pageSize: CONFIG.LIMIT,     // 每一页的个数(秘语)
+                pageSize: process.env.VUE_APP_LIMIT,     // 每一页的个数(秘语)
                 offset: 0,                  // 当前页数(nodejs)
-                limit: CONFIG.LIMIT,        // 每页显示记录数(nodejs)
+                limit: process.env.VUE_APP_LIMIT,        // 每页显示记录数(nodejs)
                 page: 1,                    // 当前页数(php)
-                pageNum: CONFIG.LIMIT,      // 每页显示记录数(php)
+                pageNum: process.env.VUE_APP_LIMIT,      // 每页显示记录数(php)
                 hasMore: true,              // 是否还有数据, 决定最底下是否显示" - 已加载完毕 - "样式
                 isLoading: false,           // 正在加载
 //                listCount: 0,               // 数据列表计数，用于初始加载判断
@@ -336,11 +335,11 @@
             reset ({resetData = true} = {}) {
                 // 初始化分页参数
                 this.oTime = -1;
-                this.pageSize = CONFIG.LIMIT;
+                this.pageSize = process.env.VUE_APP_LIMIT;
                 this.offset = 0;
-                this.limit = CONFIG.LIMIT;
+                this.limit = process.env.VUE_APP_LIMIT;
                 this.page = 1;
-                this.pageNum = CONFIG.LIMIT;
+                this.pageNum = process.env.VUE_APP_LIMIT;
                 this.hasMore = true;
                 this.hasData = true;
                 this.scrollEndTxt = false;

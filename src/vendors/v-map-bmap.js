@@ -2,20 +2,19 @@
  * 百度地图
  *              -- Author by Dio Zhu on 2017/11/14
  */
-import CONFIG from '@/config.js';
 
 let obj = {
     init () {
-        if (!window.BMap && CONFIG.bmapImportTag) { // 如果有了全局加载标识，但是还没加载完成，在这里递归检测，这里设定50次，2.5s，可自行配置
+        if (!window.BMap && window.bmapImportTag) { // 如果有了全局加载标识，但是还没加载完成，在这里递归检测，这里设定50次，2.5s，可自行配置
             return this._tryBind();
         }
         return this._load().then(() => {
             console.log(`v-map-bmap.mounted.then: `);
-            CONFIG.mapReady = true;
+            window.mapReady = true;
             return this._init();
             // this.dealMap();
         }).catch((e) => {
-            CONFIG.mapReady = false;
+            window.mapReady = false;
             console.error(`v-map-bmap.mounted.error: `, e);
         });
     },
@@ -28,7 +27,7 @@ let obj = {
         this._tryCount++;
         if (window.BMap) {
             console.log(`v-map-bmap.mounted.then: `);
-            CONFIG.mapReady = true;
+            window.mapReady = true;
             return this._init();
         } else {
             // return Promise.resolve(setTimeout(this._tryBind, 50));
@@ -56,15 +55,15 @@ let obj = {
         });
     },
     _createScript () {
-        CONFIG.bmapImportTag = true; // 全局的加载标识
+        window.bmapImportTag = true; // 全局的加载标识
         window.BMap_loadScriptTime = (new Date()).getTime();
         const script = document.createElement('script');
         script.type = 'text/javascript';
         script.async = true;
         script.defer = true;
         script.id = 'bmap';
-        // script.src = 'http://api.map.baidu.com/api?v=2.0&ak=' + CONFIG.BMAP_AK;
-        script.src = 'http://api.map.baidu.com/getscript?v=2.0&ak=' + CONFIG.BMAP_AK + '&services=&t=' + window.BMap_loadScriptTime;
+        // script.src = 'http://api.map.baidu.com/api?v=2.0&ak=' + process.env.VUE_APP_BMAP_AK;
+        script.src = 'http://api.map.baidu.com/getscript?v=2.0&ak=' + process.env.VUE_APP_BMAP_AK + '&services=&t=' + window.BMap_loadScriptTime;
         return script;
     },
     _init () {

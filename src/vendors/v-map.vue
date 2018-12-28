@@ -8,7 +8,6 @@
 </template>
 <script type="text/ecmascript-6">
     import bus from './eventbus.js';
-    import CONFIG from '@/config';
 
     let defaultMaker = {
         position: [116.458076, 39.996648],
@@ -76,7 +75,7 @@
                 mapMarker: [],
                 centerPos: [],
                 page: 1,                // 页数
-                pageNum: CONFIG.LIMIT,  // 每页记录数
+                pageNum: process.env.VUE_APP_LIMIT,  // 每页记录数
                 hasMore: true
             };
         },
@@ -151,7 +150,7 @@
                 script.async = true;
                 script.defer = true;
                 script.id = 'amap';
-                script.src = 'http://webapi.amap.com/maps?v=' + CONFIG.AMAP_VERSION + '&key=' + CONFIG.AMAP_KEY + '&callback=mapLoaded';
+                script.src = 'http://webapi.amap.com/maps?v=' + process.env.VUE_APP_AMAP_VERSION + '&key=' + process.env.VUE_APP_AMAP_KEY + '&callback=mapLoaded';
                 return script;
             },
             init () {

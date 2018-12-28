@@ -2,20 +2,19 @@
  * 链式调用后的作用域会混乱，总会提示: this.setOptions is not a function...有时间再说吧。。。
  *              -- Author by Dio Zhu on 2017/11/14
  */
-import CONFIG from '@/config.js';
 
 let obj = {
     init () {
-        if (!window.qq && CONFIG.qqmapImportTag) { // 如果有了全局加载标识，但是还没加载完成，在这里递归检测，这里设定50次，2.5s，可自行配置
+        if (!window.qq && window.qqmapImportTag) { // 如果有了全局加载标识，但是还没加载完成，在这里递归检测，这里设定50次，2.5s，可自行配置
             return this._tryBind();
         }
         return this._load().then(() => {
             console.log(`v-map-qq.mounted.then: `);
-            CONFIG.mapReady = true;
+            window.mapReady = true;
             return this._init();
             // this.dealMap();
         }).catch((e) => {
-            CONFIG.mapReady = false;
+            window.mapReady = false;
             console.error(`v-map-qq.mounted.error: `, e);
         });
     },
@@ -28,7 +27,7 @@ let obj = {
         this._tryCount++;
         if (window.qq) {
             console.log(`v-map-qq.mounted.then: `);
-            CONFIG.mapReady = true;
+            window.mapReady = true;
             return this._init();
         } else {
             // return Promise.resolve(setTimeout(this._tryBind, 50));
@@ -52,7 +51,7 @@ let obj = {
         });
     },
     _createScript () {
-        CONFIG.qqmapImportTag = true; // 全局的加载标识
+        window.qqmapImportTag = true; // 全局的加载标识
         const script = document.createElement('script');
         script.type = 'text/javascript';
         script.async = true;

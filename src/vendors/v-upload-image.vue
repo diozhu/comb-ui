@@ -62,7 +62,6 @@
     import vSpinner from './v-spinner';
     import trans from '../js/core/trans.js';
     import * as utils from '../js/utils/utils.js';
-    import CONFIG from '@/config.js';
     // import {usercenter} from '@/image';
     import {path} from '@/js/core/api';
 
@@ -101,7 +100,7 @@
         data () {
             return {
                 // usercenter,
-                uploadUrl: CONFIG.URL + path + '/wap/student/upload_image',
+                uploadUrl: process.env.VUE_APP_URL + path + '/wap/student/upload_image',
                 data: {},
                 currentValue: this.value,
                 isWechat: true,
