@@ -41,6 +41,7 @@
                     classes.push('is-placemiddle');
                 }
                 classes.push(this.className);
+                if (this.message && this.message.length > 18) classes.push('muti');
 
                 return classes.join(' ');
             }
@@ -104,6 +105,17 @@
         white-space: nowrap;
         overflow: hidden;
     }
+
+    .v-toast.muti {
+        width: 100%;
+
+        .v-toast-text {
+            white-space: initial;
+            line-height: 1.5;
+            text-align: left;
+        }
+    }
+
     .v-toast-pop-enter, .v-toast-pop-leave-active {
         opacity: 0
     }
