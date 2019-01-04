@@ -562,7 +562,8 @@ export function format (url, { width = 0, height = 0, type = '', thumb = false }
     const newType = url.slice(url.lastIndexOf('.') + 1);
 
     if (/upaiyun.com/.test(url)) { // 又拍云
-        if (thumb) return url + '!/fw/50' + (newType === 'png' ? '' : '/gaussblur/5x5'); // 返回缩略图
+        // if (thumb) return url + '!/fw/50' + (newType === 'png' ? '' : '/gaussblur/5x5'); // 返回缩略图
+        if (thumb) return url + '!/fw/21'; // 返回缩略图
         let tmp = '!';
 
         // 2. 格式转换 非空 && (非webp格式 || webp && 支持webp)
@@ -582,9 +583,10 @@ export function format (url, { width = 0, height = 0, type = '', thumb = false }
 
         let newQuery = tmp === '!' ? '' : tmp;
         return url + newQuery;
-    } else if (/s01.dongyin.net|aliyuncs.com/.test(url)) { // 阿里云oss（自有域名：s01.dongyin.net）
+    } else if (/oss.dongyin.net|s01.dongyin.net|aliyuncs.com/.test(url)) { // 阿里云oss（自有域名：s01.dongyin.net）
         // console.warn(url, thumb);
-        if (thumb) return url + '?x-oss-process=image/format,webp/resize,w_51' + (newType === 'png' ? '' : '/blur,r_5,s_5'); // 返回缩略图
+        // if (thumb) return url + '?x-oss-process=image/format,webp/resize,w_51' + (newType === 'png' ? '' : '/blur,r_5,s_5'); // 返回缩略图
+        if (thumb) return url + '?x-oss-process=image/resize,w_21'; // 返回缩略图
         let tmp = '';
 
         // 1. 针对宽高处理

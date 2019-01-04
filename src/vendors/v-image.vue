@@ -106,14 +106,14 @@
         .thumb {
 
             /* 渐显 */
-            &.fade.loading { filter: blur(25px); }
+            &.fade.loading { filter: blur(50px); }
             &.fade.loaded { animation: fadeOut 300ms linear; }
-            &.fade.cached.loaded { animation: fadeOut 100ms linear; } // 被缓存的图片加快显示
+            &.fade.cached.loaded { animation: fadeOut 60ms linear; }
 
             /* 缩放 */
             &.scale.loading { filter: blur(50px); transform: scale(1.1); }
             &.scale.loaded { animation: scaleIn 300ms ease-out; }
-            &.scale.cached.loaded { animation: fadeOut 100ms linear; } // 被缓存的图片加快显示
+            &.scale.cached.loaded { animation: scaleIn 60ms ease-out; }
 
             /* slide */
             &.slide {
