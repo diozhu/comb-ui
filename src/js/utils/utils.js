@@ -583,7 +583,7 @@ export function format (url, { width = 0, height = 0, type = '', thumb = false }
 
         let newQuery = tmp === '!' ? '' : tmp;
         return url + newQuery;
-    } else if (/static.91wuliu.com|aliyuncs.com/.test(url)) { // 阿里云oss（自有域名：s01.dongyin.net）
+    } else if (/91wuliu.com|aliyuncs.com/.test(url)) { // 阿里云oss（自有域名：s01.dongyin.net）
         // console.warn(url, thumb);
         // if (thumb) return url + '?x-oss-process=image/format,webp/resize,w_51' + (newType === 'png' ? '' : '/blur,r_5,s_5'); // 返回缩略图
         if (thumb) return url + '?x-oss-process=image/resize,w_21'; // 返回缩略图
