@@ -95,12 +95,16 @@
             disabled: {
                 type: Boolean,
                 default: false
+            },
+            api: { // 后台接口地址
+                type: String,
+                default: ''
             }
         },
         data () {
             return {
                 // usercenter,
-                uploadUrl: process.env.VUE_APP_URL + path + '/wap/student/upload_image',
+                uploadUrl: this.api,
                 data: {},
                 currentValue: this.value,
                 isWechat: true,
