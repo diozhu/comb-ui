@@ -59,7 +59,11 @@
                 default: 5
             },
             valueKey: String,
-            rotateEffect: {
+            rotateEffect: { // 齿轮效果
+                type: Boolean,
+                default: false
+            },
+            vibrateEnabled: { // 震动效果
                 type: Boolean,
                 default: false
             },
@@ -212,6 +216,17 @@
                 });
             },
 
+            vibrate (arg) {
+                try {
+                    window.navigator.vibrate = window.navigator.vibrate || window.navigator.webkitVibrate || window.navigator.mozVibrate || window.navigator.msVibrate;
+                    // console.log('window.navigator.vibrate: ', window.navigator.vibrate);
+                    if (window.navigator.vibrate) {
+                        // this.$toast('vibrate');
+                        window.navigator.vibrate(arg);
+                    }
+                } catch (e) {}
+            },
+
             initEvents () {
                 var el = this.$refs.wrapper,
                     dragState = {},
@@ -254,7 +269,18 @@
                         prevTranslate = translate;
 
                         if (this.rotateEffect) {
+                            // console.log('[v-picker-slot] drag: ', translate, velocityTranslate);
                             this.updateRotate(prevTranslate, pickerItems);
+                        }
+                        
+                        // 添加震动。。。mod by Dio Zhu. on 2019.5.15
+                        if (this.vibrateEnabled) {
+                            var curValue = this.translate2Value(translate);
+                            if (curValue && curValue != this.tmpVal && curValue !== this.currentValue) {
+                                this.tmpVal = curValue;
+                                // console.log('[v-picker-slot] drag: ', curValue);
+                                this.vibrate(50);
+                            }
                         }
                     },
 
@@ -289,7 +315,7 @@
 //                            let startIndex = currentIndex - vRange;
 //                            let endIndex = currentIndex + vRange;
 
-//                            console.log('v-picker-slot.initEvents.currentValue: ', this.currentValue);
+                            // console.log('v-picker-slot.initEvents.currentValue: ', this.currentValue);
 
                             if (this.rotateEffect) {
                                 this.planUpdateRotate();

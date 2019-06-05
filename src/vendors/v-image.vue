@@ -1,21 +1,35 @@
 <template>
-    <div class="v-image" :class="curValue.classes || classes" @click="onClick">
-        <!-- <img v-lazy="curValue.url || value" :alt="curValue.alt"/> -->
+    <!-- 背景图片 -->
+    <!-- <div
+        v-if="bg"
+        v-lazy:background-image="curValue.url || value"
+        :class="curValue.classes || classes"
+        @click="onClick"
+    /> -->
+
+    <!-- v-else -->
+    <!-- 图片 -->
+    <div
+        :class="curValue.classes || classes"
+        :style="imgStyle"
+        class="v-image"
+        @click="onClick"
+    >
         <img
-            v-lazy="curValue.url || value"
-            :src="thumb.url ? thumb.url : ''"
+            v-lazy="{
+                src: curValue.url || value,
+                loading: thumb.url 
+            }"
+            :src="thumb.url"
             :alt="curValue.alt"
             :class="[{thumb: thumb.url}, animation, {loading: thumb.url}]"
             :style="thumbStyle"
         />
-        <!-- <img :src="curValue.url || value" :alt="curValue.alt"/> -->
     </div>
 </template>
 
 <script>
-    // import {format} from '../js/utils/utils';
-    import * as utils from '../js/utils/utils';
-
+    import * as utils from '../js/utils/utils.js';
     /**
      * 缩略图，避免页面渲染时的空白以及提供给spider;
      * vue-lazyload组件在plugins中声明时添加了filter，在那里进行了渐进的loading赋值;
@@ -34,12 +48,22 @@
                 default: ''
             },
             animation: { // 设定图片由thumb转为原图时的动画，默认fade(渐显)
-                type: String,
-                default: 'fade' // 默认：fade（渐显）、scale（缩放）、slide（滑动）
+                type: [String, Boolean],
+                default: 'scale' // 默认：false无动画、fade（渐显）、scale（缩放）、slide（滑动）
             },
             classes: {
                 type: String,
                 default: ''
+            },
+            // bg: {
+            //     type: Boolean,
+            //     default: false
+            // },
+            imgStyle: {
+                type: Object,
+                default () {
+                    return {};
+                }
             }
         },
         data () {
@@ -89,21 +113,64 @@
         // 给v-image设置宽高，图片100%，超出之后隐藏
         overflow: hidden;
         /* 设置宽度为100% */
-        width: 100%;
+        // width: 100%;
         /*height: 100%;*/
         // 可能出现白边，设置可以解决，后期继续优化(针对图片设置的vertical-align:top也能解决)
         line-height: 1px;
         /* 图片在盒子自动居中 */
         /*text-align: center;*/
         vertical-align: top;
-        margin-top: -1px;
+        // margin-top: -1px;
         img {
             width: 100%;
-            height: 100%;
+            // height: 100%;
             vertical-align: top;
         }
 
         .thumb {
+            /* 渐显 */
+            // img.fade[lazy=loading] {
+            //     filter: blur(50px);
+            // }
+            // img.fade.cached[lazy=loaded] {
+            //     animation: fadeOut 60ms linear;
+            // }
+            // img.fade[lazy=loaded] {
+            //     animation: fadeOut 500ms linear;
+            // }
+
+            /* 缩放 */
+            // img.scale[lazy=loading] {
+            //     filter: blur(50px); transform: scale(1.1);
+            // }
+            // img.scale.cached[lazy=loaded] {
+            //     animation: scaleIn 60ms ease-out;
+            // }
+            // img.scale[lazy=loaded] {
+            //     animation: scaleIn 500ms ease-out;
+            // }
+
+            /* slide */
+            // img.slide[lazy=loading] {
+            //     filter: blur(25px);
+            // }
+            // img.slide.shadow[lazy=loaded] {
+            //     overflow: hidden;
+            //     position: absolute;
+            //     left: 0;
+            //     bottom: 0;
+            //     width: 100%;
+
+            //     img {
+            //         position: absolute;
+            //         left: 0;
+            //         bottom: 0;
+            //         filter: blur(25px);
+            //     }
+            // }
+            // img.slide[lazy=loaded] {
+            //     animation: scaleIn 500ms ease-out;
+            // }
 
             /* 渐显 */
             &.fade.loading { filter: blur(50px); }

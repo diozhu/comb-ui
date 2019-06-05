@@ -57,7 +57,11 @@ const routes = [
     {
         title: 'testing...',
         list: [
-            { name: 'HugeTable', path: '/huge-table' }
+            { name: 'HugeTable', path: '/huge-table' },
+            { name: 'canvasBitmap', path: '/canvas-bitmap' },
+            { name: 'map-search', path: '/map-search' },
+            { name: 'map-tms', path: '/map-tms' },
+            { name: 'image', path: '/image' },
         ]
     }
 ];

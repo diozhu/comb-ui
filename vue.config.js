@@ -20,7 +20,7 @@ module.exports = {
     // 是否在保存的时候使用 `eslint-loader` 进行检查
     lintOnSave: undefined,
 
-    baseUrl: process.env.NODE_ENV === 'production' ? "/comb-ui/" : '/',
+    publicPath: process.env.NODE_ENV === 'production' ? "/comb-ui/" : '/',
     outputDir: process.env.NODE_ENV === 'production' ? path.resolve(__dirname, './lib') : undefined,
     assetsDir: "static",
     runtimeCompiler: undefined,

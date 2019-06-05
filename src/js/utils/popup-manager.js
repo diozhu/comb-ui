@@ -1,8 +1,9 @@
 /**
- * Created by diozhu on 2017/2/6.
+ * export from mint-ui.
+ *              -- mod by Dio Zhu on 2017.2.6
  */
 import Vue from 'vue';
-import { addClass, removeClass } from './dom';
+import {addClass, removeClass} from './dom';
 
 let hasModal = false;
 
@@ -77,7 +78,7 @@ const PopupManager = {
 
         const modalStack = this.modalStack;
 
-        for (let i = 0, j = modalStack.length;i < j;i++) {
+        for (let i = 0, j = modalStack.length; i < j; i++) {
             const item = modalStack[i];
             if (item.id === id) {
                 return;
@@ -98,18 +99,20 @@ const PopupManager = {
             removeClass(modalDom, 'v-modal-enter');
         }, 200);
 
-        if (dom && dom.parentNode && dom.parentNode.nodeType !== 11) {
-            dom.parentNode.appendChild(modalDom);
-        } else {
-            document.body.appendChild(modalDom);
-        }
+        // console.log('【popup-manager】openModal: ', dom);
+        // if (dom && dom.parentNode && dom.parentNode.nodeType !== 11) {
+        //     dom.parentNode.appendChild(modalDom);
+        // } else {
+        //     document.body.appendChild(modalDom);
+        // }
+        document.body.appendChild(modalDom); // 不考虑dom位置，直接在body中创建。 mod by Dio Zhu. on 2018.5.10
 
         if (zIndex) {
             modalDom.style.zIndex = zIndex;
         }
         modalDom.style.display = '';
 
-        this.modalStack.push({ id: id, zIndex: zIndex, modalClass: modalClass });
+        this.modalStack.push({id: id, zIndex: zIndex, modalClass: modalClass});
     },
 
     closeModal: function (id) {
@@ -129,7 +132,7 @@ const PopupManager = {
                     modalDom.style.zIndex = modalStack[modalStack.length - 1].zIndex;
                 }
             } else {
-                for (let i = modalStack.length - 1;i >= 0;i--) {
+                for (let i = modalStack.length - 1; i >= 0; i--) {
                     if (modalStack[i].id === id) {
                         modalStack.splice(i, 1);
                         break;

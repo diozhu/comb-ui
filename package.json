@@ -1,7 +1,6 @@
 {
   "name": "comb-ui",
-  "version": "2.0.0",
-  "private": true,
+  "version": "2.0.11",
   "main": "src/vendors/index.js",
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -9,22 +8,26 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "core-js": "^2.6.5",
     "photoswipe": "^4.1.2",
-    "vue": "^2.5.17",
-    "vue-router": "^3.0.1"
+    "vue": "^2.6.10",
+    "vue-lazyload": "^1.2.6",
+    "vue-router": "^3.0.6"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.1.1",
-    "@vue/cli-plugin-eslint": "^3.1.1",
-    "@vue/cli-service": "^3.1.1",
-    "@vue/eslint-config-prettier": "^4.0.0",
+    "@vue/cli-plugin-babel": "^3.8.0",
+    "@vue/cli-plugin-eslint": "^3.8.0",
+    "@vue/cli-plugin-pwa": "^3.8.0",
+    "@vue/cli-service": "^3.8.0",
+    "@vue/eslint-config-prettier": "^4.0.1",
     "babel-eslint": "^10.0.1",
     "css-loader": "^1.0.1",
     "eslint": "^5.8.0",
     "eslint-plugin-vue": "^5.0.0-0",
     "node-sass": "^4.10.0",
+    "prettier": "^1.17.1",
     "sass-loader": "^7.1.0",
-    "vue-template-compiler": "^2.5.17"
+    "vue-template-compiler": "^2.6.10"
   },
   "eslintConfig": {
     "root": true,

@@ -1,5 +1,6 @@
 <template>
     <div class="v-map" :id="'vAMap_' + _uid">
+        <input type="text" id="keywords" class="keywords" v-model="currentKeywords" />
         <div v-if="!mapReady" class="map-loading"></div>
         <div class="v-map__img" :style="bgStyle" v-if="img"></div>
         <div class="v-map__location" v-if="location">{{location}}<i class="icon icon-arror-r"></i></div>
@@ -10,7 +11,7 @@
     import bus from './eventbus.js';
 
     let defaultMaker = {
-        position: [116.458076, 39.996648],
+        position: [116.699352, 40.091508],
         draggable: false,
         isPanTo: true,
         content: '<div class="marker-default"></div>'
@@ -24,15 +25,15 @@
             },
             lng: {
                 type: String,
-                default: '116.4514501384251588'
+                default: '116.699352'
             },
             lat: {
                 type: String,
-                default: '39.9951573546932124'
+                default: '40.091508'
             },
             img: String,         // 图片地址
             location: String,    // 显示地址
-            placeSearch: {       // 是否启用地址搜索
+            placeSearchEnable: {       // 是否启用地址搜索
                 type: Boolean,
                 default: false
             },
@@ -54,7 +55,7 @@
             },
             zoom: {
                 type: Number,
-                default: 17
+                default: 16
             },
             backAddr: {
                 type: Boolean,
@@ -63,6 +64,7 @@
         },
         data () {
             return {
+                currentKeywords: this.keywords,
                 amap: null,     // 高德地图对象
                 bgStyle: {
                     background: 'url(' + this.img + ')',
@@ -81,17 +83,28 @@
         },
 
         watch: {
-            markers (makers) {
+            // keywords (val) {
+            //     this.currentKeywords = val;
+            // },
+            currentKeywords (val) {
+                this.$emit('input', val);
+                if (val === '' || /[\u4E00-\u9FA5\uF900-\uFA2D]/.test(val)) { // 检索中文
+                    this.hasMore = true;
+                    // this.searchNearBy({keywords: val, refreshTag: true});
+                    this.placeSearchChange({keywords: val, refreshTag: true});
+                }
+            },
+            markers () {
                 this.removeMarkers();
                 this.amap && this.dealMap();
             },
 
             keywords (val) {
-//                if (val === '' || /[^\u0000-\u00FF]/.test(val)) { // 检索中文
-                if (val === '' || /[\u4E00-\u9FA5\uF900-\uFA2D]/.test(val)) { // 检索中文
-                    this.hasMore = true;
-                    this.searchNearBy({keywords: val, refreshTag: true});
-                }
+                // if (val === '' || /[\u4E00-\u9FA5\uF900-\uFA2D]/.test(val)) { // 检索中文
+                //     this.hasMore = true;
+                //     // this.searchNearBy({keywords: val, refreshTag: true});
+                //     this.placeSearchChange({keywords: val, refreshTag: true});
+                // }
             }
         },
         mounted () {
@@ -167,32 +180,103 @@
                     fixed: false
                 });
 
-                if (this.placeSearch) {
+                if (this.placeSearchEnable) {
 //                    window.AMap.event.addDomListener('dragMap', 'change', this.onModeChange);
                     this.amap.on('moveend', this.onMoveEnd);
-                    window.AMap.service('AMap.PlaceSearch', () => {
-                        this.placeSearcher = new window.AMap.PlaceSearch({ // 构造地点查询类
-                            pageSize: this.pageNum,
-                            type: '汽车服务|汽车销售|汽车维修|摩托车服务|餐饮服务|购物服务|生活服务|体育休闲服务|医疗保健服务|住宿服务|风景名胜|商务住宅|政府机构及社会团体|科教文化服务|交通设施服务|金融保险服务|公司企业|道路附属设施|地名地址信息|公共设施',
-                            pageIndex: this.page,
-//                            city: '010', // 城市
-//                            map: this.amap,
-                            showCover: false
-                        });
+//                     window.AMap.service('AMap.PlaceSearch', () => {
+//                         this.placeSearcher = new window.AMap.PlaceSearch({ // 构造地点查询类
+//                             pageSize: this.pageNum,
+//                             type: '汽车服务|汽车销售|汽车维修|摩托车服务|餐饮服务|购物服务|生活服务|体育休闲服务|医疗保健服务|住宿服务|风景名胜|商务住宅|政府机构及社会团体|科教文化服务|交通设施服务|金融保险服务|公司企业|道路附属设施|地名地址信息|公共设施',
+//                             pageIndex: this.page,
+// //                            city: '010', // 城市
+// //                            map: this.amap,
+//                             showCover: false
+//                         });
+//
+//                         // this.searchNearBy();
+//                     });
 
-//                        this.placeSearcher.searchNearBy('', [this.lng, this.lat], 200, (status, result) => {
-//                            if (status === 'complete' && result.info === 'OK') {
-//                                console.log('v-map.onDragEnd: ', status, result);
-// //                            this.locations = result.poiList.pois;
-//                                this.$emit('locations-change', result.poiList.pois);
-//                            }
-//                        });
-//                        this.$el['@@SearchNearBy'] = this.searchNearBy.bind(this);
-//                        bus.$emit('v-scroll.getList'); // 初始化完成后，触发滚动条拉取数据
-                        this.searchNearBy();
-                    });
+                    // this.amap.plugin(["AMap.Autocomplete"], () => {
+                    //     this.autocomplete = new window.AMap.Autocomplete({
+                    //         input: "keywords"
+                    //     });
+                    //     resolve();
+                    // });
+                    this.initAutoComplete();
                 }
             },
+            loadUI () { // 处理异步组件加载
+
+                return new Promise((resolve, reject) => {
+                    if (!this.loadUiMaxTry) this.loadUiMaxTry = 0;
+                    if (window.AMapUI) {
+                        // console.warn('v-map-tms.loadUI: 2 -------> ', window.AMapUI, this.loadUiMaxTry);
+                        resolve({});
+                    } else if (!window.AMapUI && this.loadUiMaxTry < 10) {
+                        // console.warn('v-map-tms.loadUI: 1 -------> ', window.AMapUI, this.loadUiMaxTry);
+                        this.loadUiMaxTry++;
+                        // setTimeout(() => {
+                        //     this.loadUI();
+                        // }, 200);
+                        setTimeout(() => {
+                            return this.loadUI().then(res => resolve(res));
+                        }, 200);
+                    } else {
+                        // console.warn('v-map-tms.loadUI: 3 -------> ', window.AMapUI, this.loadUiMaxTry);
+                        reject();
+                    }
+                });
+            },
+            
+            // ================================================== placeSearch
+            initAutoComplete () {
+                return new Promise(async resolve => {
+                    this.amap.plugin(["AMap.Autocomplete"], () => {
+                        this.autocomplete = new window.AMap.Autocomplete({
+                            input: "keywords"
+                        });
+
+                        let selectFunc = e => {
+                            this.placeSearch.setCity(e.poi.adcode);
+                            this.placeSearch.search(e.poi.name);  //关键字查询查询
+                        };
+                        AMap.event.addListener(auto, "select", selectFunc);//注册事件
+
+                        resolve();
+                    });                    
+                });
+            },
+            initPlaceSearch () {
+                return new Promise(async resolve => {
+                    AMap.service(["AMap.PlaceSearch"], res => {
+                        this.placeSearch = new AMap.PlaceSearch({ 
+                            pageSize: 5, // 单页显示结果条数
+                            pageIndex: 1, // 页码
+                            // city: "010", // 兴趣点城市
+                            citylimit: true,  //是否强制限制在设置的城市内搜索
+                            map: this.amap, // 展现结果的地图实例
+                            panel: "panel", // 结果列表将在此容器中进行展示。
+                            autoFitView: true // 是否自动调整地图视野使绘制的 Marker点都处于视口的可见范围
+                        });
+                        resolve();
+                    });
+                });
+            },
+            async placeSearchChange () {
+                console.log('[v-map] placeSearch: ', this.keywords);
+                // if (!this.autocomplete) await this.initAutoComplete();
+                // let callback = res => {
+                //     console.log('[v-map] placeSearch.callback: ', res)
+                // };
+                // this.autocomplete.search(this.keywords, callback);
+                // this.autocomplete.search(this.keywords, function (res) {
+                //     console.log('[v-map] placeSearch.callback: ', res)
+                // });
+
+                if (!this.placeSearch) await this.initPlaceSearch();
+                this.placeSearch.search(this.keywords);
+            },
+
             initGeocoder (position, cb) { // 实例化AMap的Geocoder
                 window.AMap.service('AMap.Geocoder', () => {
                     this.geocoder = new window.AMap.Geocoder({
@@ -301,7 +385,7 @@
                     offset: new window.AMap.Pixel(0, 0) // 相对于基点的偏移位置
                 });
             },
-            onMoveEnd (e) { // 拖拽地图
+            onMoveEnd () { // 拖拽地图
                 let lnglat = this.amap.getCenter();
                 console.log('v-map.onMoveEnd: ', lnglat);
 //                this.amapPlaceSearch.searchNearBy('', lnglat, 200, (status, result) => {
@@ -371,6 +455,21 @@
         } */
         /* border: #DDDEE3 1px solid; */
         transform: translate3d(0, 0, 0); // 防止滚动时重绘造成的卡顿白屏
+
+        .keywords {
+            border: #999999 1px solid;
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            z-index: 9;
+            background: #FFFFFF;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            padding: 6px;
+            margin: 8px;
+            opacity: .7;
+        }
     }
     /* .v-map object{
         z-index:0 !important;
@@ -389,7 +488,7 @@
         margin: 0 auto;
         text-align: center;
         /*background: url('../../static/images/loading.jpg') no-repeat center;*/
-        background: url('//s01.dongyin.net/doing/loading.jpg') no-repeat center;
+        background: url('//static.91wuliu.com/loading.jpg') no-repeat center;
         background-size: pxTorem(30px) auto;
     }
     .v-map__location {

@@ -53,20 +53,20 @@ let throttle = function (fn, delay) { //eslint-disable-line
             }
         };
     },
-    getComputedStyle = Vue.prototype.$isServer ? {} : document.defaultView.getComputedStyle,
+    // getComputedStyle = Vue.prototype.$isServer ? {} : document.defaultView.getComputedStyle,
 
-    getScrollEventTarget = function (element) { //eslint-disable-line
-        var currentNode = element;
-        // bugfix, see http://w3help.org/zh-cn/causes/SD9013 and http://stackoverflow.com/questions/17016740/onscroll-function-is-not-working-for-chrome
-        while (currentNode && currentNode.tagName !== 'HTML' && currentNode.tagName !== 'BODY' && currentNode.nodeType === 1) {
-            var overflowY = getComputedStyle(currentNode).overflowY;
-            if (overflowY === 'scroll' || overflowY === 'auto') {
-                return currentNode;
-            }
-            currentNode = currentNode.parentNode;
-        }
-        return window;
-    },
+    // getScrollEventTarget = function (element) { //eslint-disable-line
+    //     var currentNode = element;
+    //     // bugfix, see http://w3help.org/zh-cn/causes/SD9013 and http://stackoverflow.com/questions/17016740/onscroll-function-is-not-working-for-chrome
+    //     while (currentNode && currentNode.tagName !== 'HTML' && currentNode.tagName !== 'BODY' && currentNode.nodeType === 1) {
+    //         var overflowY = getComputedStyle(currentNode).overflowY;
+    //         if (overflowY === 'scroll' || overflowY === 'auto') {
+    //             return currentNode;
+    //         }
+    //         currentNode = currentNode.parentNode;
+    //     }
+    //     return window;
+    // },
 
     isAttached = function (element) { //eslint-disable-line
         var currentNode = element.parentNode;
@@ -289,7 +289,8 @@ let ScrollPosition = {
     getPos (el) {
         return getPosition.call(el[ctx], ...arguments);
     },
-    setPos (el, pos) {
+    // setPos (el, pos) {
+    setPos (el) {
         setPosition.call(el[ctx], ...arguments);
     },
     clear (el) {
