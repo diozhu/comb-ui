@@ -51,6 +51,7 @@ const routes = [
             { name: 'Badge', path: '/toast' },
             { name: 'Search', path: '/toast' },
             { name: 'UploadImages', path: '/toast' },
+            { name: 'UploadImage', path: '/upload-image' },
             { name: 'Validator', path: '/toast' },
         ]
     },

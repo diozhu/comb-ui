@@ -11,6 +11,12 @@
  */
 
 // /** ==================== 浏览器相关 ==================== */
+export function isApp () {
+    let ua = window.navigator.userAgent.toLowerCase();
+    return (ua.match(/navasmart/i) == 'navasmart'); //eslint-disable-line
+    // return (!!ua.match(/micromessenger/i) && !ua.match(/windowswechat/i)); //eslint-disable-line
+    // return true;
+};
 export function isWechat () {
     let ua = window.navigator.userAgent.toLowerCase();
     return (ua.match(/MicroMessenger/i) == 'micromessenger'); //eslint-disable-line
