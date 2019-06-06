@@ -51,7 +51,6 @@ const routes = [
             { name: 'Badge', path: '/toast' },
             { name: 'Search', path: '/toast' },
             { name: 'UploadImages', path: '/toast' },
-            { name: 'UploadImage', path: '/upload-image' },
             { name: 'Validator', path: '/toast' },
         ]
     },
@@ -63,6 +62,7 @@ const routes = [
             { name: 'map-search', path: '/map-search' },
             { name: 'map-tms', path: '/map-tms' },
             { name: 'image', path: '/image' },
+            { name: 'uploadImage', path: '/upload-image' },
         ]
     }
 ];

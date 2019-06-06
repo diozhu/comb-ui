@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "core-js": "^2.6.5",
+    "dsbridge": "^3.1.4",
     "photoswipe": "^4.1.2",
     "vue": "^2.6.10",
     "vue-lazyload": "^1.2.6",
