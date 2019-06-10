@@ -196,7 +196,7 @@
 
         methods: {
             load () {
-                if (window.AMap) {
+                if (window.AMap && window.AMapUI) {
                     return Promise.resolve();
                 }
                 console.log(`v-map.${this._uid}.load: `);
