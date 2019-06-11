@@ -168,7 +168,7 @@
                                         _self.$set(_self.currentValue, i, obj);
                                     }
                                 });
-                                _self.currentValue.forEach((v, i) => {
+                                _self.currentValue.forEach((el, i) => {
                                     if (el.url) num = num + 1;
                                     if (num != 0 && num === _self.currentValue.length) _self.uploadedStatus = true;
                                 });
