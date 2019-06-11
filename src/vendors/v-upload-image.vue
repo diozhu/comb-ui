@@ -5,17 +5,17 @@
             <div :class="['frm', {loading: item.loading, fadeIn: !item.loading}]">
                 <!--<img v-if="item.url || item.thumb" :src="item.thumb || item.url"  @click="handleTapPreview(item, index)" />-->
                 <v-image :value="{url: item.url}" v-if="item.url" @click="handleTapPreview(item, index)"></v-image>
-                <i v-if="item.loading" class="icon loading icon-loading"></i>
-                <i v-if="!item.loading && !disabled" class="icon icon-del" @click="handleTapDel(index)"></i>
+                <i v-if="item.loading" class="iconfont loading icon-loading"></i>
+                <i v-if="!item.loading && !disabled" class="iconfont icon-del" @click="handleTapDel(index)"></i>
             </div>
         </div>
         <!--APP环境显示按钮-->
-        <button v-if="isApp" :disabled="disabled" v-show="currentValue.length < max" @click="appChooseImage" class="wx_upload_button wechat frm"><i class="icon icon-camera-fill"></i></button>
+        <button v-if="isApp" :disabled="disabled" v-show="currentValue.length < max || max == 0" @click="appChooseImage" class="wx_upload_button wechat frm"><i class="iconfont icon-camera-fill"></i></button>
         <!--微信环境显示按钮-->
-        <button v-if="isWechat" :disabled="disabled" v-show="currentValue.length < max" @click="wxChooseImage" class="wx_upload_button wechat frm"><i class="icon icon-camera-fill"></i></button>
+        <button v-else-if="isWechat" :disabled="disabled" v-show="currentValue.length < max || max == 0" @click="wxChooseImage" class="wx_upload_button wechat frm"><i class="iconfont icon-camera-fill"></i></button>
         <!--h5环境显示input-->
-        <button v-else v-show="currentValue.length < max" class="wx_upload_button wechat frm">
-            <i class="icon icon-camera-fill"></i>
+        <button v-else  v-show="currentValue.length < max || max == 0" class="wx_upload_button wechat frm">
+            <i class="iconfont icon-camera-fill"></i>
             <input type="file" @change="h5ChooseImage"  accept="image/*" class="wx_input" :disabled="disabled">
         </button>
     </div>
@@ -155,7 +155,7 @@
                             if (xhttp.response && xhttp.response.status === 0) {
                                 if (!xhttp.response.data) return;
                                 let num = 0;
-                                this.currentValue.forEach((v, i) => {
+                                _self.currentValue.forEach((v, i) => {
                                     if (v.returnReq === params.returnReq) {
                                         let obj = {
                                             url: utils.format(xhttp.response.data.filePath, {width: 160, height: 160}),
@@ -175,8 +175,8 @@
                             } else if (xhttp.response && xhttp.response.status === 1001) {
                                 let session = utils.getSessionStorage('AUTH');
                                 session.set('token', '');
-                                session.set('beforLoginUrl', encodeURLComponent(_self.$route.fullPath));
-                                _self.$router.push(name, 'auth');
+                                session.set('beforeLoginUrl', encodeURIComponent(_self.$route.fullPath));
+                                _self.$router.push({ 'name': 'auth' });
                             } else {
                                 this.$toast(xhttp.response.msg);
                             }
@@ -228,16 +228,22 @@
                                         _self.currentValue.forEach((v, i) => {
                                             if (v.loading) {
                                                 _self.$set(_self.currentValue, i, {
-                                                    // url: utils.thumb(xhr.response.data.url, {width: 160, height: 160}),
-                                                    url: xhr.response.data.url,
+                                                    url: utils.thumb(xhr.response.data.filePath, {width: 160, height: 160}),
+                                                    orgurl: xhr.response.data.filePath,
                                                     loading: false,
-                                                    imgId: xhr.response.data.img_id,
-                                                    width: xhr.response.data.width,
-                                                    height: xhr.response.data.height
+                                                    imgId: xhr.response.data.id,
+                                                    width: xhr.response.data.imageWidth,
+                                                    height: xhr.response.data.imageHeight
                                                 });
                                             }
                                         });
                                     }
+                                } else if (xhr.response.status === 1001) {
+                                    window.alert(_self.$route.fullPath);
+                                    let session = utils.getSessionStorage('AUTH');
+                                    session.set('token', '');
+                                    session.set('beforeLoginUrl', encodeURIComponent(_self.$route.fullPath));
+                                    _self.$router.push({ 'name': 'auth' });
                                 } else {
                                     _self.uploadedStatus = true;
                                     _self.$toast(trans(xhr.response.errcode));
