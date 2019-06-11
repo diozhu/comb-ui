@@ -10,11 +10,11 @@
             </div>
         </div>
         <!--APP环境显示按钮-->
-        <button :disabled="disabled" v-show="currentValue.length < max" @click="appChooseImage" class="wx_upload_button wechat frm"><i class="icon icon-camera-fill"></i></button>
+        <button v-if="isApp" :disabled="disabled" v-show="currentValue.length < max" @click="appChooseImage" class="wx_upload_button wechat frm"><i class="icon icon-camera-fill"></i></button>
         <!--微信环境显示按钮-->
         <button v-if="isWechat" :disabled="disabled" v-show="currentValue.length < max" @click="wxChooseImage" class="wx_upload_button wechat frm"><i class="icon icon-camera-fill"></i></button>
         <!--h5环境显示input-->
-        <button v-if="isApp" v-show="currentValue.length < max" class="wx_upload_button wechat frm">
+        <button v-else v-show="currentValue.length < max" class="wx_upload_button wechat frm">
             <i class="icon icon-camera-fill"></i>
             <input type="file" @change="h5ChooseImage"  accept="image/*" class="wx_input" :disabled="disabled">
         </button>
