@@ -414,7 +414,7 @@
                     display: none;
                 }
 
-                .v-checkbox__input:checked ~ .v-checkbox__label {
+                &.checked .v-checkbox__input:checked ~ .v-checkbox__label {
                     background: #3395FF;
                     border-color: #3395ff;
                     color: #FFF;
@@ -434,10 +434,10 @@
             &.limit {
                 .v-checkbox__input:checked ~ .v-checkbox__icon{
                     color: $icon-diabled-border-color!important;
-
+                    // color: #FFF;
                     &.disk {
-                        color: $icon-diabled-border-color!important;
-                        background: $icon-diabled-color!important;
+                        color: transparent!important;
+                        background: transparent!important;
                         border-color: $icon-diabled-border-color!important;
                     }
                 }
@@ -451,12 +451,21 @@
                         border-color: $icon-diabled-border-color!important;
                     }
                 }
+                .checked .v-checkbox__input:checked ~ .v-checkbox__icon{
+                    color: $icon-diabled-border-color!important;
+                    // color: #FFF;
+                    &.disk {
+                        color: $icon-diabled-border-color!important;
+                        background: $icon-diabled-color!important;
+                        border-color: $icon-diabled-border-color!important;
+                    }
+                }
             }
         }
         &.tags {
             &.limit {
                 .v-checkbox__input:checked ~ .v-checkbox__label{
-                    // color: $icon-diabled-border-color!important;
+                    color: $icon-diabled-border-color;
                     // background: $icon-diabled-color!important;
                 }
                 .v-checkbox__input:not(:checked) ~ .v-checkbox__label {

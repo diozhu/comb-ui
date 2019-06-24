@@ -2,21 +2,24 @@
     <!--多图上传-->
     <div class="v-upload-image multi">
         <div v-for="(item, index) in currentValue" :key="index">
-            <div :class="['frm', {loading: item.loading, fadeIn: !item.loading, one: max == 1}]">
-                <img v-if="item.url || item.thumb" :src="item.thumb || item.url"  @click="handleTapPreview(item, index)" />
+            <div
+                :class="['frm', {loading: item.loading, fadeIn: !item.loading, one: max == 1}]"
+                :style="{backgroundImage: 'url(' + item.base64 + ')', backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center center'}"
+            >
                 <!-- <v-image :value="{url: item.url}" v-if="item.url" @click="handleTapPreview(item, index)"></v-image> -->
-                <img class="style-base64" v-else-if="item.base64" :src="item.base64"  @click="handleTapPreview(item, index)" />
+                <!-- <img class="style-base64" v-if="item.base64" :src="item.base64"  @click="handleTapPreview(item, index)" /> -->
+                <img v-if="item.url || item.thumb" :src="item.thumb || item.url"  @click="handleTapPreview(item, index)" />
                 <i v-if="item.loading" class="icon loading icon-loading"></i>
-                <i v-if="!item.loading && !disabled" class="iconfont icon-del" @click="handleTapDel(index)"></i>
+                <i v-if="!item.loading && !disabled" class="icon icon-del" @click="handleTapDel(index)"></i>
             </div>
         </div>
         <!--APP环境显示按钮-->
-        <button v-if="isApp" :disabled="disabled" v-show="currentValue.length < max || max == 0" @click="appChooseImage" class="wx_upload_button wechat frm" :class="[{ one: max ==1 }]"><i class="iconfont icon-camera-fill"></i></button>
+        <button v-if="isApp" :disabled="disabled" v-show="currentValue.length < max || max == 0" @click="appChooseImage" class="wx_upload_button wechat frm" :class="[{ one: max ==1 }]"><i class="icon icon-add"></i></button>
         <!--微信环境显示按钮-->
-        <button v-else-if="isWechat" :disabled="disabled" v-show="currentValue.length < max || max == 0" @click="wxChooseImage" class="wx_upload_button wechat frm" :class="[{ one: max ==1 }]"><i class="iconfont icon-camera-fill"></i></button>
+        <button v-else-if="isWechat" :disabled="disabled" v-show="currentValue.length < max || max == 0" @click="wxChooseImage" class="wx_upload_button wechat frm" :class="[{ one: max ==1 }]"><i class="icon icon-add"></i></button>
         <!--h5环境显示input-->
         <button v-else  v-show="currentValue.length < max || max == 0" class="wx_upload_button wechat frm" :class="[{ one: max ==1 }]">
-            <i class="icon icon-camera-fill"></i>
+            <i class="icon icon-add"></i>
             <input type="file" @change="h5ChooseImage"  accept="image/*" class="wx_input" :disabled="disabled">
         </button>
     </div>
@@ -166,6 +169,9 @@
                                             width: xhttp.response.data.imageWidth,
                                             height: xhttp.response.data.imageHeight
                                         };
+                                        if (_self.max === '1') {
+                                            obj.url = utils.format(xhttp.response.data.filePath, {width: 335, height: 225});
+                                        }
                                         _self.$set(_self.currentValue, i, obj);
                                     }
                                 });
@@ -571,7 +577,7 @@
             width: pxTorem(80);
             height: pxTorem(80);
             margin: pxTorem(20) 0 0 pxTorem(20);
-            border: $brand-primary 1px solid;
+            border: $brand-primary 1px dashed;
             background: transparent;
             display: flex;
             align-items: center;
@@ -600,15 +606,16 @@
             }
         }
         .one {
-            width: 355px;
-            height: 355px;
+            width: 335px;
+            height: 225px;
+            // margin: 0px;
             img {
-                width: 353px;
-                height: 353px;
+                width: 335px;
+                height: 225px;
             }
             .wx_input {
-                width: 353px;
-                height: 353px;
+                width: 333px;
+                height: 223px;
             }
         }
 
