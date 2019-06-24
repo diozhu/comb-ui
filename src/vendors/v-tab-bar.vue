@@ -3,11 +3,12 @@
         <v-row class="tn-tabbar" :class="{'is-fixed': tabs.fixed}">
             <div class="tn-tab-item" v-for="(item,index) in tabs.tabNavs"  @click="tabChange(item,index)">
                 <v-col class="tn-tab-item-tit" :class="{selected:tabs.selectNum==index}">
-                    {{item}}
+                    {{item.name}}
                 </v-col>
+                <div class="bubble-num" v-if="item.bubbleNum">{{ item.bubbleNum > 99 ?'99+' : item.bubbleNum}}</div>
             </div>
         </v-row>
-        <div class="tn-tab-container-item" v-if ="!tabs.customTpl">
+        <!-- <div class="tn-tab-container-item" v-if ="!tabs.customTpl">
             <v-text :limit.Number = "1"  class="tn-cell" v-for="(item,index) in tabs.tabCons" :key="index" v-if='tabs.selectNum==index'>
                 {{item}}
             </v-text>
@@ -18,7 +19,7 @@
         </slot>
         <slot name="customTpl">
         </slot>
-    </div>
+    </div> -->
     </div>
 </template>
 
@@ -109,11 +110,24 @@
             text-decoration: none;
             height:pxTorem(44px);
             line-height:pxTorem(44px);
+            position: relative;
             .selected{
               border-bottom:pxTorem(2px) solid #007AFF;
               color:#007AFF;
               display:inline-block;
               height:pxTorem(44px);
+          }
+          .bubble-num {
+              min-width:14px;
+              height:14px;
+              background: #f00;
+              color: #fff;
+              font-size: 12px;
+              position: absolute;
+              top:0px;
+              right: 0px;
+              border-radius: 7px;
+              line-height: 14px;
           }
         }
         .tn-tab-item-label {
