@@ -87,6 +87,16 @@
             backAddr: {
                 type: Boolean,
                 default: false
+            },
+            monitors: {
+                type: Array,
+                default:false
+            },
+            searchType: {
+                default: false
+            },
+            searchArea: {
+                default: false
             }
         },
         data () {
@@ -105,7 +115,11 @@
                 page: 1,                // 页数
                 pageNum: process.env.VUE_APP_LIMIT,  // 每页记录数
                 hasMore: true,
-                currentPaths: this.paths // 路径轨迹，点坐标集合
+                currentPaths: this.paths, // 路径轨迹，点坐标集合
+                MouseTool:null,
+                districtSearch:null,
+                Areagroup:[],
+                polygon:null
             };
         },
 
@@ -132,6 +146,18 @@
             },
             speed () { // 监听速度变化，调整轨迹动画的速度
                 this.setNavgSpeed();
+            },
+            searchType(val) {
+                if(val ==1) {
+                    this.clearPaint();
+                    this.searchCar();
+                }
+            },
+            searchArea(val) {
+                if(val!=='') {
+                    this.clearPaint();
+                    this.searchAreaCar(val);
+                }
             }
         },
 
@@ -200,7 +226,7 @@
                     return Promise.resolve();
                 }
                 console.log(`v-map.${this._uid}.load: `);
-                let script = this.createScript('//webapi.amap.com/maps?v=' + process.env.VUE_APP_AMAP_VERSION + '&key=' + process.env.VUE_APP_AMAP_KEY + '&callback=mapLoaded');
+                let script = this.createScript('//webapi.amap.com/maps?v=' + process.env.VUE_APP_AMAP_VERSION + '&key=' + process.env.VUE_APP_AMAP_KEY + '&callback=mapLoaded&plugin=AMap.CircleEditor,AMap.Autocomplete,AMap.PlaceSearch');
                 // document.body.appendChild(script);
                 document.head.appendChild(script);
 
@@ -215,6 +241,7 @@
                     script.onerror = error => reject(error);
                 });
             },
+
             createScript (src) {
                 this.$root.amapImportTag = true; // 全局的加载标识
                 const script = document.createElement('script');
@@ -238,7 +265,15 @@
                     zoom: this.zoom,
                     fixed: false
                 });
-
+                // this.map.addControl(this.MouseTool);
+                    // this.draw();
+                    // this.geocoderPromise(position, cb);
+                if(this.searchType!==false){
+                    this.initMouseTool();
+                }
+                if(this.searchArea!==false){
+                    this.initDistrictSearch();
+                }
 //                 if (this.placeSearch) {
 // //                    window.AMap.event.addDomListener('dragMap', 'change', this.onModeChange);
 //                     this.amap.on('moveend', this.onMoveEnd);
@@ -264,7 +299,6 @@
 //                         this.searchNearBy();
 //                     });
 //                 }
-
                 // 如果支持弹出infoWindow，这里加载
                 if (this.openMarkerInfoFunc && typeof this.openMarkerInfoFunc === 'function') {
                     this.initGeocoder();
@@ -284,27 +318,38 @@
                         console.error('v-map-tms.init.loadUI: ', e);
                     });
                 }
-
+            },
+            clearMap (){
+                this.simplifierWindowIns.close();
+            },
+            clearPaint(){
+                if(this.polygon!=null){
+                    this.amap.remove(this.polygon);
+                }
+                this.MouseTool.close(true);
+            },
+            openMap (){
+                this.simplifierWindowIns.open();
             },
             loadUI () { // 处理异步组件加载
-
                 return new Promise((resolve, reject) => {
-                    if (!this.loadUiMaxTry) this.loadUiMaxTry = 0;
+                    if (!this.loadUiMaxTry) this.loadUiMaxTry = 1;
                     if (window.AMapUI) {
                         // console.warn('v-map-tms.loadUI: 2 -------> ', window.AMapUI, this.loadUiMaxTry);
-                        resolve({});
-                    } else if (!window.AMapUI && this.loadUiMaxTry < 10) {
+                        return resolve({});
+                    } else if (!window.AMapUI && this.loadUiMaxTry < 50) {
                         // console.warn('v-map-tms.loadUI: 1 -------> ', window.AMapUI, this.loadUiMaxTry);
                         this.loadUiMaxTry++;
-                        // setTimeout(() => {
-                        //     this.loadUI();
-                        // }, 200);
                         setTimeout(() => {
-                            return this.loadUI().then(res => resolve(res));
+                            return this.loadUI();
                         }, 200);
+                        // // setTimeout(() => {
+                        // //     return this.loadUI().then(res => resolve(res));
+                        // // }, 200);
+                        // setTimeout(this.loadUI, 200);
                     } else {
                         // console.warn('v-map-tms.loadUI: 3 -------> ', window.AMapUI, this.loadUiMaxTry);
-                        reject();
+                        return reject();
                     }
                 });
             },
@@ -373,7 +418,6 @@
                 if (!this.SimpleInfoWindow) await this.initSimpleInfoWindow();
 
                 let cusFunc = async () => {
-                    console.log('v-map.openSimplifierWindow.cusFunc: ', this.navg.getPosition());
                     let res = await this.openSimplifierWindowFunc();
                     this.simplifierWindowIns =  new this.SimpleInfoWindow({
                         infoTitle: res.infoTitle || 'error',
@@ -391,7 +435,6 @@
                     // this.simplifierWindowIns.open(this.amap, this.navg.getPosition());
                 };
 
-                console.log('v-map-tms.openSimplifierWindow: ', item);
                 // defFunc();
                 // this.simplifierWindowIns.open(this.amap, this.navg.getPosition());
                 // 如果有自定义函数,调用进行数据格式化,否则调用基本样式展示
@@ -496,10 +539,10 @@
             async pathSimplifierChange () {
                 // 首次需要初始化
                 if (!this.PathSimplifier) await this.initPathSimplifier();
-
+                if(this.paths.length) {
                 let cursor = this.navg.getCursor().clone(), // 保存巡航器位置
                     status = this.navg.getNaviStatus(); // 延展路径
-                console.log('[v-map] async pathSimplifierChange: ', (this.paths ? this.paths.length : 0), cursor, status);
+                // console.log('[v-map] async pathSimplifierChange: ', (this.paths ? this.paths.length : 0), cursor, status);
 
                 let dat = [{
                     name: '轨迹',
@@ -535,10 +578,14 @@
                         this.simplifierWindowIns.setInfoTitle(infoTitle);
                         this.simplifierWindowIns.setInfoBody(infoBody);
                         this.simplifierWindowIns.setPosition(this.navg.getPosition());
+                        this.simplifierWindowIns.open(this.amap, this.navg.getPosition());
                     }
-                });
-            },
 
+                    });
+                } else {
+                    return '';
+                }
+            },
             setNavgSpeed () { // 修改轨迹动画的速度
                 if (this.navg && this.navg.setSpeed) this.navg.setSpeed(this.speed);
             },
@@ -590,7 +637,98 @@
                     });
                 });
             },
-
+            initMouseTool () {
+                return new Promise(resolve => {
+                    window.AMap.plugin('AMap.MouseTool', () => {
+                        this.MouseTool = new window.AMap.MouseTool(this.amap);
+                        // this.map.addControl(this.MouseTool);
+                       // this.draw();
+                        // this.geocoderPromise(position, cb);
+                        resolve();
+                    });
+                });
+            },
+            initDistrictSearch () {
+                return new Promise(resolve => {
+                    window.AMap.plugin('AMap.DistrictSearch', () => {
+                        this.districtSearch = new window.AMap.DistrictSearch({
+                            subdistrict: 0,   //获取边界不需要返回下级行政区
+                            extensions: 'all',  //返回行政区边界坐标组等具体信息
+                            level:'province'
+                        });
+                        // this.map.addControl(this.MouseTool);
+                        // this.draw();
+                        // this.geocoderPromise(position, cb);
+                        resolve();
+                    });
+                });
+            },
+            searchAreaCar (val) {
+                let self = this;
+                self.Areagroup= []
+                self.polygon = []
+                this.districtSearch.search(val, function(status,result) {
+                    let bounds = result.districtList[0].boundaries;
+                    let polygons = [];
+                    if(bounds) {
+                        let path = [];
+                        for (var i=0,l =bounds.length;i<l;i++){
+                            path.push(bounds[i]);
+                        }
+                        for(var i=0, l=bounds.length;i<l;i++){
+                            let poly = new AMap.Polygon({
+                                map: self.amap,
+                                strokeWeight: 1,
+                                path: path[i],
+                                fillOpacity: 0.7,
+                                fillColor: '#CCF3FF',
+                                strokeColor: '#80d8ff'
+                            })
+                            let Areagroup= self.monitors.filter((item,key)=>{
+                                return poly.contains(self.mapMarker[key].getPosition());
+                            })
+                            self.Areagroup.push(...Areagroup);
+                            self.polygon.push(poly);
+                        }
+                        // for (var i=0,l =bounds.length;i<l;i++){
+                        //     console.log(bounds[i]);
+                        //     let polygon = new AMap.Polygon({
+                        //         map: self.amap,
+                        //         strokeWeight: 1,
+                        //         path: bounds[i],
+                        //         fillOpacity: 0.7,
+                        //         fillColor: '#CCF3FF',
+                        //         strokeColor: '#CC66CC'
+                        //     })
+                        //     polygons.push(polygon);
+                        // }
+                        self.amap.add(self.polygon);
+                        self.$emit('groupList',self.Areagroup);
+                        self.amap.setFitView();
+                    }
+                })
+            },
+            searchCar () {
+                this.MouseTool.rectangle({
+                    strokeColor:'#80d8ff',
+                    fillColor:'#80d8ff',
+                    fillOpacity:0.3
+                    //同 Polygon 的 Option 设置
+                });
+                let self = this
+                window.AMap.event.addListener(this.MouseTool,'draw',function(e){
+                    let group = [];
+                    console.log(self.mapMarker);
+                    self.mapMarker.map((item,key)=>{
+                        if(e.obj.contains(item.getPosition())){
+                            group.push(self.monitors[key]);
+                        }
+                    })
+                    console.log(group,'hhhhhhhhhhhhhhhhhhhhhhh');
+                    self.$emit('groupList',group);
+                    self.MouseTool.close();
+                })
+            },
             /** ======================================== 标记 markers ======================================== */
 
             initMarkers () { // 初始化点标记
@@ -765,132 +903,134 @@
     };
 </script>
 <style rel="stylesheet/scss" lang="scss">
-    @import "../scss/variables";
-    @import "../scss/mixins";
+@import '../scss/variables';
+@import '../scss/mixins';
 
-    .v-map {
-        position: relative;
-        width: 100%;
-        height: 100%;
-        z-index: 0;
-        /* transform: translateZ(1px); */
-        /* overflow: hidden; */
-        /* backface-visibility: hidden; */
-        /* perspective:1000px; */
-        /* canvas{
+.v-map {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    /* transform: translateZ(1px); */
+    /* overflow: hidden; */
+    /* backface-visibility: hidden; */
+    /* perspective:1000px; */
+    /* canvas{
             backface-visibility: hidden;
             perspective:1000;
         } */
-        /* border: #DDDEE3 1px solid; */
-        transform: translate3d(0, 0, 0); // 防止滚动时重绘造成的卡顿白屏
-    }
-    /* .v-map object{
+    /* border: #DDDEE3 1px solid; */
+    transform: translate3d(0, 0, 0); // 防止滚动时重绘造成的卡顿白屏
+}
+/* .v-map object{
         z-index:0 !important;
     } */
-    .v-map__img {
-        width: 100%;
-        height: 100%;
-        z-index: 8;
-        position: absolute;
-        top:0;
-        left: 0;
-    }
-    .map-loading{
-        width: pxTorem(30px);
-        height: 100%;
-        margin: 0 auto;
-        text-align: center;
-        /*background: url('../../static/images/loading.jpg') no-repeat center;*/
-        background: url('//static.91wuliu.com/loading.jpg') no-repeat center;
-        background-size: pxTorem(30px) auto;
-    }
-    .v-map__location {
-        position: absolute;
-        width: 100%;
-        height: pxTorem(30px);
-        font-size: pxTorem(14px);
-        line-height: pxTorem(30px);
-        /*background: url(../assets/download-bg.png);*/
-        background: url('data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7');
-        color: #FFF;
-        z-index: 9;
-        bottom: 0;
-        @include nowarp(pxTorem(14px));
-        padding-left: pxTorem(15px);
-        padding-right: pxTorem(50px);
-        @include opacity(.8);
+.v-map__img {
+    width: 100%;
+    height: 100%;
+    z-index: 8;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.map-loading {
+    width: pxTorem(30px);
+    height: 100%;
+    margin: 0 auto;
+    text-align: center;
+    /*background: url('../../static/images/loading.jpg') no-repeat center;*/
+    background: url('//static.91wuliu.com/loading.jpg') no-repeat center;
+    background-size: pxTorem(30px) auto;
+}
+.v-map__location {
+    position: absolute;
+    width: 100%;
+    height: pxTorem(30px);
+    font-size: pxTorem(14px);
+    line-height: pxTorem(30px);
+    /*background: url(../assets/download-bg.png);*/
+    background: url('data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7');
+    color: #fff;
+    z-index: 9;
+    bottom: 0;
+    @include nowarp(pxTorem(14px));
+    padding-left: pxTorem(15px);
+    padding-right: pxTorem(50px);
+    @include opacity(0.8);
 
-        .icon {
-            &:before {
-                position: absolute;
-                right: pxTorem(10px);
-                font-size: pxTorem(20px);
-                font-weight: bold;
-                top: 50%;
-                margin-top: pxTorem(-10px);
-            }
+    .icon {
+        &:before {
+            position: absolute;
+            right: pxTorem(10px);
+            font-size: pxTorem(20px);
+            font-weight: bold;
+            top: 50%;
+            margin-top: pxTorem(-10px);
         }
     }
-    .amap-marker .marker-default {
-        position: absolute;
-        /* width: pxTorem(18px);
+}
+.amap-marker .marker-default {
+    position: absolute;
+    /* width: pxTorem(18px);
         height: pxTorem(36px); */
-        width: pxTorem(36px);
-        height: pxTorem(61px);
-        font-size: pxTorem(12px);
-        color: #e90000;
-        /*background: url('../../static/images/mark.png') no-repeat;*/
-        background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACYAAAA/CAYAAACM5Lr9AAAFkklEQVR42s3VaWxUVRjG8ddiEKPRxAQTCVSWLnZaWmjpTgulpYUBExP9Agou4IKAogUKAgItlNJCgUIXINFPfsFoDCjibkQRI0QIICAQWUpZugKtpcv0+DxyYqaTe2/vTLf58Etu7znnPf+0k44opQw5i5qsjIFs2APHoBZatFq+02vZeq94yyKs0dOjsAzOTCtuVtNKWtX0UpeaXqHU07tgt4ZnvuMa93Avz/CsniE2WIQV3iEaCDnQ8F/MTgZ4h2d4ljNgmZ4pFszDpmIRIuFP57YWDMcFu7uHMziLMyEKxJBl2MbbM6DZub2NQ3sUZ3K2vkMMGIdNKbi1ADqcZe1q2i7VKzibd8BCEE8GUQ3PQ4ez3KWcGNCbeAfv0neKm85hWRvqo+Hu1LJ2HuwTvAt3tkAciKbDIDO/7iE4l7X9rpqCA30pa3uLwt3nYRAIuIfV5mcWN6msnapf8G405IGQMGry+prB0DiloqPfwng3G3SLDltXnTt5S6PK3NnRr9jAFhDJyLsZAJcz8SGcjOr+xAa0XGGTpOfeSMrYUKcyKlx+gS1oSkbY9VXpm2+rjHKXX2ALm2TS2qq96duaVHp5u19gC5skbc3V05N23FWT8NIfsIVNkra6siGttE2llbX7h9JWhaZ6mfj+lfaJZW3Kn6DJJRNWXWqbgN+Y39jRqtDUKKkrL15PxfdjammrfyhpVmiqlNQVfx9KwX/cFJT6A7awSVLeu1CeUlinxu9o8QsphbUKTWUyfvn5Wcm511QSXvoDtrBJkpedewzaE/E58wdsYZMopSQ55+z+pKK6fo9KKqpXaDkAIgxLWnomK3H1JZVQ0tyv2ICW6XAvLHHJ6QD4K6GgRsVjQ3/g3WzQLffCKGHJqfHgisOXaNy2f/oU7+TdukGIUW5xJ0vic6+oWGzsS7yTd4NoncPiF594GC7FFlSrcVub+gTv4p36btE6h1Fc9nFn7IpzKmZrY5/gXbwTxI0O8xD77rGPYtZeVtE42Jt4B+8C8WAcNu6dPwZDzVh8PYzdcqdXcDbvgMdBPDHEOG7R0Xkxqy6oKAzpDZzNO0AMmIfFvH1kABwZk1epIotv9yjOxOyj+g4xYB4W/dbvlAAdozGsJ3Gmni0mzMPGLvyN6IMo/NojNt/qEZyFmR+CWLAIW3CYaDDUR+D/TTgGdwdncJaeKRbMw8bM/9XdosjlZ5VjU0O3cAZngXTBPCzqzV/cPQAXHeuqVBgu8IVj/TXFGXqWdME8LHLez55mRSw9qUI31fuEZzFjNogNFmFvHPQUACfC8IUbUlTvlbDcSsWzeobYYB42+vWfjDwbnn3c6zCewdnnQGwyD4t47UcjAXA2JO+qCi6ss4V7eUafFZuswn4wM8ex+LgKwqV2cC/OzAXxgnlY+KvfmxkIVaPyr6tRhbWWuId79RnxgnmYY+53VlaHLj2lRm6stRSSc0ph7xoQL1mEzfnWyhPQNrKgGgE1hrjGPTAExEvmYWGvfNOVPUErz6vhiDDCNez5GMQHVmFfd2Vq6MLD6smCGkNc4x4QH5iHPfXyV125H64NX1eFkOpO+I5reo/4wDws9KUDdhSPxFdNIGLc8R3XQHxkFfalHYnB8w6qYRuqO+E7roH4yDws5MX9dtwHlYF5lQi6qYjPfKfXxEcWYbO/sKtsBP50QxFFI/D/De8qQLrBPCwYizY9M2r+of/D+Mx3ID6zDJv1uaVwGfAIBDqGJsbhZ9eQ/BuK+OwYlhzPNe7hXh9Yhe0zwqBB4IAYouCZn1wIXH5GEZ/d1sjBMzzrBfOwoBf2GWFYBMS4C03JWRA087OaoBmf3uCz5zrP8Kx9lmF7jXiE2RbBs95ghB0MIo8/pS0OeJAzvOBLmKY//BAGURBN+jmMa3qPkLdh/wKOL8SpLbnYFgAAAABJRU5ErkJggg==') no-repeat;
-        background-size: 100%;
-        cursor: pointer;
-        text-align:center;
-        color:#fff;
-        left: pxTorem(-9px);
-        top:pxTorem(-8px);
-        transform: translateZ(1px);
-    }
-    .amap-logo{
-        display: none !important;
-    }
-    .amap-copyright{
-        display: none !important;
-    }
-    .amap-marker-label{
-        background-color: transparent;
-        border:none;
-    }
+    width: pxTorem(36px);
+    height: pxTorem(61px);
+    font-size: pxTorem(12px);
+    color: #e90000;
+    /*background: url('../../static/images/mark.png') no-repeat;*/
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACYAAAA/CAYAAACM5Lr9AAAFkklEQVR42s3VaWxUVRjG8ddiEKPRxAQTCVSWLnZaWmjpTgulpYUBExP9Agou4IKAogUKAgItlNJCgUIXINFPfsFoDCjibkQRI0QIICAQWUpZugKtpcv0+DxyYqaTe2/vTLf58Etu7znnPf+0k44opQw5i5qsjIFs2APHoBZatFq+02vZeq94yyKs0dOjsAzOTCtuVtNKWtX0UpeaXqHU07tgt4ZnvuMa93Avz/CsniE2WIQV3iEaCDnQ8F/MTgZ4h2d4ljNgmZ4pFszDpmIRIuFP57YWDMcFu7uHMziLMyEKxJBl2MbbM6DZub2NQ3sUZ3K2vkMMGIdNKbi1ADqcZe1q2i7VKzibd8BCEE8GUQ3PQ4ez3KWcGNCbeAfv0neKm85hWRvqo+Hu1LJ2HuwTvAt3tkAciKbDIDO/7iE4l7X9rpqCA30pa3uLwt3nYRAIuIfV5mcWN6msnapf8G405IGQMGry+prB0DiloqPfwng3G3SLDltXnTt5S6PK3NnRr9jAFhDJyLsZAJcz8SGcjOr+xAa0XGGTpOfeSMrYUKcyKlx+gS1oSkbY9VXpm2+rjHKXX2ALm2TS2qq96duaVHp5u19gC5skbc3V05N23FWT8NIfsIVNkra6siGttE2llbX7h9JWhaZ6mfj+lfaJZW3Kn6DJJRNWXWqbgN+Y39jRqtDUKKkrL15PxfdjammrfyhpVmiqlNQVfx9KwX/cFJT6A7awSVLeu1CeUlinxu9o8QsphbUKTWUyfvn5Wcm511QSXvoDtrBJkpedewzaE/E58wdsYZMopSQ55+z+pKK6fo9KKqpXaDkAIgxLWnomK3H1JZVQ0tyv2ICW6XAvLHHJ6QD4K6GgRsVjQ3/g3WzQLffCKGHJqfHgisOXaNy2f/oU7+TdukGIUW5xJ0vic6+oWGzsS7yTd4NoncPiF594GC7FFlSrcVub+gTv4p36btE6h1Fc9nFn7IpzKmZrY5/gXbwTxI0O8xD77rGPYtZeVtE42Jt4B+8C8WAcNu6dPwZDzVh8PYzdcqdXcDbvgMdBPDHEOG7R0Xkxqy6oKAzpDZzNO0AMmIfFvH1kABwZk1epIotv9yjOxOyj+g4xYB4W/dbvlAAdozGsJ3Gmni0mzMPGLvyN6IMo/NojNt/qEZyFmR+CWLAIW3CYaDDUR+D/TTgGdwdncJaeKRbMw8bM/9XdosjlZ5VjU0O3cAZngXTBPCzqzV/cPQAXHeuqVBgu8IVj/TXFGXqWdME8LHLez55mRSw9qUI31fuEZzFjNogNFmFvHPQUACfC8IUbUlTvlbDcSsWzeobYYB42+vWfjDwbnn3c6zCewdnnQGwyD4t47UcjAXA2JO+qCi6ss4V7eUafFZuswn4wM8ex+LgKwqV2cC/OzAXxgnlY+KvfmxkIVaPyr6tRhbWWuId79RnxgnmYY+53VlaHLj2lRm6stRSSc0ph7xoQL1mEzfnWyhPQNrKgGgE1hrjGPTAExEvmYWGvfNOVPUErz6vhiDDCNez5GMQHVmFfd2Vq6MLD6smCGkNc4x4QH5iHPfXyV125H64NX1eFkOpO+I5reo/4wDws9KUDdhSPxFdNIGLc8R3XQHxkFfalHYnB8w6qYRuqO+E7roH4yDws5MX9dtwHlYF5lQi6qYjPfKfXxEcWYbO/sKtsBP50QxFFI/D/De8qQLrBPCwYizY9M2r+of/D+Mx3ID6zDJv1uaVwGfAIBDqGJsbhZ9eQ/BuK+OwYlhzPNe7hXh9Yhe0zwqBB4IAYouCZn1wIXH5GEZ/d1sjBMzzrBfOwoBf2GWFYBMS4C03JWRA087OaoBmf3uCz5zrP8Kx9lmF7jXiE2RbBs95ghB0MIo8/pS0OeJAzvOBLmKY//BAGURBN+jmMa3qPkLdh/wKOL8SpLbnYFgAAAABJRU5ErkJggg==')
+        no-repeat;
+    background-size: 100%;
+    cursor: pointer;
+    text-align: center;
+    color: #fff;
+    left: pxTorem(-9px);
+    top: pxTorem(-8px);
+    transform: translateZ(1px);
+}
+.amap-logo {
+    display: none !important;
+}
+.amap-copyright {
+    display: none !important;
+}
+.amap-marker-label {
+    background-color: transparent;
+    border: none;
+}
 
-    .v-map__local { // 点击回默认点的悬浮按钮
-        position: absolute;
-        z-index: 99;
-        left: pxTorem(10px);
-        bottom: pxTorem(10px);
-        width: pxTorem(30px);
-        height: pxTorem(30px);
-        border-radius: pxTorem(3px);
-        border: #898989 1px solid;
-        background: rgba(255, 255, 255, 0.3);
-        display: flex;
-        align-items: center;
-        justify-content: center;
+.v-map__local {
+    // 点击回默认点的悬浮按钮
+    position: absolute;
+    z-index: 99;
+    left: pxTorem(10px);
+    bottom: pxTorem(10px);
+    width: pxTorem(30px);
+    height: pxTorem(30px);
+    border-radius: pxTorem(3px);
+    border: #898989 1px solid;
+    background: rgba(255, 255, 255, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-        > div {
-            width: pxTorem(18px);
-            height: pxTorem(18px);
-            background: #FFF;
+    > div {
+        width: pxTorem(18px);
+        height: pxTorem(18px);
+        background: #fff;
+        border-radius: 50%;
+        border: #898989 pxTorem(1px) solid;
+
+        &::after {
+            content: ' ';
+            position: absolute;
+            width: pxTorem(8px);
+            height: pxTorem(8px);
+            background: #898989;
             border-radius: 50%;
-            border: #898989 pxTorem(1px) solid;
-
-            &::after {
-                content: ' ';
-                position: absolute;
-                width: pxTorem(8px);
-                height: pxTorem(8px);
-                background: #898989;
-                border-radius: 50%;
-                left: pxTorem(10.5px);
-                top: pxTorem(10.5px);
-            }
+            left: pxTorem(10.5px);
+            top: pxTorem(10.5px);
         }
     }
+}
 </style>
