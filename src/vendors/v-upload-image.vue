@@ -247,7 +247,8 @@ export default {
                                         loading: false,
                                         imaId: res.id,
                                         width: res.imageWidth,
-                                        height: res.imageHeight
+                                        height: res.imageHeight,
+                                        fileName: res.fileName
                                     };
                                     if (_self.max === '1') {
                                         obj.url = utils.format(res.filePath, {width: 304, height: 168});
@@ -351,7 +352,8 @@ export default {
                                             loading: false,
                                             imgId: res.id,
                                             width: res.imageWidth,
-                                            height: res.imageHeight
+                                            height: res.imageHeight,
+                                            fileName: res.fileName
                                         });
                                         if (_self.max === '1') {
                                             _self.currentValue[i].url = utils.format(res.filePath, {width: 304, height: 168});
