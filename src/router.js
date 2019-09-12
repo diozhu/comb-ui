@@ -63,6 +63,7 @@ const routes = [
             { name: 'map-tms', path: '/map-tms' },
             { name: 'image', path: '/image' },
             { name: 'uploadImage', path: '/upload-image' },
+            { name: 'tic', path: '/tic' },
         ]
     }
 ];
