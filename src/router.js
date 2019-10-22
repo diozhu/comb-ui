@@ -64,6 +64,7 @@ const routes = [
             { name: 'image', path: '/image' },
             { name: 'uploadImage', path: '/upload-image' },
             { name: 'tic', path: '/tic' },
+            { name: 'weather', path: '/weather' },
         ]
     }
 ];
