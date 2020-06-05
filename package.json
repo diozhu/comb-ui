@@ -1,6 +1,6 @@
 {
   "name": "comb-ui",
-  "version": "2.0.21",
+  "version": "2.0.23",
   "main": "src/vendors/index.js",
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -25,7 +25,7 @@
     "css-loader": "^1.0.1",
     "eslint": "^5.8.0",
     "eslint-plugin-vue": "^5.0.0-0",
-    "node-sass": "^4.10.0",
+    "node-sass": "^4.14.1",
     "prettier": "^1.17.1",
     "sass-loader": "^7.1.0",
     "vue-template-compiler": "^2.6.10"
