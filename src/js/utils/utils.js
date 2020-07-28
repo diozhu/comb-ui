@@ -517,11 +517,7 @@ export function thumb (url, { width = 750, height = 0 } = {}) {
         if (width && height) str += '!/both/' + width + 'x' + height;
         else if (width) str += '!/fw/' + width;
         else if (height) str += '!/fh/' + height;
-    } else if (/img-yp-cdn.dongyin.net/.test(url)) { // 阿里云缩略图
-        if (width && height) str += '?x-oss-process=image/resize,h_' + height + ',w_' + width;
-        else if (width) str += '?x-oss-process=image/resize,w_' + width;
-        else if (height) str += '?x-oss-process=image/resize,h_' + height;
-    } else if (/dy-static-h5.oss-cn-beijing.aliyuncs.com/.test(url)) {
+    } else if (/static.91wuliu.com | aliyuncs.com/.test(url)) { // 阿里云缩略图
         if (width && height) str += '?x-oss-process=image/resize,h_' + height + ',w_' + width;
         else if (width) str += '?x-oss-process=image/resize,w_' + width;
         else if (height) str += '?x-oss-process=image/resize,h_' + height;
