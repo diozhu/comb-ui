@@ -1,6 +1,6 @@
 {
   "name": "comb-ui",
-  "version": "2.0.21",
+  "version": "2.0.25",
   "main": "src/vendors/index.js",
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -16,16 +16,16 @@
     "vue-router": "^3.0.6"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.8.0",
-    "@vue/cli-plugin-eslint": "^3.8.0",
-    "@vue/cli-plugin-pwa": "^3.8.0",
-    "@vue/cli-service": "^3.8.0",
+    "@vue/cli-plugin-babel": "^3.12.1",
+    "@vue/cli-plugin-eslint": "^3.12.1",
+    "@vue/cli-plugin-pwa": "^3.12.1",
+    "@vue/cli-service": "^3.12.1",
     "@vue/eslint-config-prettier": "^4.0.1",
-    "babel-eslint": "^10.0.1",
+    "babel-eslint": "^10.1.0",
     "css-loader": "^1.0.1",
     "eslint": "^5.8.0",
     "eslint-plugin-vue": "^5.0.0-0",
-    "node-sass": "^4.10.0",
+    "node-sass": "^4.14.1",
     "prettier": "^1.17.1",
     "sass-loader": "^7.1.0",
     "vue-template-compiler": "^2.6.10"
