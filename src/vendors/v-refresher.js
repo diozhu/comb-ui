@@ -134,7 +134,7 @@ let isAttached = function (element) {
             translateExpr = this.el.getAttribute('refresh-translate'),
             distance = (this.currentY - this.startY);
         // console.log(`[v-refresher.pulling]: ${this.direction}, ${viewportScrollTop}, ${distance - this.startScrollTop}`);
-        if (this.direction === 'down' && viewportScrollTop === 0 && this.expression) { // 下拉
+        if (this.direction === 'down' && viewportScrollTop === 0 && this.expression && e.cancelable) { // 下拉
             // console.log('[v-refresher.pulling]!!!', this.vm[translateExpr]);
             // console.log('[v-refresher.pulling]!!!', e.cancelable, !e.defaultPrevented);
             e.preventDefault();
@@ -152,7 +152,7 @@ let isAttached = function (element) {
 
     pullEnd = function (e) {
         console.log('[v-refresher].pullEnd: ', this.direction);
-        if (this.startScrollTop === 0) e.preventDefault();
+        if (this.startScrollTop === 0 && e.cancelable) e.preventDefault();
         // if (!this.vm[this.el.getAttribute('refresh-enabled')]) return;
         let viewportScrollTop = getScrollTop(this.pullEventTarget),
             translateExpr = this.el.getAttribute('refresh-translate');
