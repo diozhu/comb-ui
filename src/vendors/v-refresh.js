@@ -111,8 +111,8 @@ let isAttached = function (element) {
             translateExpr = this.el.getAttribute('refresh-translate'),
             distance = (this.currentY - this.startY);
         // console.log(`[v-refresh.pulling]: ${this.direction}, ${viewportScrollTop}, ${distance - this.startScrollTop}`);
-        if (this.direction === 'down' && viewportScrollTop < 10) e.preventDefault(); // 阻止微信内页面下拉
-        if (this.direction === 'down' && viewportScrollTop === 0 && this.expression) { // 下拉
+        if (this.direction === 'down' && viewportScrollTop < 10 &&  e.cancelable) e.preventDefault(); // 阻止微信内页面下拉
+        if (this.direction === 'down' && viewportScrollTop === 0 && this.expression &&  e.cancelable) { // 下拉
             // console.log('[v-refresh.pulling]!!!', this.vm[translateExpr]);
             e.preventDefault();
             e.stopPropagation();
