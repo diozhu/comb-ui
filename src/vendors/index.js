@@ -28,7 +28,6 @@ import vSpinner from './v-spinner';
 
 import Swipe from './v-swipe.js';
 import Sticky from './v-sticky.js';
-import Eventbus from './eventbus.js';
 import ScrollPosition from './v-scroll-position.js';
 
 const version = '1.0.1';
@@ -55,7 +54,6 @@ const install = function (Vue) {
     //
     Vue.use(Swipe);
     Vue.use(Sticky);
-    Vue.use(Eventbus);
     Vue.use(ScrollPosition);
     // Vue.use(Refresh);
     // Vue.use(Scroll);
@@ -99,7 +97,6 @@ export {
     // ScrollPosition,
     Swipe,
     Sticky,
-    Eventbus,
     ScrollPosition,
     //
     MessageBox,
