@@ -28,6 +28,7 @@ import vSpinner from './v-spinner';
 
 import Swipe from './v-swipe.js';
 import Sticky from './v-sticky.js';
+import Eventbus from './eventbus.js';
 import ScrollPosition from './v-scroll-position.js';
 
 const version = '1.0.1';
@@ -97,6 +98,7 @@ export {
     // ScrollPosition,
     Swipe,
     Sticky,
+    Eventbus,
     ScrollPosition,
     //
     MessageBox,

@@ -1,6 +1,6 @@
 {
   "name": "comb-ui",
-  "version": "2.0.27",
+  "version": "2.0.29",
   "main": "src/vendors/index.js",
   "scripts": {
     "serve": "vue-cli-service serve",
