@@ -55,6 +55,7 @@ const install = function (Vue) {
     //
     Vue.use(Swipe);
     Vue.use(Sticky);
+    Vue.use(Eventbus);
     Vue.use(ScrollPosition);
     // Vue.use(Refresh);
     // Vue.use(Scroll);
